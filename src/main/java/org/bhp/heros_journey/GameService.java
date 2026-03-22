@@ -112,83 +112,6 @@ public class GameService {
     }
 
     public String processAction(String userAction, Player player, Room currentRoom) {
-        // 1. Determine if the player already has a skill relevant to this action
-        // We'll ask Gemini to identify the most relevant skill from the player's map
-        String identifiedSkill = identifyRelevantSkill(userAction, player);
-
-        if (identifiedSkill == null) {
-            // --- NEW SKILL LOGIC ---
-            ActionValidation validation = withRetries(() -> chatClient.prompt()
-                    .user(u -> u.text("""
-                                    - Context: {roomDesc}
-                                    - Action: {action}
-                                    - Player Stats: {stats}
-                                    - Rules:
-                                        - Regardless of the possibility of the action, you MUST ALWAYS respond with a JSON object containing:
-                                          - `canDo` (boolean) : indicates whether the player can attempt this action based on their current skills and stats.
-                                          - `skillName` (string) : provide a name for the new skill that would be relevant to this action. Be creative but concise, and tie it into the narrative of the room and the action.
-                                          - `initialLevel` (integer) : indicates the starting level of this new skill
-                                          - `description` (string) : a creative description of what happens when the player attempts this action, taking into account their current stats, if canDo is true or false, the initial level of the new skill, and the difficulty involved with how the user is attempting to use the new skill. This should be flavorful and narrative-driven, not just mechanical. For example, if the player is trying to "pick a pocket" without any relevant skills, you might say something like: "You attempt to pick the noble's pocket, but your lack of finesse causes you to fumble and draw attention. The noble glares at you, and you quickly realize that this is going to be much harder than you thought. You feel a spark of potential in this new skill, but it's clear that you have a long way to go before you can master it."
-                                        - If the action is possible:
-                                            - Define a skill name
-                                            - Define the appropriate skill level of the player, taking into account any
-                                              skills (and their levels) the player has that can be considered adjacent
-                                              to the new skill. For example, if the player has "Lockpicking" at level
-                                              20, and they attempt to "pick a pocket," you might say this is possible
-                                              with a new skill called "Pickpocketing" at level 10.
-                                            - Set `canDo: true`
-                                            - Provide a creative description of how they use this new skill. Remember
-                                              that being *able* to do something doesn't necessarily mean they *succeed*
-                                              at it. For example, if they have "Pickpocketing" at level 10, they might
-                                              be able to attempt to pick a noble's pocket, but they might fail and get
-                                              caught, resulting in damage or other consequences.
-                                        - If the action is borderline (e.g., "try to swim across a river" when they have
-                                          no swimming-related skills):
-                                            - Set `canDo: true` to allow them to attempt it
-                                            - Define a skill name
-                                            - Set the initial level to 1
-                                            - Provide a description that reflects the high difficulty and likely failure. For example: "You wade into the river, the current immediately proving stronger than you anticipated. With no prior swimming skills to rely on, you struggle to keep your head above water. The cold bites into you, and you realize this is going to be a daunting challenge. You manage to make it back to shore, soaked and exhausted, but alive. This new skill of 'Swimming' feels like a distant dream, something you might be able to develop with a lot of practice and determination, but for now, it's clear that you're out of your depth."
-                                        - If the action is impossible or nonsensical:
-                                            - Set `canDo: false`
-                                            - Provide a creative and flavorful description of the failure, taking into account the narrative context.
-                                            - Define a skill name
-                                            - Set an initial level of 0 to indicate that they have no ability in this area yet
-                                        - Be creative with the skill names and descriptions, and try to tie them into the narrative of the room and the action. For example, if they are in a library and try to "find a hidden passage," you might create a new skill called "Hidden Lore" or "Secret Searching."
-                                    """)
-                            .param("roomDesc", currentRoom.description())
-                            .param("action", userAction)
-                            .param("stats", player.toString()))
-                    .call()
-                    .entity(ActionValidation.class));
-
-            if (validation.canDo()) {
-                player.getSkills().put(validation.skillName(), validation.initialLevel());
-            }
-            return validation.description();
-
-        } else {
-            // --- EXISTING SKILL LOGIC ---
-            ActionResult result = withRetries(() -> chatClient.prompt()
-                    .user(u -> u.text("""
-                                    Context: {roomDesc}
-                                    Action: {action}
-                                    Skill Used: {skill} (Level {level})
-                                    Rules: Determine success, level increase, and any damage or health/stat boosts.
-                                    """)
-                            .param("roomDesc", currentRoom.description())
-                            .param("action", userAction)
-                            .param("skill", identifiedSkill)
-                            .param("level", player.getSkills().get(identifiedSkill)))
-                    .call()
-                    .entity(ActionResult.class));
-
-            // Apply updates to the Player object
-            updatePlayerState(player, result, identifiedSkill);
-            return result.description();
-        }
-    }
-
-    public String processAction(String userAction, Player player, Room currentRoom) {
         String identifiedSkill = identifyRelevantSkill(userAction, player);
 
         ActionOutcome outcome = identifiedSkill == null
@@ -223,7 +146,8 @@ public class GameService {
                             
                             Rules:
                             - If canAttempt is false
-                              - Set 
+                              - Set skillInitialLevel to 0 to indicate they have no ability in this area yet.
+                              - Provide a flavorful description of the failure, taking into account the narrative context.
                             If canAttempt is true, predict likely outcome (success rate, damage, growth).
                             """)
                         .param("roomDesc", currentRoom.description())
@@ -256,18 +180,6 @@ public class GameService {
         player.setCurrentHealth(player.getCurrentHealth() + outcome.healthBoost());
         player.setInjuryReduction(player.getInjuryReduction() + outcome.injuryReductionGain());
         player.receiveDamage(outcome.damageTaken());
-    }
-
-
-    private void updatePlayerState(Player player, ActionResult res, String skill) {
-        if (res.levelIncreased()) player.getSkills().put(skill, res.newLevel());
-
-        player.setMaxHealth(player.getMaxHealth() + res.maxHealthIncrease());
-        player.setCurrentHealth(player.getCurrentHealth() + res.healthBoost());
-        player.setInjuryReduction(player.getInjuryReduction() + res.injuryReductionGain());
-
-        // Apply damage (using our logic to reduce it by injuryReduction)
-        player.receiveDamage(res.damageTaken());
     }
 
     private String identifyRelevantSkill(String action, Player player) {
