@@ -1,0 +1,50 @@
+body {
+    background: #121212;
+    color: #00ff41; /* Classic terminal green */
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+}
+
+#game-container { display: flex; width: 100%; }
+
+#stats-panel {
+    width: 250px;
+    border-right: 1px solid #333;
+    padding: 20px;
+    background: #1a1a1a;
+}
+
+#main-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#history-log {
+    flex-grow: 1;
+    overflow-y: auto; /* Maintains the scrolling list */
+    margin-bottom: 20px;
+    padding-right: 10px;
+}
+
+#input-area {
+    display: flex;
+    font-size: 1.2rem;
+}
+
+#user-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    outline: none;
+    flex-grow: 1;
+    margin-left: 10px;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.action-text { color: #888; font-style: italic; }
+.response-text { margin-bottom: 1.5rem; }
