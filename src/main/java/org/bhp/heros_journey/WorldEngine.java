@@ -5,7 +5,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class WorldEngine {
@@ -39,25 +38,6 @@ public class WorldEngine {
         for (Exit exit : currentRoom.exits()) {
             // Start generating all rooms in parallel!
             exit.setLeadingTo(generateRoomAsync(exit.getDescription()));
-        }
-    }
-
-    public String movePlayer(String direction, Player player) {
-        Exit chosenExit = findExit(direction);
-
-        try {
-            // .get() will wait for Gemini to finish IF it's not done yet.
-            // If it's already done, this is instantaneous.
-            Room nextRoom = chosenExit.getLeadingTo().get(5, TimeUnit.SECONDS);
-
-            this.currentRoom = nextRoom;
-
-            // Start pre-generating the NEXT set of exits immediately!
-            hydrateExits(this.currentRoom);
-
-            return "You enter " + chosenExit.getDirection() + ". " + currentRoom.getDescription();
-        } catch (Exception e) {
-            return "The path is still forming in the mist... (Try again in a second).";
         }
     }
 }
