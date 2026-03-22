@@ -1,4 +1,4 @@
 package org.bhp.heros_journey;
 
-public record CommandRequest() {
+public record CommandRequest(String command) {
 }
