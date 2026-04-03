@@ -133,23 +133,23 @@ public class GameService {
     private ActionOutcome handleNewSkillAction(String userAction, Player player, Room currentRoom) {
         return withRetries(() -> chatClient.prompt()
                 .user(u -> u.text("""
-                            Context: {roomDesc}
-                            Action: {action}
-                            Player Stats: {stats}
-                            
-                            Request: First, determine if this action is possible for the player based on their current skills
-                                     and stats as well as the current circumstances and surroundings. If it is possible,
-                                     define a new skill name and initial level that would be relevant to this action. If it's borderline but still possible, allow it but indicate the high difficulty. If it's impossible, indicate that as well. Always provide a creative description of what happens when they attempt this action, taking into account their current stats, the possibility of the action, and the initial level of the new skill.
-                            
-                            Return JSON with: canAttempt, skillName, initialLevel, success, levelIncreased, newLevel,
-                            damageTaken, healthBoost, maxHealthIncrease, injuryReductionGain, description.
-                            
-                            Rules:
-                            - If canAttempt is false
-                              - Set skillInitialLevel to 0 to indicate they have no ability in this area yet.
-                              - Provide a flavorful description of the failure, taking into account the narrative context.
-                            If canAttempt is true, predict likely outcome (success rate, damage, growth).
-                            """)
+                                Context: {roomDesc}
+                                Action: {action}
+                                Player Stats: {stats}
+                                
+                                Request: First, determine if this action is possible for the player based on their current skills
+                                         and stats as well as the current circumstances and surroundings. If it is possible,
+                                         define a new skill name and initial level that would be relevant to this action. If it's borderline but still possible, allow it but indicate the high difficulty. If it's impossible, indicate that as well. Always provide a creative description of what happens when they attempt this action, taking into account their current stats, the possibility of the action, and the initial level of the new skill.
+                                
+                                Return JSON with: canAttempt, skillName, initialLevel, success, levelIncreased, newLevel,
+                                damageTaken, healthBoost, maxHealthIncrease, injuryReductionGain, description.
+                                
+                                Rules:
+                                - If canAttempt is false
+                                  - Set skillInitialLevel to 0 to indicate they have no ability in this area yet.
+                                  - Provide a flavorful description of the failure, taking into account the narrative context.
+                                If canAttempt is true, predict likely outcome (success rate, damage, growth).
+                                """)
                         .param("roomDesc", currentRoom.description())
                         .param("action", userAction)
                         .param("stats", player.toString()))
@@ -160,13 +160,13 @@ public class GameService {
     private ActionOutcome handleExistingSkillAction(String userAction, Player player, Room currentRoom, String skill) {
         return withRetries(() -> chatClient.prompt()
                 .user(u -> u.text("""
-                            Context: {roomDesc}
-                            Action: {action}
-                            Skill Used: {skill} (Level {level})
-                            
-                            Return JSON with: canAttempt, skillName, initialLevel, success, levelIncreased, newLevel,
-                            damageTaken, healthBoost, maxHealthIncrease, injuryReductionGain, description.
-                            """)
+                                Context: {roomDesc}
+                                Action: {action}
+                                Skill Used: {skill} (Level {level})
+                                
+                                Return JSON with: canAttempt, skillName, initialLevel, success, levelIncreased, newLevel,
+                                damageTaken, healthBoost, maxHealthIncrease, injuryReductionGain, description.
+                                """)
                         .param("roomDesc", currentRoom.description())
                         .param("action", userAction)
                         .param("skill", skill)
@@ -176,10 +176,22 @@ public class GameService {
     }
 
     private void applyStateChanges(Player player, ActionOutcome outcome) {
+        // 1. Update Health and Armor
         player.setMaxHealth(player.getMaxHealth() + outcome.maxHealthIncrease());
         player.setCurrentHealth(player.getCurrentHealth() + outcome.healthBoost());
         player.setInjuryReduction(player.getInjuryReduction() + outcome.injuryReductionGain());
         player.receiveDamage(outcome.damageTaken());
+
+        // 2. Skill Calculation based on your formula: floor(sqrt(XP / 10))
+        String skill = outcome.skillName();
+        int currentXP = player.getSkills().getOrDefault(skill, 0); // You'll need an XP map in Player
+        int newXP = currentXP + outcome.xpGained();
+
+        player.getSkills().put(skill, newXP);
+
+        // Calculate new level
+        int newLevel = (int) Math.floor(Math.sqrt(newXP / 10.0));
+        player.getSkills().put(skill, newLevel);
     }
 
     private String identifyRelevantSkill(String action, Player player) {

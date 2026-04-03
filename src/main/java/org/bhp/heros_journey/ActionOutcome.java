@@ -7,6 +7,7 @@ public record ActionOutcome(
         int skillInitialLevel,
 
         // Result phase (only populated if canAttempt=true)
+        int xpGained,
         boolean success,
         boolean levelIncreased,
         int newLevel,

@@ -10,7 +10,8 @@ public class Player {
     private int currentHealth = 100;
     private int maxHealth = 100;
 
-    /** * Represented as a decimal (0.0 to 1.0).
+    /**
+     * Represented as a decimal (0.0 to 1.0).
      * 0.1 means 10% damage reduction.
      */
     private double injuryReduction = 0.0;

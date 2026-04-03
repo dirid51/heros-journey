@@ -11,4 +11,9 @@ public class Exit {
     private String direction;   // e.g., "North", "Climb the tree"
     private String description; // The AI's creative description of the exit
     private String targetRoomId; // The ID of the room being generated in the background
+
+    public Exit(String direction, String description) {
+        this.direction = direction;
+        this.description = description;
+    }
 }

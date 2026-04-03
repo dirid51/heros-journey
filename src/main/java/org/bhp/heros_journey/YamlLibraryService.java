@@ -25,6 +25,23 @@ public class YamlLibraryService {
         return items == null ? List.of() : items.stream().map(ItemTemplate::getId).collect(Collectors.toList());
     }
 
+    public ItemTemplate getItemById(String id) {
+        return items.stream().filter(item -> item.getId().equals(id)).findFirst().orElse(this.getRandomItem());
+    }
+
+    private ItemTemplate getRandomItem() {
+        // return a random ItemTemplate from the list
+        return items.get((int) (Math.random() * items.size()));
+    }
+
+    public NpcTemplate getNpcById(String id) {
+        return npcs.stream().filter(npc -> npc.getId().equals(id)).findFirst().orElse(this.getRandomNpc());
+    }
+
+    private NpcTemplate getRandomNpc() {
+        return npcs.get((int) (Math.random() * npcs.size()));
+    }
+
     @Data
     public static class NpcTemplate {
         private String id;
