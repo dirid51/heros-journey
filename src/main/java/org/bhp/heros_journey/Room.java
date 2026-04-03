@@ -1,5 +1,6 @@
 package org.bhp.heros_journey;
 
+import java.io.Serializable;
 import java.util.List;
 
 public record Room(
@@ -10,5 +11,5 @@ public record Room(
         List<String> npcIds,  // IDs from your NPCs YAML
         List<String> itemIds, // IDs from your Items YAML
         List<String> skillOpportunities
-) {
+) implements Serializable {
 }

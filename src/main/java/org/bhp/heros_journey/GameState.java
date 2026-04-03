@@ -4,13 +4,19 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.io.Serializable;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Component
 @SessionScope // This is the "magic" that makes it one player per browser session
 @Data
-public class GameState {
+public class GameState implements Serializable {
     private Player player;
     private Room currentRoom;
     private boolean initialized = false;
+    // In GameState:
+    private final Map<String, Room> roomCache = new ConcurrentHashMap<>();
 
     public GameState() {
         this.player = new Player();
@@ -23,6 +29,6 @@ public class GameState {
     }
 
     public boolean isGameOver() {
-        return player.getCurrentHealth() < 0;
+        return player.isDead();
     }
 }

@@ -2,11 +2,12 @@ package org.bhp.heros_journey;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 @Data
-public class Player {
+public class Player implements Serializable {
     private int currentHealth = 100;
     private int maxHealth = 100;
 
@@ -16,7 +17,8 @@ public class Player {
      */
     private double injuryReduction = 0.0;
 
-    private Map<String, Integer> skills = new HashMap<>();
+    private Map<String, Integer> skills = new HashMap<>(); // skill name, level
+    private Map<String, Integer> skillXp = new HashMap<>(); // skill name, xp
 
     /**
      * Logic: The game ends only if health is BELOW zero.

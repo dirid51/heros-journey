@@ -37,11 +37,14 @@ public class GameController {
             return startNewGame();
         }
 
-        if (state.getPlayer().getCurrentHealth() <= 0) {
+        if (state.isGameOver()) {
             return createResponse("You have fallen. Your journey ends here.");
         }
 
         String cmd = req.command().trim().toLowerCase();
+        if (cmd.isBlank() || cmd.length() > 500) {
+            return createResponse("Please enter a valid action (max 500 characters).");
+        }
 
         // 2. Check for Movement (matches direction or exit description)
         Optional<Exit> matchingExit = state.getCurrentRoom().exits().stream()
@@ -91,7 +94,7 @@ public class GameController {
         roomRepository.discardUnusedRooms(nextRoom.id(),
                 nextRoom.exits().stream().map(Exit::getTargetRoomId).collect(java.util.stream.Collectors.toSet()));
 
-        state.setCurrentRoom(nextRoom);
+        state.updateRoom(nextRoom);
 
         // TRIGGER: Start generating the next set of rooms for this new location
         roomGenerationService.prepareAdjacentRooms(nextRoom, state.getPlayer());

@@ -5,6 +5,7 @@ public record ActionOutcome(
         boolean canAttempt,
         String skillName,
         int skillInitialLevel,
+        boolean isExistingSkill,
 
         // Result phase (only populated if canAttempt=true)
         int xpGained,

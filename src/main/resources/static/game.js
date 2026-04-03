@@ -30,7 +30,7 @@ function appendLog(text, className) {
 }
 
 function updateUI(state) {
-    appendLog(state.lastDescription, 'response-text');
+    appendLog(state.description, 'response-text');
 
     // Update Stats
     document.getElementById('hp-val').innerText = state.player.currentHealth;
@@ -46,7 +46,7 @@ function updateUI(state) {
         list.appendChild(li);
     }
 
-    if (gameState.player.currentHealth < 0) {
+    if (state.player.currentHealth < 0) {
         appendLog("FATAL INJURY: Your journey ends here.", "death-text");
         document.getElementById('user-input').disabled = true;
         document.getElementById('user-input').placeholder = "GAME OVER";

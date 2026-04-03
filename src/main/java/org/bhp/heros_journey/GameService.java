@@ -3,8 +3,10 @@ package org.bhp.heros_journey;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import javax.annotation.PreDestroy;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @Service
 public class GameService {
@@ -77,39 +79,18 @@ public class GameService {
                 .build();
     }
 
+
     private <T> T withRetries(Callable<T> action) {
-        CompletableFuture<T> future = new CompletableFuture<>();
-        AtomicInteger attempts = new AtomicInteger(0);
-
-        Runnable attemptRunnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    T result = action.call();
-                    future.complete(result);
-                } catch (Exception e) {
-                    int att = attempts.incrementAndGet();
-                    if (att >= MAX_RETRIES) {
-                        future.completeExceptionally(new RuntimeException("LLM call failed after " + att + " attempts", e));
-                    } else {
-                        long delay = (long) (BASE_DELAY_MS * Math.pow(2, att - 1));
-                        scheduler.schedule(this, delay, TimeUnit.MILLISECONDS);
-                    }
-                }
+        Exception last = null;
+        for (int i = 0; i < MAX_RETRIES; i++) {
+            try {
+                if (i > 0) Thread.sleep((long) (BASE_DELAY_MS * Math.pow(2, i - 1)));
+                return action.call();
+            } catch (Exception e) {
+                last = e;
             }
-        };
-
-        scheduler.execute(attemptRunnable);
-
-        try {
-            return future.get();
-        } catch (InterruptedException ie) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException("Retry interrupted", ie);
-        } catch (ExecutionException ee) {
-            Throwable cause = ee.getCause() != null ? ee.getCause() : ee;
-            throw new RuntimeException(cause);
         }
+        throw new RuntimeException("LLM call failed after " + MAX_RETRIES + " attempts", last);
     }
 
     public String processAction(String userAction, Player player, Room currentRoom) {
@@ -137,26 +118,11 @@ public class GameService {
                                 Context: {roomDesc}
                                 Action: {action}
                                 Player Stats: {stats}
-                                
-                                Request: First, determine if this action is possible for the player based on their current skills
-                                         and stats as well as the current circumstances and surroundings. If it is possible,
-                                         define a new skill name and initial level that would be relevant to this action. If it's borderline but still possible, allow it but indicate the high difficulty. If it's impossible, indicate that as well. Always provide a creative description of what happens when they attempt this action, taking into account their current stats, the possibility of the action, and the initial level of the new skill.
-                                
-                                Return JSON with: canAttempt, skillName, initialLevel, success, levelIncreased, newLevel,
-                                damageTaken, healthBoost, maxHealthIncrease, injuryReductionGain, description.
-                                
-                                Rules:
-                                - If canAttempt is false
-                                  - Set skillInitialLevel to 0 to indicate they have no ability in this area yet.
-                                  - Provide a flavorful description of the failure, taking into account the narrative context.
-                                If canAttempt is true, predict likely outcome (success rate, damage, growth).
                                 """)
                         .param("roomDesc", currentRoom.description())
                         .param("action", userAction)
                         .param("stats", player.toString())
-                        .param("roomDesc", currentRoom.description())
-                        .param("entities", getEntityDetails(currentRoom)) // Pass full text of NPCs/Items
-                        .param("action", userAction))
+                        .param("entities", getEntityDetails(currentRoom))) // Pass full text of NPCs/Items
                 .call()
                 .entity(ActionOutcome.class));
     }
@@ -167,9 +133,6 @@ public class GameService {
                                 Context: {roomDesc}
                                 Action: {action}
                                 Skill Used: {skill} (Level {level})
-                                
-                                Return JSON with: canAttempt, skillName, initialLevel, success, levelIncreased, newLevel,
-                                damageTaken, healthBoost, maxHealthIncrease, injuryReductionGain, description.
                                 """)
                         .param("roomDesc", currentRoom.description())
                         .param("action", userAction)
@@ -181,17 +144,17 @@ public class GameService {
 
     private void applyStateChanges(Player player, ActionOutcome outcome) {
         // 1. Update Health and Armor
-        player.setMaxHealth(player.getMaxHealth() + outcome.maxHealthIncrease());
-        player.setCurrentHealth(player.getCurrentHealth() + outcome.healthBoost());
-        player.setInjuryReduction(player.getInjuryReduction() + outcome.injuryReductionGain());
+        player.increaseMaxHealth(outcome.maxHealthIncrease());
+        player.addCurrentHealthBoost(outcome.healthBoost());
+        player.improveInjuryReduction(outcome.injuryReductionGain());
         player.receiveDamage(outcome.damageTaken());
 
         // 2. Skill Calculation based on your formula: floor(sqrt(XP / 10))
         String skill = outcome.skillName();
-        int currentXP = player.getSkills().getOrDefault(skill, 0); // You'll need an XP map in Player
+        int currentXP = player.getSkillXp().getOrDefault(skill, 0); // You'll need an XP map in Player
         int newXP = currentXP + outcome.xpGained();
 
-        player.getSkills().put(skill, newXP);
+        player.getSkillXp().put(skill, newXP);
 
         // Calculate new level
         int newLevel = (int) Math.floor(Math.sqrt(newXP / 10.0));
@@ -223,5 +186,15 @@ public class GameService {
                 .entity(SkillMapping.class);
 
         return (mapping != null && mapping.isMatch()) ? mapping.matchedSkillName() : null;
+    }
+
+    private String getEntityDetails(Room room) {
+        // Combine NPC and item IDs into a readable string for the prompt
+        return "NPCs: " + room.npcIds() + ", Items: " + room.itemIds();
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        scheduler.shutdownNow();
     }
 }
