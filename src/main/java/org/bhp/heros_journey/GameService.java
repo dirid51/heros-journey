@@ -94,52 +94,47 @@ public class GameService {
     }
 
     public String processAction(String userAction, Player player, Room currentRoom) {
-        String identifiedSkill = identifyRelevantSkill(userAction, player);
-
-        ActionOutcome outcome = identifiedSkill == null
-                ? handleNewSkillAction(userAction, player, currentRoom)
-                : handleExistingSkillAction(userAction, player, currentRoom, identifiedSkill);
+        ActionOutcome outcome = withRetries(() -> chatClient.prompt()
+                .user(u -> u.text("""
+                                Room: {roomDesc}
+                                Entities present: {entities}
+                                Player stats: {stats}
+                                Player's known skills: {skills}
+                                Player action: "{action}"
+                                
+                                First, check if the player's known skills list contains a skill
+                                applicable to this action (be reasonable with synonyms, e.g.
+                                'punching' matches 'Unarmed Combat'). Then resolve the action.
+                                
+                                Return JSON with all fields. Key rules for isExistingSkill:
+                                - true: the action maps to a skill already in the known skills list.
+                                  Set skillName to the EXACT name from that list.
+                                - false: this is a new skill. Infer an appropriate skillInitialLevel
+                                  from any adjacent skills the player has (e.g. Lockpicking lvl 20
+                                  → new Pickpocketing starts at ~10). Default to 5-15 if no
+                                  adjacent skills exist. Set to 0 only if canAttempt is false.
+                                """)
+                        .param("roomDesc", currentRoom.description())
+                        .param("entities", getEntityDetails(currentRoom))
+                        .param("stats", player.toString())
+                        .param("skills", player.getSkills().isEmpty()
+                                ? "none" : player.getSkills().toString())
+                        .param("action", userAction))
+                .call()
+                .entity(ActionOutcome.class));
 
         if (outcome.canAttempt()) {
-            if (identifiedSkill == null) {
+            if (outcome.isExistingSkill()) {
+                if (outcome.levelIncreased()) {
+                    player.getSkills().put(outcome.skillName(), outcome.newLevel());
+                }
+            } else {
                 player.getSkills().put(outcome.skillName(), outcome.skillInitialLevel());
-            } else if (outcome.levelIncreased()) {
-                player.getSkills().put(identifiedSkill, outcome.newLevel());
             }
             applyStateChanges(player, outcome);
         }
 
         return outcome.description();
-    }
-
-    private ActionOutcome handleNewSkillAction(String userAction, Player player, Room currentRoom) {
-        return withRetries(() -> chatClient.prompt()
-                .user(u -> u.text("""
-                                Context: {roomDesc}
-                                Action: {action}
-                                Player Stats: {stats}
-                                """)
-                        .param("roomDesc", currentRoom.description())
-                        .param("action", userAction)
-                        .param("stats", player.toString())
-                        .param("entities", getEntityDetails(currentRoom))) // Pass full text of NPCs/Items
-                .call()
-                .entity(ActionOutcome.class));
-    }
-
-    private ActionOutcome handleExistingSkillAction(String userAction, Player player, Room currentRoom, String skill) {
-        return withRetries(() -> chatClient.prompt()
-                .user(u -> u.text("""
-                                Context: {roomDesc}
-                                Action: {action}
-                                Skill Used: {skill} (Level {level})
-                                """)
-                        .param("roomDesc", currentRoom.description())
-                        .param("action", userAction)
-                        .param("skill", skill)
-                        .param("level", player.getSkills().get(skill)))
-                .call()
-                .entity(ActionOutcome.class));
     }
 
     private void applyStateChanges(Player player, ActionOutcome outcome) {
@@ -159,33 +154,6 @@ public class GameService {
         // Calculate new level
         int newLevel = (int) Math.floor(Math.sqrt(newXP / 10.0));
         player.getSkills().put(skill, newLevel);
-    }
-
-    private String identifyRelevantSkill(String action, Player player) {
-        // If the player has no skills yet, we can skip the LLM call entirely
-        if (player.getSkills().isEmpty()) {
-            return null;
-        }
-
-        // Convert the skill keys to a comma-separated string for the prompt
-        String existingSkills = String.join(", ", player.getSkills().keySet());
-
-        SkillMapping mapping = chatClient.prompt()
-                .user(u -> u.text("""
-                                A player is attempting this action: "{action}"
-                                Their current known skills are: [{skills}]
-                                
-                                Determine if this action uses one of their existing skills.
-                                - If it does, set isMatch to true and provide the exact skill name from the list.
-                                - If the action describes something they don't have a skill for yet, set isMatch to false.
-                                - Be reasonable with synonyms (e.g., 'punching' matches 'Unarmed Combat').
-                                """)
-                        .param("action", action)
-                        .param("skills", existingSkills))
-                .call()
-                .entity(SkillMapping.class);
-
-        return (mapping != null && mapping.isMatch()) ? mapping.matchedSkillName() : null;
     }
 
     private String getEntityDetails(Room room) {
