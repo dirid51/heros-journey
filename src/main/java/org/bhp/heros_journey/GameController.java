@@ -1,5 +1,6 @@
 package org.bhp.heros_journey;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,16 +19,18 @@ public class GameController {
     private final RoomRepository roomRepository;
     private final GameState state;
     private final YamlLibraryService libraryService;
+    private final HttpServletRequest request;
 
     public GameController(GameService gameService,
                           RoomGenerationService roomGenerationService,
                           RoomRepository roomRepository,
-                          GameState state, YamlLibraryService libraryService) {
+                          GameState state, YamlLibraryService libraryService, HttpServletRequest request) {
         this.gameService = gameService;
         this.roomGenerationService = roomGenerationService;
         this.roomRepository = roomRepository;
         this.state = state;
         this.libraryService = libraryService;
+        this.request = request;
     }
 
     @PostMapping("/action")
@@ -62,6 +65,8 @@ public class GameController {
     }
 
     private GameResponse startNewGame() {
+        request.changeSessionId(); // Start a new session for this player
+
         // Generate the very first room synchronously so the player has somewhere to stand
         // We pass a dummy exit or a 'starting' prompt
         Exit startExit = new Exit("The Beginning", "A mysterious starting point");
