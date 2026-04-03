@@ -67,6 +67,7 @@ public class GameService {
                                         - Define a skill name
                                         - Set an initial level of 0 to indicate that they have no ability in this area yet
                                     - Be creative with the skill names and descriptions, and try to tie them into the narrative of the room and the action. For example, if they are in a library and try to "find a hidden passage," you might create a new skill called "Hidden Lore" or "Secret Searching."
+                                    - If the player interacts with an object or person not explicitly listed in the room description, you are authorized to generate the NPC data or object effects on the fly to maintain immersion.
                         
                                 ### NARRATIVE STYLE:
                                 - Be descriptive and atmospheric.
@@ -152,7 +153,10 @@ public class GameService {
                                 """)
                         .param("roomDesc", currentRoom.description())
                         .param("action", userAction)
-                        .param("stats", player.toString()))
+                        .param("stats", player.toString())
+                        .param("roomDesc", currentRoom.description())
+                        .param("entities", getEntityDetails(currentRoom)) // Pass full text of NPCs/Items
+                        .param("action", userAction))
                 .call()
                 .entity(ActionOutcome.class));
     }
