@@ -1,0 +1,17 @@
+game-library:
+  npcs:
+    - id: "shadow_merchant_01"
+      name: "Silas the Shady"
+      goal: "To trade forbidden artifacts for life essence."
+      description: "A hooded figure leaning against a wall, clinking coins."
+    - id: "feral_wolf_01"
+      name: "Hungry Wolf"
+      goal: "To find its next meal."
+      description: "A lean, grey-furred beast with glowing amber eyes."
+  items:
+    - id: "rusty_key_01"
+      name: "Rusty Iron Key"
+      description: "A heavy, pitted key that looks like it belongs to a jail cell."
+    - id: "essence_vial_01"
+      name: "Glowing Blue Vial"
+      description: "A small glass bottle filled with swirling cerulean smoke."

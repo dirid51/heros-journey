@@ -1,17 +1,14 @@
 package org.bhp.heros_journey;
 
 import lombok.Data;
-
-import java.util.concurrent.CompletableFuture;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Exit {
-    private final String direction;
-    private final String description;
-    private CompletableFuture<Room> leadingTo; // The "Future" room
-
-    public Exit(String direction, String description) {
-        this.direction = direction;
-        this.description = description;
-    }
+    private String direction;   // e.g., "North", "Climb the tree"
+    private String description; // The AI's creative description of the exit
+    private String targetRoomId; // The ID of the room being generated in the background
 }
