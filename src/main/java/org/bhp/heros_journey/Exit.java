@@ -1,19 +1,14 @@
 package org.bhp.heros_journey;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import java.io.Serializable;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Exit {
-    private String direction;   // e.g., "North", "Climb the tree"
-    private String description; // The AI's creative description of the exit
-    private String targetRoomId; // The ID of the room being generated in the background
-
-    public Exit(String direction, String description) {
-        this.direction = direction;
-        this.description = description;
-    }
+/**
+ * Immutable record representing an exit from a room.
+ * Exit links to target rooms are managed separately in RoomRepository.exitLinkMap
+ * to avoid race conditions between background generation and concurrent movement.
+ */
+public record Exit(
+        String direction,   // e.g., "North", "Climb the tree"
+        String description  // The AI's creative description of the exit
+) implements Serializable {
 }

@@ -51,8 +51,8 @@ public class GameController {
 
         // 2. Check for Movement (matches direction or exit description)
         Optional<Exit> matchingExit = state.getCurrentRoom().exits().stream()
-                .filter(e -> cmd.contains(e.getDirection().toLowerCase()) ||
-                        cmd.contains("go " + e.getDirection().toLowerCase()))
+                .filter(e -> cmd.contains(e.direction().toLowerCase()) ||
+                        cmd.contains("go " + e.direction().toLowerCase()))
                 .findFirst();
 
         if (matchingExit.isPresent()) {
@@ -79,6 +79,11 @@ public class GameController {
             roomGenerationService.prepareAdjacentRooms(startingRoom, state.getPlayer());
 
             return createResponse("The mists clear... " + startingRoom.description());
+        } catch (InterruptedException e) {
+            // Re-interrupt the thread as per best practice when InterruptedException is caught
+            Thread.currentThread().interrupt();
+            log.error("Game initialization interrupted", e);
+            return createResponse("The void refuses to yield. (Error generating start room)");
         } catch (Exception e) {
             log.error("Failed to start game", e);
             return createResponse("The void refuses to yield. (Error generating start room)");
@@ -86,7 +91,10 @@ public class GameController {
     }
 
     private GameResponse handleMovement(Exit exit) {
-        String targetId = exit.getTargetRoomId();
+        // Query the repository for the linked target room ID using the exit key
+        String exitKey = generateExitKey(state.getCurrentRoom().id(),
+                state.getCurrentRoom().exits().indexOf(exit));
+        String targetId = roomRepository.getLinkedRoomId(exitKey);
 
         // Check if the background thread has finished generating this room
         if (targetId == null || !roomRepository.exists(targetId)) {
@@ -97,14 +105,21 @@ public class GameController {
 
         // RULE: Discard old rooms to save memory and keep the journey 'one-way'
         roomRepository.discardUnusedRooms(nextRoom.id(),
-                nextRoom.exits().stream().map(Exit::getTargetRoomId).collect(java.util.stream.Collectors.toSet()));
+                nextRoom.exits().stream()
+                        .flatMap(e -> {
+                            int idx = nextRoom.exits().indexOf(e);
+                            String key = generateExitKey(nextRoom.id(), idx);
+                            String linkedId = roomRepository.getLinkedRoomId(key);
+                            return linkedId != null ? java.util.stream.Stream.of(linkedId) : java.util.stream.Stream.empty();
+                        })
+                        .collect(java.util.stream.Collectors.toSet()));
 
         state.updateRoom(nextRoom);
 
         // TRIGGER: Start generating the next set of rooms for this new location
         roomGenerationService.prepareAdjacentRooms(nextRoom, state.getPlayer());
 
-        return createResponse("You head toward " + exit.getDirection() + ". " + nextRoom.description());
+        return createResponse("You head toward " + exit.direction() + ". " + nextRoom.description());
     }
 
     private GameResponse createResponse(String desc) {
@@ -117,9 +132,10 @@ public class GameController {
     }
 
     private RoomView createRoomView(Room room) {
+        // ...existing code...
         // Convert the list of Exit objects into just their 'direction' strings for the UI
         List<String> exitNames = room.exits().stream()
-                .map(Exit::getDirection)
+                .map(Exit::direction)
                 .toList();
 
         // Look up the names/descriptions of items from your YAML library
@@ -139,5 +155,13 @@ public class GameController {
                 itemDescriptions,
                 npcNames
         );
+    }
+
+    /**
+     * Generates a unique key for an exit within a room.
+     * Format: "roomId:exitIndex"
+     */
+    private String generateExitKey(String roomId, int exitIndex) {
+        return roomId + ":" + exitIndex;
     }
 }
