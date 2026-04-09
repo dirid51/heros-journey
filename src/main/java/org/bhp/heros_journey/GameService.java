@@ -15,6 +15,37 @@ public class GameService {
     private static final int MAX_RETRIES = 3;
     private static final long BASE_DELAY_MS = 500L;
 
+    /**
+     * Prompt template for action resolution.
+     * Contains instructions for the AI to resolve player actions and determine skill outcomes.
+     */
+    private static final String ACTION_RESOLUTION_PROMPT = """
+            Room: {roomDesc}
+            Entities present: {entities}
+            Player stats: {stats}
+            Player's known skills: {skills}
+            Player action: "{action}"
+            
+            First, check if the player's known skills list contains a skill
+            applicable to this action (be reasonable with synonyms, e.g.
+            'punching' matches 'Unarmed Combat'). Then resolve the action.
+            
+            Return JSON with all fields. Key rules for skill levels:
+            - Use the formula: skill_level = floor(sqrt(xp / 10))
+            - For new skills, calculate the required XP: xp = skillInitialLevel * skillInitialLevel * 10
+              (e.g., to start at level 10: xp = 100 * 10 = 1000)
+            - For existing skills, xpGained is added to current XP, then level recalculates
+            
+            For isExistingSkill:
+            - true: the action maps to a skill already in the known skills list.
+              Set skillName to the EXACT name from that list. Only set xpGained.
+            - false: this is a new skill. Infer an appropriate skillInitialLevel
+              from any adjacent skills the player has (e.g. Lockpicking lvl 20
+              → new Pickpocketing starts at ~10). Default to 5-15 if no
+              adjacent skills exist. Set to 0 only if canAttempt is false.
+              Set xpGained to the initial XP amount (using the formula above).
+            """;
+
     public GameService(ChatClient.Builder builder) {
         this.chatClient = builder
                 .defaultSystem("""
@@ -84,36 +115,22 @@ public class GameService {
         Exception last = null;
         for (int i = 0; i < MAX_RETRIES; i++) {
             try {
-                if (i > 0) Thread.sleep((long) (BASE_DELAY_MS * Math.pow(2, i - 1)));
+                if (i > 0) Thread.sleep((long) (BASE_DELAY_MS * Math.pow(2, i - 1.0)));
                 return action.call();
+            } catch (InterruptedException e) {
+                // Re-interrupt the thread to preserve the interrupted status
+                Thread.currentThread().interrupt();
+                last = e;
             } catch (Exception e) {
                 last = e;
             }
         }
-        throw new RuntimeException("LLM call failed after " + MAX_RETRIES + " attempts", last);
+        throw new LlmCallFailedException("LLM call failed after " + MAX_RETRIES + " attempts", MAX_RETRIES, last);
     }
 
     public String processAction(String userAction, Player player, Room currentRoom) {
         ActionOutcome outcome = withRetries(() -> chatClient.prompt()
-                .user(u -> u.text("""
-                                Room: {roomDesc}
-                                Entities present: {entities}
-                                Player stats: {stats}
-                                Player's known skills: {skills}
-                                Player action: "{action}"
-                                
-                                First, check if the player's known skills list contains a skill
-                                applicable to this action (be reasonable with synonyms, e.g.
-                                'punching' matches 'Unarmed Combat'). Then resolve the action.
-                                
-                                Return JSON with all fields. Key rules for isExistingSkill:
-                                - true: the action maps to a skill already in the known skills list.
-                                  Set skillName to the EXACT name from that list.
-                                - false: this is a new skill. Infer an appropriate skillInitialLevel
-                                  from any adjacent skills the player has (e.g. Lockpicking lvl 20
-                                  → new Pickpocketing starts at ~10). Default to 5-15 if no
-                                  adjacent skills exist. Set to 0 only if canAttempt is false.
-                                """)
+                .user(u -> u.text(ACTION_RESOLUTION_PROMPT)
                         .param("roomDesc", currentRoom.description())
                         .param("entities", getEntityDetails(currentRoom))
                         .param("stats", player.toString())
@@ -124,13 +141,6 @@ public class GameService {
                 .entity(ActionOutcome.class));
 
         if (outcome.canAttempt()) {
-            if (outcome.isExistingSkill()) {
-                if (outcome.levelIncreased()) {
-                    player.getSkills().put(outcome.skillName(), outcome.newLevel());
-                }
-            } else {
-                player.getSkills().put(outcome.skillName(), outcome.skillInitialLevel());
-            }
             applyStateChanges(player, outcome);
         }
 
@@ -144,14 +154,15 @@ public class GameService {
         player.improveInjuryReduction(outcome.injuryReductionGain());
         player.receiveDamage(outcome.damageTaken());
 
-        // 2. Skill Calculation based on your formula: floor(sqrt(XP / 10))
+        // 2. Single Source of Truth: Skill XP determines skill level
+        // Using formula: skill_level = floor(sqrt(XP / 10))
         String skill = outcome.skillName();
-        int currentXP = player.getSkillXp().getOrDefault(skill, 0); // You'll need an XP map in Player
+        int currentXP = player.getSkillXp().getOrDefault(skill, 0);
         int newXP = currentXP + outcome.xpGained();
 
         player.getSkillXp().put(skill, newXP);
 
-        // Calculate new level
+        // Calculate new level - single source of truth
         int newLevel = (int) Math.floor(Math.sqrt(newXP / 10.0));
         player.getSkills().put(skill, newLevel);
     }
