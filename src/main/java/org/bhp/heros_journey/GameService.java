@@ -136,7 +136,7 @@ public class GameService {
                         .param("stats", player.toString())
                         .param("skills", player.getSkills().isEmpty()
                                 ? "none" : player.getSkills().toString())
-                        .param("action", userAction))
+                        .param("action", PromptInjectionProtection.sanitizeWithLabel(userAction)))
                 .call()
                 .entity(ActionOutcome.class));
 

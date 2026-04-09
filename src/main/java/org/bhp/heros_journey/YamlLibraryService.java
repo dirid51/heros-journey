@@ -6,6 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,6 +17,7 @@ public class YamlLibraryService {
 
     private List<NpcTemplate> npcs;
     private List<ItemTemplate> items;
+    private Random random = new Random();
 
     public List<String> getAllNpcIds() {
         return npcs == null ? List.of() : npcs.stream().map(NpcTemplate::getId).collect(Collectors.toList());
@@ -31,7 +33,7 @@ public class YamlLibraryService {
 
     private ItemTemplate getRandomItem() {
         // return a random ItemTemplate from the list
-        return items.get((int) (Math.random() * items.size()));
+        return items.get(random.nextInt() * items.size());
     }
 
     public NpcTemplate getNpcById(String id) {
@@ -39,7 +41,7 @@ public class YamlLibraryService {
     }
 
     private NpcTemplate getRandomNpc() {
-        return npcs.get((int) (Math.random() * npcs.size()));
+        return npcs.get(random.nextInt() * npcs.size());
     }
 
     @Data

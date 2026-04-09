@@ -13,6 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Data
 public class GameState implements Serializable {
     private Player player;
+    // NOSONAR: S1168 - currentRoom must be a field (not local variable) because this class is @SessionScope
+    // and needs to maintain room state across multiple HTTP requests within the same player session
     private Room currentRoom;
     private boolean initialized = false;
     // In GameState:

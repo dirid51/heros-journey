@@ -1,25 +1,71 @@
 const input = document.getElementById('user-input');
 const history = document.getElementById('history-log');
 
+// Client-side rate limiting: debounce requests to prevent rapid-fire API calls
+let lastRequestTime = 0;
+const MIN_REQUEST_INTERVAL_MS = 500; // Minimum 500ms between requests
+
 input.addEventListener('keydown', async (e) => {
     if (e.key === 'Enter') {
+        const now = Date.now();
+
+        // Enforce client-side rate limiting
+        if (now - lastRequestTime < MIN_REQUEST_INTERVAL_MS) {
+            appendLog('Please wait before acting again...', 'rate-limit-text');
+            return;
+        }
+
+        lastRequestTime = now;
         const cmd = input.value;
         input.value = '';
 
         // Add user command to log
         appendLog(`> ${cmd}`, 'action-text');
 
-        // Send to Spring Boot
-        const response = await fetch('/api/game/action', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ command: cmd })
-        });
+        try {
+            // Send to Spring Boot with CSRF token from cookie
+            const response = await fetch('/api/game/action', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': getCsrfToken()
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({ command: cmd })
+            });
 
-        const gameState = await response.json();
-        updateUI(gameState);
+            if (!response.ok) {
+                appendLog('Error communicating with server. Please try again.', 'error-text');
+                return;
+            }
+
+            const gameState = await response.json();
+            updateUI(gameState);
+        } catch (error) {
+            console.error('Error:', error);
+            appendLog('Network error. Please try again.', 'error-text');
+        }
     }
 });
+
+/**
+ * Extract CSRF token from cookies for secure POST requests
+ */
+function getCsrfToken() {
+    const name = 'XSRF-TOKEN';
+    let csrfToken = '';
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (const cookie of cookies) {
+            const trimmedCookie = cookie.trim();
+            if (trimmedCookie.startsWith(name + '=')) {
+                csrfToken = decodeURIComponent(trimmedCookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return csrfToken;
+}
 
 function appendLog(text, className) {
     const p = document.createElement('p');
@@ -50,6 +96,5 @@ function updateUI(state) {
         appendLog("FATAL INJURY: Your journey ends here.", "death-text");
         document.getElementById('user-input').disabled = true;
         document.getElementById('user-input').placeholder = "GAME OVER";
-        return;
     }
 }

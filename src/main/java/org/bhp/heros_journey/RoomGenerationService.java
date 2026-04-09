@@ -3,6 +3,7 @@ package org.bhp.heros_journey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,9 @@ public class RoomGenerationService {
     private final ChatClient chatClient;
     private final RoomRepository roomRepository;
     private final YamlLibraryService libraryService;
-    private final RoomGenerationService self;
+    private final ObjectProvider<RoomGenerationService> selfProvider;
 
-    public RoomGenerationService(ChatClient.Builder builder, RoomRepository roomRepository, YamlLibraryService libraryService, RoomGenerationService self) {
+    public RoomGenerationService(ChatClient.Builder builder, RoomRepository roomRepository, YamlLibraryService libraryService, ObjectProvider<RoomGenerationService> selfProvider) {
         // Best Practice: Define a base system prompt to ensure JSON consistency
         this.chatClient = builder
                 .defaultSystem("You are a dungeon master. Always return valid JSON matching the Room schema. " +
@@ -28,7 +29,7 @@ public class RoomGenerationService {
                 .build();
         this.roomRepository = roomRepository;
         this.libraryService = libraryService;
-        this.self = self;
+        this.selfProvider = selfProvider;
     }
 
     /**
@@ -48,7 +49,7 @@ public class RoomGenerationService {
 
             // Only generate if we haven't already
             if (roomRepository.getLinkedRoomId(exitKey) == null) {
-                CompletableFuture<Void> future = self.generateRoomAsync(exit, player)
+                CompletableFuture<Void> future = selfProvider.getObject().generateRoomAsync(exit, player)
                         .thenAccept(generatedRoom -> {
                             // Thread-safe: use repository map instead of mutating exit
                             roomRepository.linkExit(exitKey, generatedRoom.id());

@@ -48,3 +48,6 @@ body {
 
 .action-text { color: #888; font-style: italic; }
 .response-text { margin-bottom: 1.5rem; }
+.death-text { color: #ff4444; font-weight: bold; }
+.error-text { color: #ff8844; font-weight: bold; }
+.rate-limit-text { color: #ffaa00; font-style: italic; }

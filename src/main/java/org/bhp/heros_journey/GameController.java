@@ -20,22 +20,31 @@ public class GameController {
     private final GameState state;
     private final YamlLibraryService libraryService;
     private final HttpServletRequest request;
+    private final RateLimitService rateLimitService;
 
     public GameController(GameService gameService,
                           RoomGenerationService roomGenerationService,
                           RoomRepository roomRepository,
-                          GameState state, YamlLibraryService libraryService, HttpServletRequest request) {
+                          GameState state, YamlLibraryService libraryService, HttpServletRequest request,
+                          RateLimitService rateLimitService) {
         this.gameService = gameService;
         this.roomGenerationService = roomGenerationService;
         this.roomRepository = roomRepository;
         this.state = state;
         this.libraryService = libraryService;
         this.request = request;
+        this.rateLimitService = rateLimitService;
     }
 
     @PostMapping("/action")
     public GameResponse handleAction(@RequestBody CommandRequest req) {
-        // 1. Initial Start Logic
+        // 1. Rate Limiting Check - Prevent API quota exhaustion
+        String sessionId = request.getSession().getId();
+        if (!rateLimitService.isAllowed(sessionId)) {
+            return createResponse("You attempt to act, but the world seems to slow around you. Try again in a moment.");
+        }
+
+        // 2. Initial Start Logic
         if (!state.isInitialized()) {
             return startNewGame();
         }
