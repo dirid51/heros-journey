@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.List;
 
 @Service
 public class RoomGenerationService {
@@ -33,9 +34,13 @@ public class RoomGenerationService {
     /**
      * Pre-generates rooms for all exits in the current room.
      * Uses exitLinkMap to avoid mutating Exit objects, preventing race conditions.
+     * Returns a CompletableFuture that completes when all exit links have been established.
+     * This ensures that discardUnusedRooms can safely query the exit map without race conditions.
      */
-    public void prepareAdjacentRooms(Room currentRoom, Player player) {
+    public CompletableFuture<Void> prepareAdjacentRooms(Room currentRoom, Player player) {
         log.info("Starting background generation for {} exits.", currentRoom.exits().size());
+
+        List<CompletableFuture<Void>> futures = new java.util.ArrayList<>();
 
         for (int exitIndex = 0; exitIndex < currentRoom.exits().size(); exitIndex++) {
             Exit exit = currentRoom.exits().get(exitIndex);
@@ -43,7 +48,7 @@ public class RoomGenerationService {
 
             // Only generate if we haven't already
             if (roomRepository.getLinkedRoomId(exitKey) == null) {
-                self.generateRoomAsync(exit, player)
+                CompletableFuture<Void> future = self.generateRoomAsync(exit, player)
                         .thenAccept(generatedRoom -> {
                             // Thread-safe: use repository map instead of mutating exit
                             roomRepository.linkExit(exitKey, generatedRoom.id());
@@ -54,8 +59,12 @@ public class RoomGenerationService {
                             log.error("Failed to generate room for exit {}: {}", exit.direction(), ex.getMessage());
                             return null;
                         });
+                futures.add(future);
             }
         }
+
+        // Return a future that completes when all room links are established
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
     }
 
     @Async

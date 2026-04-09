@@ -76,6 +76,7 @@ public class GameController {
             state.setInitialized(true);
 
             // Immediately start background generation for the exits in the first room
+            // Fire-and-forget: we don't need to wait for these to complete
             roomGenerationService.prepareAdjacentRooms(startingRoom, state.getPlayer());
 
             return createResponse("The mists clear... " + startingRoom.description());
@@ -103,7 +104,20 @@ public class GameController {
 
         Room nextRoom = roomRepository.getRoom(targetId);
 
+        // TRIGGER: Start generating the next set of rooms for this new location
+        // Wait for all exit links to be established before discarding rooms
+        try {
+            roomGenerationService.prepareAdjacentRooms(nextRoom, state.getPlayer()).get();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error("Room generation interrupted", e);
+        } catch (Exception e) {
+            log.error("Error generating adjacent rooms", e);
+            // Continue anyway - worst case, rooms won't be pre-generated
+        }
+
         // RULE: Discard old rooms to save memory and keep the journey 'one-way'
+        // Safe to query exit links now that adjacent rooms are being generated
         roomRepository.discardUnusedRooms(nextRoom.id(),
                 nextRoom.exits().stream()
                         .flatMap(e -> {
@@ -116,8 +130,6 @@ public class GameController {
 
         state.updateRoom(nextRoom);
 
-        // TRIGGER: Start generating the next set of rooms for this new location
-        roomGenerationService.prepareAdjacentRooms(nextRoom, state.getPlayer());
 
         return createResponse("You head toward " + exit.direction() + ". " + nextRoom.description());
     }
