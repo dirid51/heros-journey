@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
+import static org.bhp.heros_journey.ExitKeyUtils.generateExitKey;
+
 @RestController
 @RequestMapping("/api/game")
 public class GameController {
@@ -193,11 +195,4 @@ public class GameController {
         );
     }
 
-    /**
-     * Generates a unique key for an exit within a room.
-     * Format: "roomId:exitIndex"
-     */
-    private String generateExitKey(String roomId, int exitIndex) {
-        return roomId + ":" + exitIndex;
-    }
 }

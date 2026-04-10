@@ -11,6 +11,8 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.List;
 
+import static org.bhp.heros_journey.ExitKeyUtils.generateExitKey;
+
 @Service
 public class RoomGenerationService {
 
@@ -119,13 +121,5 @@ public class RoomGenerationService {
             log.error("AI Generation Error: ", e);
             return CompletableFuture.failedFuture(e);
         }
-    }
-
-    /**
-     * Generates a unique key for an exit within a room.
-     * Format: "roomId:exitIndex"
-     */
-    private String generateExitKey(String roomId, int exitIndex) {
-        return roomId + ":" + exitIndex;
     }
 }
