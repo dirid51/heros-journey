@@ -102,8 +102,21 @@ public class GameController {
 
     private GameResponse handleMovement(Exit exit) {
         // Query the repository for the linked target room ID using the exit key
-        String exitKey = generateExitKey(state.getCurrentRoom().id(),
-                state.getCurrentRoom().exits().indexOf(exit));
+        // Use counter-based loop to find exit index instead of indexOf() to avoid
+        // issues with duplicate Exit objects that may be equal by .equals()
+        List<Exit> currentExits = state.getCurrentRoom().exits();
+        int exitIndex = -1;
+        for (int i = 0; i < currentExits.size(); i++) {
+            if (currentExits.get(i) == exit) {  // Identity check for the exact Exit object
+                exitIndex = i;
+                break;
+            }
+        }
+        if (exitIndex == -1) {
+            return createResponse("Error: Could not identify the exit. Please try again.");
+        }
+
+        String exitKey = generateExitKey(state.getCurrentRoom().id(), exitIndex);
         String targetId = roomRepository.getLinkedRoomId(exitKey);
 
         // Check if the background thread has finished generating this room
@@ -127,15 +140,17 @@ public class GameController {
 
         // RULE: Discard old rooms to save memory and keep the journey 'one-way'
         // Safe to query exit links now that adjacent rooms are being generated
-        roomRepository.discardUnusedRooms(nextRoom.id(),
-                nextRoom.exits().stream()
-                        .flatMap(e -> {
-                            int idx = nextRoom.exits().indexOf(e);
-                            String key = generateExitKey(nextRoom.id(), idx);
-                            String linkedId = roomRepository.getLinkedRoomId(key);
-                            return linkedId != null ? java.util.stream.Stream.of(linkedId) : java.util.stream.Stream.empty();
-                        })
-                        .collect(java.util.stream.Collectors.toSet()));
+        // Use counter-based loop instead of indexOf() to avoid matching by .equals()
+        java.util.Set<String> linkedRoomIds = new java.util.HashSet<>();
+        List<Exit> nextRoomExits = nextRoom.exits();
+        for (int i = 0; i < nextRoomExits.size(); i++) {
+            String key = generateExitKey(nextRoom.id(), i);
+            String linkedId = roomRepository.getLinkedRoomId(key);
+            if (linkedId != null) {
+                linkedRoomIds.add(linkedId);
+            }
+        }
+        roomRepository.discardUnusedRooms(nextRoom.id(), linkedRoomIds);
 
         state.updateRoom(nextRoom);
 
