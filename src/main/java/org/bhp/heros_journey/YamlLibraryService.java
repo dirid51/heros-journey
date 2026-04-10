@@ -33,7 +33,7 @@ public class YamlLibraryService {
 
     private ItemTemplate getRandomItem() {
         // return a random ItemTemplate from the list
-        return items.get(random.nextInt() * items.size());
+        return items.get(random.nextInt(items.size()));
     }
 
     public NpcTemplate getNpcById(String id) {
@@ -41,7 +41,7 @@ public class YamlLibraryService {
     }
 
     private NpcTemplate getRandomNpc() {
-        return npcs.get(random.nextInt() * npcs.size());
+        return npcs.get(random.nextInt(npcs.size()));
     }
 
     @Data
