@@ -159,7 +159,7 @@ public class GameController {
     }
 
     private GameResponse createResponse(String desc) {
-        boolean isDead = state.getPlayer().getCurrentHealth() <= 0;
+        boolean isDead = state.isGameOver();
 
         // Map the internal Room record to the UI-friendly RoomView record
         RoomView view = createRoomView(state.getCurrentRoom());
