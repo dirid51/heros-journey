@@ -17,7 +17,8 @@ public class GameService {
 
     /**
      * Prompt template for action resolution.
-     * Contains instructions for the AI to resolve player actions and determine skill outcomes.
+     * Contains per-request context: the current game state and the player's action.
+     * Invariant rules are in the system prompt.
      */
     private static final String ACTION_RESOLUTION_PROMPT = """
             Room: {roomDesc}
@@ -30,20 +31,7 @@ public class GameService {
             applicable to this action (be reasonable with synonyms, e.g.
             'punching' matches 'Unarmed Combat'). Then resolve the action.
             
-            Return JSON with all fields. Key rules for skill levels:
-            - Use the formula: skill_level = floor(sqrt(xp / 10))
-            - For new skills, calculate the required XP: xp = skillInitialLevel * skillInitialLevel * 10
-              (e.g., to start at level 10: xp = 100 * 10 = 1000)
-            - For existing skills, xpGained is added to current XP, then level recalculates
-            
-            For isExistingSkill:
-            - true: the action maps to a skill already in the known skills list.
-              Set skillName to the EXACT name from that list. Only set xpGained.
-            - false: this is a new skill. Infer an appropriate skillInitialLevel
-              from any adjacent skills the player has (e.g. Lockpicking lvl 20
-              → new Pickpocketing starts at ~10). Default to 5-15 if no
-              adjacent skills exist. Set to 0 only if canAttempt is false.
-              Set xpGained to the initial XP amount (using the formula above).
+            Return JSON with all fields.
             """;
 
     public GameService(ChatClient.Builder builder) {
@@ -54,7 +42,10 @@ public class GameService {
                                 ### CORE MECHANICS:
                                 1. DEATH: The player only dies if health falls BELOW 0. 0 HP is "clinging to life."
                                 2. SKILLS: Scale is 1-100. 1 = Novice, 100 = Godlike.
-                                   - New skills should usually start between 5-15.
+                                   - Skill level is ALWAYS calculated from XP using: skill_level = floor(sqrt(xp / 10))
+                                   - For new skills, calculate required XP: xp = skillInitialLevel * skillInitialLevel * 10
+                                     (e.g., to start at level 10: xp = 100 * 10 = 1000)
+                                   - New skills should usually start between 5-15 (unless canAttempt is false).
                                    - Skill increases should be rare (1-5 points) and only occur on significant effort.
                                 3. INJURY REDUCTION: This is a percentage (0.0 to 0.9).
                                    - Awards should be tiny (e.g., 0.01 to 0.05) and extremely rare (e.g., finding
@@ -64,15 +55,31 @@ public class GameService {
                                    - Major: 20-40 HP
                                    - Deadly: 60+ HP
                         
+                                ### SKILL XP RULES (INVARIANT):
+                                These rules are FIXED and override any per-action instructions:
+                                - isExistingSkill: true
+                                  * The action maps to a skill already in the known skills list.
+                                  * Set skillName to the EXACT name from that list.
+                                  * Only populate xpGained (add to current XP, system recalculates level).
+                                  * skillInitialLevel and new XP calculations are ignored by the backend.
+                                - isExistingSkill: false
+                                  * This is a new skill. Infer an appropriate skillInitialLevel from adjacent skills.
+                                  * Example: If player has "Lockpicking" lvl 20, new "Pickpocketing" starts at ~10.
+                                  * Default to 5-15 if no adjacent skills exist.
+                                  * If canAttempt is false, set skillInitialLevel to 0.
+                                  * Set xpGained to the initial XP amount calculated from skillInitialLevel.
+                        
                                 ### INTERACTION RULES:
                                     - Regardless of the possibility of the action, you MUST ALWAYS respond with a JSON object containing:
                                       - `canAttempt` (boolean) : indicates whether the player is capable of attempting this action based on their current skills and stats.
                                       - `skillName` (string) : ALWAYS provide a name for the new skill that would be relevant to this action. Be creative but concise, and tie it into the narrative of the room and the action.
-                                      - `skillInitialLevel` (integer) : indicates the starting level of this new skill
+                                      - `skillInitialLevel` (integer) : indicates the starting level of this new skill (0 if canAttempt is false)
+                                      - `isExistingSkill` (boolean) : true if skillName matches an existing skill, false otherwise
                                       - `description` (string) : a creative description of what happens when the player attempts this action, taking into account their current stats, if canAttempt is true or false, the initial level of the new skill, and the difficulty involved with how the user is attempting to use the new skill. This should be flavorful and narrative-driven, not just mechanical. For example, if the player is trying to "pick a pocket" without any relevant skills, you might say something like: "You attempt to pick the noble's pocket, but your lack of finesse causes you to fumble and draw attention. The noble glares at you, and you quickly realize that this is going to be much harder than you thought. You feel a spark of potential in this new skill, but it's clear that you have a long way to go before you can master it."
                                       - `success` (boolean) : indicates whether the attempted action was successful or not
                                       - `levelIncreased` (boolean) : indicates whether the player has improved in this skill as a result of this attempt (whether they succeeded or failed), taking into account the effort involved and the potential for growth.
                                       - `newLevel` (integer) : indicates the new level of the skill if it increased, or the same level if it did not
+                                      - `xpGained` (integer) : XP to award (added to existing XP for the skill)
                                       - `damageTaken` (integer) : indicates any damage the player takes as a result of this action
                                       - `healthBoost` (integer) : indicates any one-time boosts to current health they might gain from this action (e.g., finding a healing potion or successfully completing a "Survival Challenge").
                                       - `maxHealthIncrease` (integer) : indicates any permanent increases to max health they might gain from this action (e.g., finding a magical artifact that increases vitality or successfully completing a "Heroic Feat").
@@ -95,7 +102,7 @@ public class GameService {
                                         - Set the initial level to 1
                                         - Provide a description that reflects the high difficulty and likely failure. For example: "You wade into the river, the current immediately proving stronger than you anticipated. With no prior swimming skills to rely on, you struggle to keep your head above water. The cold bites into you, and you realize this is going to be a daunting challenge. You manage to make it back to shore, soaked and exhausted, but alive. This new skill of 'Swimming' feels like a distant dream, something you might be able to develop with a lot of practice and determination, but for now, it's clear that you're out of your depth."
                                     - If the action is impossible or nonsensical:
-                                        - Set `canDo: false`
+                                        - Set canAttempt: false
                                         - Provide a creative and flavorful description of the failure, taking into account the narrative context.
                                         - Define a skill name
                                         - Set an initial level of 0 to indicate that they have no ability in this area yet
