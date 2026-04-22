@@ -7,6 +7,8 @@ package org.bhp.heros_journey;
  */
 public class ExitKeyUtils {
 
+    private static final String SEPARATOR = ":";
+
     private ExitKeyUtils() {
         // Utility class, cannot be instantiated
     }
@@ -20,7 +22,22 @@ public class ExitKeyUtils {
      * @return a unique exit key
      */
     public static String generateExitKey(String roomId, int exitIndex) {
-        return roomId + ":" + exitIndex;
+        return roomId + SEPARATOR + exitIndex;
+    }
+
+    /**
+     * Extracts the room ID from an exit key.
+     * Format: "roomId:exitIndex" -> returns "roomId"
+     *
+     * @param exitKey the exit key in format "roomId:exitIndex"
+     * @return the room ID, or the original key if parsing fails
+     */
+    public static String getRoomIdFromKey(String exitKey) {
+        if (exitKey == null || !exitKey.contains(SEPARATOR)) {
+            return exitKey;
+        }
+        int separatorIndex = exitKey.lastIndexOf(SEPARATOR);
+        return exitKey.substring(0, separatorIndex);
     }
 }
 

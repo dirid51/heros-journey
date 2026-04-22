@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import static org.bhp.heros_journey.ExitKeyUtils.generateExitKey;
 
@@ -88,7 +89,7 @@ public class GameController {
 
             // Immediately start background generation for the exits in the first room
             // Fire-and-forget: we don't need to wait for these to complete
-            roomGenerationService.prepareAdjacentRooms(startingRoom, state.getPlayer());
+            roomGenerationService.prepareAdjacentRooms(startingRoom, state.getPlayer(), roomRepository);
 
             return createResponse("The mists clear... " + startingRoom.description());
         } catch (InterruptedException e) {
@@ -130,11 +131,16 @@ public class GameController {
 
         // TRIGGER: Start generating the next set of rooms for this new location
         // Wait for all exit links to be established before discarding rooms
+        // Use timeout to prevent blocking HTTP thread indefinitely
         try {
-            roomGenerationService.prepareAdjacentRooms(nextRoom, state.getPlayer()).get();
+            roomGenerationService.prepareAdjacentRooms(nextRoom, state.getPlayer(), roomRepository)
+                    .get(5, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             log.error("Room generation interrupted", e);
+        } catch (java.util.concurrent.TimeoutException e) {
+            // Timeout is acceptable - rooms will be generated in background
+            log.warn("Room generation timed out after 5 seconds, but player can still move");
         } catch (Exception e) {
             log.error("Error generating adjacent rooms", e);
             // Continue anyway - worst case, rooms won't be pre-generated

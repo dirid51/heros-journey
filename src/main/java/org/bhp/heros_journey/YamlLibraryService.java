@@ -17,7 +17,7 @@ public class YamlLibraryService {
 
     private List<NpcTemplate> npcs;
     private List<ItemTemplate> items;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public List<String> getAllNpcIds() {
         return npcs == null ? List.of() : npcs.stream().map(NpcTemplate::getId).collect(Collectors.toList());

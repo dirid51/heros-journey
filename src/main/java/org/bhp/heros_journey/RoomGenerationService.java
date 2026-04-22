@@ -3,7 +3,6 @@ package org.bhp.heros_journey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +18,15 @@ public class RoomGenerationService {
     private static final Logger log = LoggerFactory.getLogger(RoomGenerationService.class);
 
     private final ChatClient chatClient;
-    private final RoomRepository roomRepository;
     private final YamlLibraryService libraryService;
-    private final ObjectProvider<RoomGenerationService> selfProvider;
 
-    public RoomGenerationService(ChatClient.Builder builder, RoomRepository roomRepository, YamlLibraryService libraryService, ObjectProvider<RoomGenerationService> selfProvider) {
+    public RoomGenerationService(ChatClient.Builder builder, YamlLibraryService libraryService) {
         // Best Practice: Define a base system prompt to ensure JSON consistency
         this.chatClient = builder
                 .defaultSystem("You are a dungeon master. Always return valid JSON matching the Room schema. " +
                         "Do not include markdown formatting like ```json in the response.")
                 .build();
-        this.roomRepository = roomRepository;
         this.libraryService = libraryService;
-        this.selfProvider = selfProvider;
     }
 
     /**
@@ -39,8 +34,12 @@ public class RoomGenerationService {
      * Uses exitLinkMap to avoid mutating Exit objects, preventing race conditions.
      * Returns a CompletableFuture that completes when all exit links have been established.
      * This ensures that discardUnusedRooms can safely query the exit map without race conditions.
+     *
+     * @param currentRoom the current room whose exits should be pre-generated
+     * @param player the player whose skills should influence room generation
+     * @param roomRepository the session-scoped repository (passed as parameter, not injected)
      */
-    public CompletableFuture<Void> prepareAdjacentRooms(Room currentRoom, Player player) {
+    public CompletableFuture<Void> prepareAdjacentRooms(Room currentRoom, Player player, RoomRepository roomRepository) {
         log.info("Starting background generation for {} exits.", currentRoom.exits().size());
 
         List<CompletableFuture<Void>> futures = new java.util.ArrayList<>();
@@ -51,7 +50,7 @@ public class RoomGenerationService {
 
             // Only generate if we haven't already
             if (roomRepository.getLinkedRoomId(exitKey) == null) {
-                CompletableFuture<Void> future = selfProvider.getObject().generateRoomAsync(exit, player)
+                CompletableFuture<Void> future = generateRoomAsync(exit, player)
                         .thenAccept(generatedRoom -> {
                             // Thread-safe: use repository map instead of mutating exit
                             roomRepository.linkExit(exitKey, generatedRoom.id());

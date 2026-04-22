@@ -1,7 +1,9 @@
 package org.bhp.heros_journey;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.stereotype.Service;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -17,7 +19,7 @@ public class RateLimitService {
     private static final long REFILL_INTERVAL_MS = 1000 / TOKENS_PER_SECOND; // Refill every 500ms
 
     private static class TokenBucket {
-        private long lastRefillTime;
+        private volatile long lastRefillTime;
         private final AtomicLong tokens;
 
         TokenBucket() {
@@ -42,7 +44,13 @@ public class RateLimitService {
         }
     }
 
-    private final ConcurrentHashMap<String, TokenBucket> sessionBuckets = new ConcurrentHashMap<>();
+    /**
+     * Session buckets cache with 30-minute expiry after last access.
+     * Prevents unbounded growth of inactive session buckets.
+     */
+    private final Cache<String, TokenBucket> sessionBuckets = Caffeine.newBuilder()
+            .expireAfterAccess(30, TimeUnit.MINUTES)
+            .build();
 
     /**
      * Check if a session is allowed to make a request.
@@ -54,7 +62,7 @@ public class RateLimitService {
             return false;
         }
 
-        TokenBucket bucket = sessionBuckets.computeIfAbsent(sessionId, _ -> new TokenBucket());
+        TokenBucket bucket = sessionBuckets.get(sessionId, _ -> new TokenBucket());
         return bucket.tryConsume();
     }
 }

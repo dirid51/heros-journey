@@ -3,6 +3,7 @@ package org.bhp.heros_journey;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,5 +66,24 @@ public class Player implements Serializable {
      */
     public void improveInjuryReduction(double gain) {
         this.injuryReduction = Math.min(0.9, this.injuryReduction + gain);
+    }
+
+    /**
+     * Returns an unmodifiable view of the skill XP map to prevent external mutations.
+     * Use updateSkillXp() to modify XP values.
+     */
+    public Map<String, Integer> getSkillXp() {
+        return Collections.unmodifiableMap(skillXp);
+    }
+
+    /**
+     * Updates the XP for a specific skill.
+     * Use this method instead of mutating the skillXp map directly.
+     *
+     * @param skillName the name of the skill
+     * @param xp the new XP value
+     */
+    public void updateSkillXp(String skillName, int xp) {
+        this.skillXp.put(skillName, xp);
     }
 }

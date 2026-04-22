@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static org.bhp.heros_journey.ExitKeyUtils.getRoomIdFromKey;
+
 @Repository
 @SessionScope
 public class RoomRepository implements Serializable {
@@ -59,9 +61,9 @@ public class RoomRepository implements Serializable {
         // Remove everything that isn't the current room or its immediate exits
         worldMap.keySet().retainAll(keysToKeep);
 
-        // Also clean up exit links for removed rooms
+        // Also clean up exit links for removed rooms using the utility method
         exitLinkMap.keySet().removeIf(key -> {
-            String roomId = key.split(":")[0];
+            String roomId = getRoomIdFromKey(key);
             return !keysToKeep.contains(roomId);
         });
     }
