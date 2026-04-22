@@ -3,6 +3,7 @@ package org.bhp.heros_journey;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.stereotype.Service;
+
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -19,11 +20,11 @@ public class RateLimitService {
     private static final long REFILL_INTERVAL_MS = 1000 / TOKENS_PER_SECOND; // Refill every 500ms
 
     private static class TokenBucket {
-        private volatile long lastRefillTime;
+        private final AtomicLong lastRefillTime;
         private final AtomicLong tokens;
 
         TokenBucket() {
-            this.lastRefillTime = System.currentTimeMillis();
+            this.lastRefillTime = new AtomicLong(System.currentTimeMillis());
             this.tokens = new AtomicLong(MAX_TOKENS);
         }
 
@@ -34,12 +35,12 @@ public class RateLimitService {
 
         private void refillTokens() {
             long now = System.currentTimeMillis();
-            long timePassed = now - lastRefillTime;
+            long previousRefillTime = lastRefillTime.get();
+            long timePassed = now - previousRefillTime;
 
-            if (timePassed >= REFILL_INTERVAL_MS) {
+            if (timePassed >= REFILL_INTERVAL_MS && lastRefillTime.compareAndSet(previousRefillTime, now)) {
                 long tokensToAdd = (timePassed / REFILL_INTERVAL_MS) * TOKENS_PER_SECOND;
                 tokens.updateAndGet(current -> Math.min(current + tokensToAdd, MAX_TOKENS));
-                lastRefillTime = now;
             }
         }
     }
@@ -54,6 +55,7 @@ public class RateLimitService {
 
     /**
      * Check if a session is allowed to make a request.
+     *
      * @param sessionId The session identifier
      * @return true if the request is allowed, false if rate limit exceeded
      */

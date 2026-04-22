@@ -14,7 +14,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) {
         http
                 // Enable CSRF protection
                 .csrf(csrf -> csrf
@@ -28,8 +28,18 @@ public class SecurityConfig {
                                 .maxAgeInSeconds(31536000)
                         )
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::deny)
+                        // Content Security Policy for this game application:
+                        // - 'self' allows resources from the same origin only (no external CDNs)
+                        // - script-src 'self' 'unsafe-inline' is intentional for game.js dynamic DOM updates
+                        // - style-src 'self' 'unsafe-inline' for inline game styles
+                        // - This policy is appropriate because:
+                        //   1. The game is self-contained (no external API calls except AI chat)
+                        //   2. All static assets (game.js, style.css) are served from 'self'
+                        //   3. Inline scripts are used for game UI updates (appendLog, etc.)
+                        // - Trade-off: 'unsafe-inline' is less restrictive but necessary for dynamic game behavior
+                        //   Future optimization: Consider extracting inline styles/scripts to separate files
                         .contentSecurityPolicy(csp -> csp
-                                .policyDirectives("default-src 'self'")
+                                .policyDirectives("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'")
                         )
                 )
                 // Disable HTTP Basic authentication

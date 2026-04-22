@@ -50,7 +50,7 @@ public class RoomGenerationService {
 
             // Only generate if we haven't already
             if (roomRepository.getLinkedRoomId(exitKey) == null) {
-                CompletableFuture<Void> future = generateRoomAsync(exit, player)
+                CompletableFuture<Void> future = generateRoomAsyncInternal(exit, player)
                         .thenAccept(generatedRoom -> {
                             // Thread-safe: use repository map instead of mutating exit
                             roomRepository.linkExit(exitKey, generatedRoom.id());
@@ -69,9 +69,31 @@ public class RoomGenerationService {
         return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
     }
 
-    @Async
+    /**
+     * Public wrapper for generating a room asynchronously.
+     * Delegates to the internal async method to ensure the @Async annotation is effective
+     * when called from external beans.
+     *
+     * @param exit the exit the room should connect to
+     * @param player the player whose skills influence room generation
+     * @return a CompletableFuture containing the generated room
+     */
     public CompletableFuture<Room> generateRoomAsync(Exit exit, Player player) {
-        // ...existing code...
+        return generateRoomAsyncInternal(exit, player);
+    }
+
+    /**
+     * Internal async method for room generation.
+     * This is marked @Async to ensure it runs on the async executor thread pool.
+     * By marking the private method @Async instead of the public one, we avoid
+     * Spring AOP proxy issues when called from other methods in this service.
+     *
+     * @param exit the exit the room should connect to
+     * @param player the player whose skills influence room generation
+     * @return a CompletableFuture containing the generated room
+     */
+    @Async
+    public CompletableFuture<Room> generateRoomAsyncInternal(Exit exit, Player player) {
         // 1. Prepare data for the prompt
         String availableItems = String.join(", ", libraryService.getAllItemIds());
         String availableNpcs = String.join(", ", libraryService.getAllNpcIds());
