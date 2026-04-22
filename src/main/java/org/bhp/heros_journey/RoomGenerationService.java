@@ -19,14 +19,17 @@ public class RoomGenerationService {
 
     private final ChatClient chatClient;
     private final YamlLibraryService libraryService;
+    private final LibraryPersistenceService libraryPersistenceService;
 
-    public RoomGenerationService(ChatClient.Builder builder, YamlLibraryService libraryService) {
+    public RoomGenerationService(ChatClient.Builder builder, YamlLibraryService libraryService, 
+                                LibraryPersistenceService libraryPersistenceService) {
         // Best Practice: Define a base system prompt to ensure JSON consistency
         this.chatClient = builder
                 .defaultSystem("You are a dungeon master. Always return valid JSON matching the Room schema. " +
                         "Do not include markdown formatting like ```json in the response.")
                 .build();
         this.libraryService = libraryService;
+        this.libraryPersistenceService = libraryPersistenceService;
     }
 
     /**
@@ -137,10 +140,65 @@ public class RoomGenerationService {
                     rawRoom.skillOpportunities()
             );
 
+            // 5. Capture any newly referenced items and NPCs
+            captureNewItemsAndNpcs(finalizedRoom);
+
             return CompletableFuture.completedFuture(finalizedRoom);
         } catch (Exception e) {
             log.error("AI Generation Error: ", e);
             return CompletableFuture.failedFuture(e);
         }
+    }
+
+    /**
+     * Captures newly referenced items and NPCs from a generated room.
+     * If the AI references items or NPCs that don't exist in the library,
+     * creates minimal templates and persists them.
+     *
+     * @param room the room that may contain new item/NPC references
+     */
+    private void captureNewItemsAndNpcs(Room room) {
+        if (room.itemIds() != null) {
+            for (String itemId : room.itemIds()) {
+                if (!libraryService.getAllItemIds().contains(itemId)) {
+                    // Create a minimal template - the AI should ideally provide descriptions
+                    YamlLibraryService.ItemTemplate newItem = new YamlLibraryService.ItemTemplate();
+                    newItem.setId(itemId);
+                    newItem.setName(formatIdToName(itemId));
+                    newItem.setDescription("A mysterious item discovered during exploration.");
+                    libraryPersistenceService.addNewItem(newItem);
+                }
+            }
+        }
+
+        if (room.npcIds() != null) {
+            for (String npcId : room.npcIds()) {
+                if (!libraryService.getAllNpcIds().contains(npcId)) {
+                    // Create a minimal template - the AI should ideally provide descriptions
+                    YamlLibraryService.NpcTemplate newNpc = new YamlLibraryService.NpcTemplate();
+                    newNpc.setId(npcId);
+                    newNpc.setName(formatIdToName(npcId));
+                    newNpc.setDescription("A mysterious entity encountered during exploration.");
+                    newNpc.setGoal("Unknown.");
+                    libraryPersistenceService.addNewNpc(newNpc);
+                }
+            }
+        }
+    }
+
+    /**
+     * Converts an ID (e.g., "shadow_merchant_01") into a readable name (e.g., "Shadow Merchant").
+     *
+     * @param id the identifier to format
+     * @return a human-readable name
+     */
+    private String formatIdToName(String id) {
+        // Remove trailing numbers and underscore
+        String withoutNumber = id.replaceAll("_\\d+$", "");
+        // Replace underscores with spaces and capitalize
+        return java.util.Arrays.stream(withoutNumber.split("_"))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+                .reduce((a, b) -> a + " " + b)
+                .orElse(id);
     }
 }
