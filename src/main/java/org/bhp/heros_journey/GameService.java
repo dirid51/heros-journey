@@ -5,6 +5,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.Callable;
 
+/**
+ * Custom exception for invalid action outcomes from the AI model.
+ * Wraps IllegalArgumentException from ActionOutcomeValidator to allow controller-level handling.
+ */
+class InvalidActionOutcomeException extends RuntimeException {
+    public InvalidActionOutcomeException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+
 @Service
 public class GameService {
     private final ChatClient chatClient;
@@ -58,7 +68,8 @@ public class GameService {
     }
 
     public String processAction(String userAction, Player player, Room currentRoom) {
-        ActionOutcome outcome = withRetries(() -> chatClient.prompt()
+        // Get eligibility response from AI
+        ActionEligibility eligibility = withRetries(() -> chatClient.prompt()
                 .user(u -> u.text(ACTION_RESOLUTION_PROMPT)
                         .param("roomDesc", currentRoom.description())
                         .param("entities", getEntityDetails(currentRoom))
@@ -67,30 +78,53 @@ public class GameService {
                                 ? "none" : player.getSkills().toString())
                         .param("action", PromptInjectionProtection.sanitizeWithLabel(userAction)))
                 .call()
-                .entity(ActionOutcome.class));
+                .entity(ActionEligibility.class));
 
-        // Validate outcome before applying state changes
-        ActionOutcomeValidator.validate(outcome);
-
-        if (outcome.canAttempt()) {
-            applyStateChanges(player, outcome);
+        // Validate eligibility phase
+        try {
+            ActionOutcomeValidator.validateEligibility(eligibility);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidActionOutcomeException(
+                    "AI produced invalid action eligibility: " + e.getMessage(), e);
         }
 
-        return outcome.description();
+        // If player cannot attempt the action, return the reason
+        if (!eligibility.canAttempt()) {
+            return eligibility.description();
+        }
+
+        // Get result details from AI (only if action is eligible)
+        ActionResult result = withRetries(() -> chatClient.prompt()
+                .user(u -> u.text("Provide detailed ActionResult JSON for: " + eligibility.description()))
+                .call()
+                .entity(ActionResult.class));
+
+        // Validate result phase
+        try {
+            ActionOutcomeValidator.validateResult(result);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidActionOutcomeException(
+                    "AI produced invalid action result: " + e.getMessage(), e);
+        }
+
+        // Apply state changes based on validated result
+        applyStateChanges(player, eligibility, result);
+
+        return result.description();
     }
 
-    private void applyStateChanges(Player player, ActionOutcome outcome) {
+    private void applyStateChanges(Player player, ActionEligibility eligibility, ActionResult result) {
         // 1. Update Health and Armor
-        player.increaseMaxHealth(outcome.maxHealthIncrease());
-        player.addCurrentHealthBoost(outcome.healthBoost());
-        player.improveInjuryReduction(outcome.injuryReductionGain());
-        player.receiveDamage(outcome.damageTaken());
+        player.increaseMaxHealth(result.maxHealthIncrease());
+        player.addCurrentHealthBoost(result.healthBoost());
+        player.improveInjuryReduction(result.injuryReductionGain());
+        player.receiveDamage(result.damageTaken());
 
         // 2. Single Source of Truth: Skill XP determines skill level
         // Using formula: skill_level = floor(sqrt(XP / 10))
-        String skill = outcome.skillName();
+        String skill = eligibility.skillName();
         int currentXP = player.getSkillXp().getOrDefault(skill, 0);
-        int newXP = currentXP + outcome.xpGained();
+        int newXP = currentXP + result.xpGained();
 
         player.updateSkillXp(skill, newXP);
 

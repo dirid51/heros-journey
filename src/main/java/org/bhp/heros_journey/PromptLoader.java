@@ -13,16 +13,20 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class PromptLoader {
 
-    private String actionResolutionSystemPrompt;
+    private volatile String actionResolutionSystemPrompt;
 
     public String getActionResolutionSystemPrompt() {
         if (actionResolutionSystemPrompt == null) {
-            try {
-                ClassPathResource resource = new ClassPathResource("prompts/action-resolution-system.txt");
-                byte[] bytes = resource.getInputStream().readAllBytes();
-                actionResolutionSystemPrompt = new String(bytes, StandardCharsets.UTF_8);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to load action resolution system prompt", e);
+            synchronized (this) {
+                if (actionResolutionSystemPrompt == null) {
+                    try {
+                        ClassPathResource resource = new ClassPathResource("prompts/action-resolution-system.txt");
+                        byte[] bytes = resource.getInputStream().readAllBytes();
+                        actionResolutionSystemPrompt = new String(bytes, StandardCharsets.UTF_8);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Failed to load action resolution system prompt", e);
+                    }
+                }
             }
         }
         return actionResolutionSystemPrompt;

@@ -1,6 +1,8 @@
 package org.bhp.heros_journey;
 
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import java.util.stream.Collectors;
 @PropertySource(value = "classpath:library.yml", factory = org.bhp.heros_journey.YamlPropertySourceFactory.class)
 public class YamlLibraryService {
 
+    private static final Logger log = LoggerFactory.getLogger(YamlLibraryService.class);
+
     private List<NpcTemplate> npcs;
     private List<ItemTemplate> items;
     private final Random random = new Random();
@@ -28,7 +32,12 @@ public class YamlLibraryService {
     }
 
     public ItemTemplate getItemById(String id) {
-        return items.stream().filter(item -> item.getId().equals(id)).findFirst().orElse(this.getRandomItem());
+        var item = items.stream().filter(item_ -> item_.getId().equals(id)).findFirst();
+        if (item.isEmpty()) {
+            log.warn("AI generated invalid item ID: {}. Returning random item as fallback.", id);
+            return this.getRandomItem();
+        }
+        return item.get();
     }
 
     private ItemTemplate getRandomItem() {
@@ -37,7 +46,12 @@ public class YamlLibraryService {
     }
 
     public NpcTemplate getNpcById(String id) {
-        return npcs.stream().filter(npc -> npc.getId().equals(id)).findFirst().orElse(this.getRandomNpc());
+        var npc = npcs.stream().filter(npc_ -> npc_.getId().equals(id)).findFirst();
+        if (npc.isEmpty()) {
+            log.warn("AI generated invalid NPC ID: {}. Returning random NPC as fallback.", id);
+            return this.getRandomNpc();
+        }
+        return npc.get();
     }
 
     private NpcTemplate getRandomNpc() {

@@ -19,11 +19,11 @@ public class RateLimitService {
     private static final long REFILL_INTERVAL_MS = 1000 / TOKENS_PER_SECOND; // Refill every 500ms
 
     private static class TokenBucket {
-        private volatile long lastRefillTime;
+        private final AtomicLong lastRefillTime;
         private final AtomicLong tokens;
 
         TokenBucket() {
-            this.lastRefillTime = System.currentTimeMillis();
+            this.lastRefillTime = new AtomicLong(System.currentTimeMillis());
             this.tokens = new AtomicLong(MAX_TOKENS);
         }
 
@@ -34,12 +34,15 @@ public class RateLimitService {
 
         private void refillTokens() {
             long now = System.currentTimeMillis();
-            long timePassed = now - lastRefillTime;
+            long previousRefillTime = lastRefillTime.get();
+            long timePassed = now - previousRefillTime;
 
             if (timePassed >= REFILL_INTERVAL_MS) {
-                long tokensToAdd = (timePassed / REFILL_INTERVAL_MS) * TOKENS_PER_SECOND;
-                tokens.updateAndGet(current -> Math.min(current + tokensToAdd, MAX_TOKENS));
-                lastRefillTime = now;
+                // Use compareAndSet for atomic read-modify-write to prevent double-adding tokens
+                if (lastRefillTime.compareAndSet(previousRefillTime, now)) {
+                    long tokensToAdd = (timePassed / REFILL_INTERVAL_MS) * TOKENS_PER_SECOND;
+                    tokens.updateAndGet(current -> Math.min(current + tokensToAdd, MAX_TOKENS));
+                }
             }
         }
     }
