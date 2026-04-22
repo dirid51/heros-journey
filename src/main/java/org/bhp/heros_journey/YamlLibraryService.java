@@ -32,7 +32,7 @@ public class YamlLibraryService {
     }
 
     public ItemTemplate getItemById(String id) {
-        var item = items.stream().filter(item_ -> item_.getId().equals(id)).findFirst();
+        var item = items.stream().filter(itemTemplate -> itemTemplate.getId().equals(id)).findFirst();
         if (item.isEmpty()) {
             log.warn("AI generated invalid item ID: {}. Returning random item as fallback.", id);
             return this.getRandomItem();
@@ -46,7 +46,7 @@ public class YamlLibraryService {
     }
 
     public NpcTemplate getNpcById(String id) {
-        var npc = npcs.stream().filter(npc_ -> npc_.getId().equals(id)).findFirst();
+        var npc = npcs.stream().filter(npcTemplate -> npcTemplate.getId().equals(id)).findFirst();
         if (npc.isEmpty()) {
             log.warn("AI generated invalid NPC ID: {}. Returning random NPC as fallback.", id);
             return this.getRandomNpc();

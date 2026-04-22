@@ -3,6 +3,7 @@ package org.bhp.heros_journey;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.stereotype.Service;
+
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -37,12 +38,9 @@ public class RateLimitService {
             long previousRefillTime = lastRefillTime.get();
             long timePassed = now - previousRefillTime;
 
-            if (timePassed >= REFILL_INTERVAL_MS) {
-                // Use compareAndSet for atomic read-modify-write to prevent double-adding tokens
-                if (lastRefillTime.compareAndSet(previousRefillTime, now)) {
-                    long tokensToAdd = (timePassed / REFILL_INTERVAL_MS) * TOKENS_PER_SECOND;
-                    tokens.updateAndGet(current -> Math.min(current + tokensToAdd, MAX_TOKENS));
-                }
+            if (timePassed >= REFILL_INTERVAL_MS && lastRefillTime.compareAndSet(previousRefillTime, now)) {
+                long tokensToAdd = (timePassed / REFILL_INTERVAL_MS) * TOKENS_PER_SECOND;
+                tokens.updateAndGet(current -> Math.min(current + tokensToAdd, MAX_TOKENS));
             }
         }
     }
@@ -57,6 +55,7 @@ public class RateLimitService {
 
     /**
      * Check if a session is allowed to make a request.
+     *
      * @param sessionId The session identifier
      * @return true if the request is allowed, false if rate limit exceeded
      */

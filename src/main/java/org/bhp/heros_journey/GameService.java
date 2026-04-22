@@ -18,9 +18,10 @@ class InvalidActionOutcomeException extends RuntimeException {
 @Service
 public class GameService {
     private final ChatClient chatClient;
-    private final PromptLoader promptLoader;
     private static final int MAX_RETRIES = 3;
     private static final long BASE_DELAY_MS = 500L;
+
+    private final PromptLoader promptLoader;
 
     /**
      * Prompt template for action resolution.
