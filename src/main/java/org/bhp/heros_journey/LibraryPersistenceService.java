@@ -1,23 +1,29 @@
 package org.bhp.heros_journey;
 
-import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.representer.Representer;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Service for persisting newly generated items and NPCs to the library.yml file.
  * Ensures that dynamically created game content is saved for future use.
+ *
+ * <p>Serialization note: SnakeYAML will emit Java class-type tags (e.g.
+ * {@code !!org.bhp...NpcTemplate}) when dumping POJOs directly.  Those tags
+ * break {@code YamlPropertiesFactoryBean} on the next startup.  To avoid this,
+ * every object is converted to a plain {@code LinkedHashMap} before serialization
+ * so the output is tag-free and matches the hand-authored library.yml structure.</p>
  */
 @Service
 public class LibraryPersistenceService {
@@ -45,18 +51,14 @@ public class LibraryPersistenceService {
             return false;
         }
 
-        // Check if item already exists
         if (libraryService.getAllItemIds().contains(item.getId())) {
             log.debug("Item already exists in library: {}", item.getId());
             return false;
         }
 
         try {
-            // Add to in-memory library
             libraryService.getItems().add(item);
             log.info("Added new item to library: {} - {}", item.getId(), item.getName());
-
-            // Persist to file
             persistLibraryToFile();
             return true;
         } catch (Exception e) {
@@ -77,18 +79,14 @@ public class LibraryPersistenceService {
             return false;
         }
 
-        // Check if NPC already exists
         if (libraryService.getAllNpcIds().contains(npc.getId())) {
             log.debug("NPC already exists in library: {}", npc.getId());
             return false;
         }
 
         try {
-            // Add to in-memory library
             libraryService.getNpcs().add(npc);
             log.info("Added new NPC to library: {} - {}", npc.getId(), npc.getName());
-
-            // Persist to file
             persistLibraryToFile();
             return true;
         } catch (Exception e) {
@@ -129,36 +127,74 @@ public class LibraryPersistenceService {
         return added;
     }
 
+    // -------------------------------------------------------------------------
+    // Private helpers
+    // -------------------------------------------------------------------------
+
     /**
      * Persists the current in-memory library state to the YAML file.
-     * Uses a custom representer to maintain proper YAML formatting.
+     *
+     * <p>Objects are converted to plain {@link LinkedHashMap}s before dumping so
+     * that SnakeYAML never emits Java class-type tags.  The resulting YAML is
+     * structurally identical to the hand-authored {@code library.yml} and can be
+     * read back cleanly by {@link YamlPropertySourceFactory} /
+     * {@code YamlPropertiesFactoryBean}.</p>
      */
     private synchronized void persistLibraryToFile() throws IOException {
-        try {
-            Map<String, Object> libraryMap = new LinkedHashMap<>();
-            Map<String, Object> gameLibraryMap = new LinkedHashMap<>();
+        // Build a plain-map representation of the whole library
+        Map<String, Object> root = new LinkedHashMap<>();
+        Map<String, Object> gameLibrary = new LinkedHashMap<>();
 
-            // Preserve ordering and structure
-            gameLibraryMap.put("npcs", libraryService.getNpcs());
-            gameLibraryMap.put("items", libraryService.getItems());
-            libraryMap.put("game-library", gameLibraryMap);
+        gameLibrary.put("npcs", libraryService.getNpcs().stream()
+                .map(LibraryPersistenceService::npcToMap)
+                .toList());
 
-            // Configure YAML output for readability
-            DumperOptions options = new DumperOptions();
-            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-            options.setPrettyFlow(true);
+        gameLibrary.put("items", libraryService.getItems().stream()
+                .map(LibraryPersistenceService::itemToMap)
+                .toList());
 
-            Yaml yaml = new Yaml(new Representer(options), options);
+        root.put("game-library", gameLibrary);
 
-            // Write to file
-            Path path = Paths.get(libraryPath);
-            try (FileWriter writer = new FileWriter(path.toFile())) {
-                yaml.dump(libraryMap, writer);
-                log.debug("Library persisted to file: {}", path.toAbsolutePath());
-            }
+        // Configure YAML for block-style, human-readable output
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        options.setPrettyFlow(true);
+        options.setIndent(2);
+
+        Yaml yaml = new Yaml(options);
+
+        Path path = Paths.get(libraryPath);
+        try (FileWriter writer = new FileWriter(path.toFile())) {
+            yaml.dump(root, writer);
+            log.debug("Library persisted to file: {}", path.toAbsolutePath());
         } catch (IOException e) {
             log.error("Failed to persist library to file: {}", libraryPath, e);
             throw e;
         }
+    }
+
+    /**
+     * Converts an {@link YamlLibraryService.NpcTemplate} to a plain {@link LinkedHashMap}.
+     * Field order matches the hand-authored library.yml for readability.
+     */
+    private static Map<String, Object> npcToMap(YamlLibraryService.NpcTemplate npc) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("id", npc.getId());
+        map.put("name", npc.getName());
+        map.put("goal", npc.getGoal());
+        map.put("description", npc.getDescription());
+        return map;
+    }
+
+    /**
+     * Converts an {@link YamlLibraryService.ItemTemplate} to a plain {@link LinkedHashMap}.
+     * Field order matches the hand-authored library.yml for readability.
+     */
+    private static Map<String, Object> itemToMap(YamlLibraryService.ItemTemplate item) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("id", item.getId());
+        map.put("name", item.getName());
+        map.put("description", item.getDescription());
+        return map;
     }
 }
