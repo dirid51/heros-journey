@@ -16,9 +16,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // Enable CSRF protection with cookie-based tokens that are readable by JavaScript
+                // Configure CSRF protection: disable for API endpoints (stateless endpoints don't need CSRF)
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers("/api/game/**")
                 )
                 // Configure security headers
                 .headers(headers -> headers
