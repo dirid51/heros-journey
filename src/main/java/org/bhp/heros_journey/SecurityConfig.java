@@ -16,7 +16,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // Enable CSRF protection
+                // Enable CSRF protection with cookie-based tokens that are readable by JavaScript
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
@@ -47,7 +47,7 @@ public class SecurityConfig {
                 // Allow public access to static resources and the game endpoint
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/", "/index.html", "/style.css", "/game.js").permitAll()
-                        .requestMatchers("/api/game/**").permitAll()
+                        .requestMatchers("/api/game/init", "/api/game/action").permitAll()
                         .anyRequest().permitAll()
                 );
 

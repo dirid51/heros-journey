@@ -3,6 +3,8 @@ package org.bhp.heros_journey;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,20 @@ public class GameController {
         this.request = request;
         this.rateLimitService = rateLimitService;
         this.gameMovementService = gameMovementService;
+    }
+
+    /**
+     * GET endpoint to trigger CSRF token generation and game initialization
+     */
+    @GetMapping("/init")
+    public String initGame(HttpServletRequest request) {
+        // Access the CSRF token to force Spring Security to generate and set it in a cookie
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        if (csrfToken != null) {
+            // Token is now available in the XSRF-TOKEN cookie for the frontend to use
+            csrfToken.getToken();
+        }
+        return "{\"status\": \"initialized\"}";
     }
 
     @PostMapping("/action")

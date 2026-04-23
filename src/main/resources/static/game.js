@@ -5,6 +5,18 @@ const history = document.getElementById('history-log');
 let lastRequestTime = 0;
 const MIN_REQUEST_INTERVAL_MS = 500; // Minimum 500ms between requests
 
+// Initialize game on page load to ensure CSRF token is generated
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        await fetch('/api/game/init', {
+            method: 'GET',
+            credentials: 'same-origin'
+        });
+    } catch (error) {
+        console.error('Failed to initialize game:', error);
+    }
+});
+
 input.addEventListener('keydown', async (e) => {
     if (e.key === 'Enter') {
         const now = Date.now();
