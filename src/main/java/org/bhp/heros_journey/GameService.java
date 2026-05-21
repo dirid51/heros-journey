@@ -3,21 +3,13 @@ package org.bhp.heros_journey;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.concurrent.Callable;
-
-/**
- * Custom exception for invalid action outcomes from the AI model.
- * Wraps IllegalArgumentException from ActionOutcomeValidator to allow controller-level handling.
- */
-class InvalidActionOutcomeException extends RuntimeException {
-    public InvalidActionOutcomeException(String message, Throwable cause) {
-        super(message, cause);
-    }
-}
 
 @Service
 public class GameService {
     private final ChatClient chatClient;
+    private final LocalActionHandler localActionHandler;
     private static final int MAX_RETRIES = 3;
     private static final long BASE_DELAY_MS = 500L;
 
@@ -40,7 +32,8 @@ public class GameService {
             Return JSON with all fields.
             """;
 
-    public GameService(ChatClient.Builder builder, PromptLoader promptLoader) {
+    public GameService(ChatClient.Builder builder, PromptLoader promptLoader, LocalActionHandler localActionHandler) {
+        this.localActionHandler = localActionHandler;
         this.chatClient = builder
                 .defaultSystem(promptLoader.getActionResolutionSystemPrompt())
                 .build();
@@ -66,6 +59,11 @@ public class GameService {
     }
 
     public String processAction(String userAction, Player player, Room currentRoom) {
+        Optional<String> localResponse = localActionHandler.tryHandle(userAction, player, currentRoom);
+        if (localResponse.isPresent()) {
+            return localResponse.get();
+        }
+        
         ActionOutcome outcome = withRetries(() -> chatClient.prompt()
                 .user(u -> u.text(ACTION_RESOLUTION_PROMPT)
                         .param("roomDesc", currentRoom.description())
