@@ -21,8 +21,6 @@ public class GameService {
     private static final int MAX_RETRIES = 3;
     private static final long BASE_DELAY_MS = 500L;
 
-    private final PromptLoader promptLoader;
-
     /**
      * Prompt template for action resolution.
      * Contains per-request context: the current game state and the player's action.
@@ -43,7 +41,6 @@ public class GameService {
             """;
 
     public GameService(ChatClient.Builder builder, PromptLoader promptLoader) {
-        this.promptLoader = promptLoader;
         this.chatClient = builder
                 .defaultSystem(promptLoader.getActionResolutionSystemPrompt())
                 .build();
@@ -69,52 +66,27 @@ public class GameService {
     }
 
     public String processAction(String userAction, Player player, Room currentRoom) {
-        // Get eligibility response from AI
-        ActionEligibility eligibility = withRetries(() -> chatClient.prompt()
+        ActionOutcome outcome = withRetries(() -> chatClient.prompt()
                 .user(u -> u.text(ACTION_RESOLUTION_PROMPT)
                         .param("roomDesc", currentRoom.description())
                         .param("entities", getEntityDetails(currentRoom))
                         .param("stats", player.toString())
-                        .param("skills", player.getSkills().isEmpty()
-                                ? "none" : player.getSkills().toString())
+                        .param("skills", player.getSkills().toString())
                         .param("action", PromptInjectionProtection.sanitizeWithLabel(userAction)))
                 .call()
-                .entity(ActionEligibility.class));
+                .entity(ActionOutcome.class));
 
-        // Validate eligibility phase
-        try {
-            ActionOutcomeValidator.validateEligibility(eligibility);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidActionOutcomeException(
-                    "AI produced invalid action eligibility: " + e.getMessage(), e);
+        ActionOutcomeValidator.validate(outcome);
+
+        if (!outcome.canAttempt()) {
+            return outcome.description();
         }
 
-        // If player cannot attempt the action, return the reason
-        if (!eligibility.canAttempt()) {
-            return eligibility.description();
-        }
-
-        // Get result details from AI (only if action is eligible)
-        ActionResult result = withRetries(() -> chatClient.prompt()
-                .user(u -> u.text("Provide detailed ActionResult JSON for: " + eligibility.description()))
-                .call()
-                .entity(ActionResult.class));
-
-        // Validate result phase
-        try {
-            ActionOutcomeValidator.validateResult(result);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidActionOutcomeException(
-                    "AI produced invalid action result: " + e.getMessage(), e);
-        }
-
-        // Apply state changes based on validated result
-        applyStateChanges(player, eligibility, result);
-
-        return result.description();
+        applyStateChanges(player, outcome);
+        return outcome.description();
     }
 
-    private void applyStateChanges(Player player, ActionEligibility eligibility, ActionResult result) {
+    private void applyStateChanges(Player player, ActionOutcome result) {
         // 1. Update Health and Armor
         player.increaseMaxHealth(result.maxHealthIncrease());
         player.addCurrentHealthBoost(result.healthBoost());
@@ -123,7 +95,7 @@ public class GameService {
 
         // 2. Single Source of Truth: Skill XP determines skill level
         // Using formula: skill_level = floor(sqrt(XP / 10))
-        String skill = eligibility.skillName();
+        String skill = result.skillName();
         int currentXP = player.getSkillXp().getOrDefault(skill, 0);
         int newXP = currentXP + result.xpGained();
 
