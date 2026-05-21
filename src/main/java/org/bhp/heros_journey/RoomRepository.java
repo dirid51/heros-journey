@@ -34,7 +34,8 @@ public class RoomRepository implements Serializable {
     /**
      * Links an exit to a target room.
      * Thread-safe mapping that avoids mutating Exit objects.
-     * @param exitKey Format: "roomId:exitIndex"
+     *
+     * @param exitKey      Format: "roomId:exitIndex"
      * @param targetRoomId The ID of the target room
      */
     public void linkExit(String exitKey, String targetRoomId) {
@@ -43,6 +44,7 @@ public class RoomRepository implements Serializable {
 
     /**
      * Retrieves the linked target room ID for an exit.
+     *
      * @param exitKey Format: "roomId:exitIndex"
      * @return The target room ID, or null if not yet linked
      */
@@ -75,5 +77,12 @@ public class RoomRepository implements Serializable {
     // For the Save/Load requirement
     public Map<String, Room> getAllActiveRooms() {
         return worldMap;
+    }
+
+    public void restore(RoomRepository saved) {
+        this.worldMap.clear();
+        this.worldMap.putAll(saved.worldMap);
+        this.exitLinkMap.clear();
+        this.exitLinkMap.putAll(saved.exitLinkMap);
     }
 }

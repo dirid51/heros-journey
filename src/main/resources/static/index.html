@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="loading-screen">
+    <div id="loading-content">
+        <div id="loading-spinner">⠋</div>
+        <p id="loading-text">The world is taking shape...</p>
+    </div>
+</div>
 <div id="game-container">
     <aside id="stats-panel">
         <h2>Player Stats</h2>
@@ -22,6 +28,7 @@
         <div id="input-area">
             <span>&gt; </span>
             <input type="text" id="user-input" autofocus placeholder="Type an action or direction...">
+            <span id="spinner" class="spinner hidden">⠋</span>
         </div>
     </main>
 </div>

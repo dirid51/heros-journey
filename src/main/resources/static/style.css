@@ -51,3 +51,36 @@ body {
 .death-text { color: #ff4444; font-weight: bold; }
 .error-text { color: #ff8844; font-weight: bold; }
 .rate-limit-text { color: #ffaa00; font-style: italic; }
+
+.hidden { display: none; }
+
+.spinner {
+    color: #00ff41;
+    margin-left: 10px;
+    animation: spin-frames 0.8s steps(8) infinite;
+}
+
+@keyframes spin-frames {
+    from { content: "⠋"; }
+}
+
+#loading-screen {
+    position: fixed;
+    inset: 0;
+    background: #121212;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    color: #00ff41;
+}
+
+#loading-spinner {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: none; /* JS-driven */
+}
+
+#loading-screen.hidden { display: none; }

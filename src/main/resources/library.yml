@@ -506,3 +506,6 @@ game-library:
     name: Bundle of Dried Herbs
     description: Twelve different herbs tied with red string. A healer or herbalist
       would recognize most of them — and be very curious about the one they don't.
+  - id: cursed_magic_merchant_01
+    name: Cursed Magic Merchant
+    description: A mysterious item discovered during exploration.

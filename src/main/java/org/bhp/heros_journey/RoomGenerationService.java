@@ -20,16 +20,14 @@ public class RoomGenerationService {
     private final ChatClient chatClient;
     private final YamlLibraryService libraryService;
     private final LibraryPersistenceService libraryPersistenceService;
+    private final RoomInspirationService inspirationService;
 
-    public RoomGenerationService(ChatClient.Builder builder, YamlLibraryService libraryService, 
-                                LibraryPersistenceService libraryPersistenceService) {
+    public RoomGenerationService(ChatClient.Builder builder, YamlLibraryService libraryService, LibraryPersistenceService libraryPersistenceService, RoomInspirationService inspirationService) {
         // Best Practice: Define a base system prompt to ensure JSON consistency
-        this.chatClient = builder
-                .defaultSystem("You are a dungeon master. Always return valid JSON matching the Room schema. " +
-                        "Do not include markdown formatting like ```json in the response.")
-                .build();
+        this.chatClient = builder.defaultSystem("You are a dungeon master. Always return valid JSON matching the Room schema. " + "Do not include markdown formatting like ```json in the response.").build();
         this.libraryService = libraryService;
         this.libraryPersistenceService = libraryPersistenceService;
+        this.inspirationService = inspirationService;
     }
 
     /**
@@ -38,8 +36,8 @@ public class RoomGenerationService {
      * Returns a CompletableFuture that completes when all exit links have been established.
      * This ensures that discardUnusedRooms can safely query the exit map without race conditions.
      *
-     * @param currentRoom the current room whose exits should be pre-generated
-     * @param player the player whose skills should influence room generation
+     * @param currentRoom    the current room whose exits should be pre-generated
+     * @param player         the player whose skills should influence room generation
      * @param roomRepository the session-scoped repository (passed as parameter, not injected)
      */
     public CompletableFuture<Void> prepareAdjacentRooms(Room currentRoom, Player player, RoomRepository roomRepository) {
@@ -53,17 +51,15 @@ public class RoomGenerationService {
 
             // Only generate if we haven't already
             if (roomRepository.getLinkedRoomId(exitKey) == null) {
-                CompletableFuture<Void> future = generateRoomAsyncInternal(exit, player)
-                        .thenAccept(generatedRoom -> {
-                            // Thread-safe: use repository map instead of mutating exit
-                            roomRepository.linkExit(exitKey, generatedRoom.id());
-                            roomRepository.saveGeneratedRoom(generatedRoom);
-                            log.debug("Room generated and linked to exit: {}", exit.direction());
-                        })
-                        .exceptionally(ex -> {
-                            log.error("Failed to generate room for exit {}: {}", exit.direction(), ex.getMessage());
-                            return null;
-                        });
+                CompletableFuture<Void> future = generateRoomAsyncInternal(exit, player).thenAccept(generatedRoom -> {
+                    // Thread-safe: use repository map instead of mutating exit
+                    roomRepository.linkExit(exitKey, generatedRoom.id());
+                    roomRepository.saveGeneratedRoom(generatedRoom);
+                    log.debug("Room generated and linked to exit: {}", exit.direction());
+                }).exceptionally(ex -> {
+                    log.error("Failed to generate room for exit {}: {}", exit.direction(), ex.getMessage());
+                    return null;
+                });
                 futures.add(future);
             }
         }
@@ -77,7 +73,7 @@ public class RoomGenerationService {
      * Delegates to the internal async method to ensure the @Async annotation is effective
      * when called from external beans.
      *
-     * @param exit the exit the room should connect to
+     * @param exit   the exit the room should connect to
      * @param player the player whose skills influence room generation
      * @return a CompletableFuture containing the generated room
      */
@@ -91,7 +87,7 @@ public class RoomGenerationService {
      * By marking the private method @Async instead of the public one, we avoid
      * Spring AOP proxy issues when called from other methods in this service.
      *
-     * @param exit the exit the room should connect to
+     * @param exit   the exit the room should connect to
      * @param player the player whose skills influence room generation
      * @return a CompletableFuture containing the generated room
      */
@@ -101,6 +97,7 @@ public class RoomGenerationService {
         String availableItems = String.join(", ", libraryService.getAllItemIds());
         String availableNpcs = String.join(", ", libraryService.getAllNpcIds());
         String playerSkills = player.getSkills().toString();
+        String inspirationSection = buildInspirationSection();
 
         // 2. Build the Prompt (Refined for better AI logic)
         String userPrompt = """
@@ -111,18 +108,17 @@ public class RoomGenerationService {
                 1. Select up to 2 items from this library: [%s].
                 2. Select up to 1 NPC from this library: [%s].
                 3. Create 1-3 creative exits.
-                4. Logic: If the player lacks movement skills (flight/climbing), don't provide exits requiring them.
-                
-                Return a JSON object with 'title', 'description', 'exits', 'npcIds', 'itemIds', and 'skillOpportunities'.
-                """.formatted(exit.description(), playerSkills, availableItems, availableNpcs);
+                4. Logic: If the player lacks movement skills (flight/climbing), \
+                don't provide exits requiring them.
+                %s
+                Return a JSON object with 'title', 'description', 'exits', \
+                'npcIds', 'itemIds', and 'skillOpportunities'.
+                """.formatted(exit.description(), playerSkills, availableItems, availableNpcs, inspirationSection);
 
         try {
             // 3. Call Gemini
             // We generate the raw data first, then "stamp" our ID on it.
-            Room rawRoom = chatClient.prompt()
-                    .user(userPrompt)
-                    .call()
-                    .entity(Room.class);
+            Room rawRoom = chatClient.prompt().user(userPrompt).call().entity(Room.class);
 
             // Check for null response from AI model
             if (rawRoom == null) {
@@ -130,24 +126,45 @@ public class RoomGenerationService {
             }
 
             // 4. Create the final Record with a UUID (since Records are immutable)
-            Room finalizedRoom = new Room(
-                    UUID.randomUUID().toString(),
-                    rawRoom.title(),
-                    rawRoom.description(),
-                    rawRoom.exits(),
-                    rawRoom.npcIds(),
-                    rawRoom.itemIds(),
-                    rawRoom.skillOpportunities()
-            );
+            Room finalizedRoom = new Room(UUID.randomUUID().toString(), rawRoom.title(), rawRoom.description(), rawRoom.exits(), rawRoom.npcIds(), rawRoom.itemIds(), rawRoom.skillOpportunities());
 
             // 5. Capture any newly referenced items and NPCs
             captureNewItemsAndNpcs(finalizedRoom);
+            harvestInspiration(finalizedRoom);
 
             return CompletableFuture.completedFuture(finalizedRoom);
         } catch (Exception e) {
             log.error("AI Generation Error: ", e);
             return CompletableFuture.failedFuture(e);
         }
+    }
+
+    private String buildInspirationSection() {
+        List<RoomInspirationService.RoomInspiration> roomSamples = inspirationService.sampleRooms(3);
+        List<String> skillSamples = inspirationService.sampleSkillPatterns(3);
+
+        if (roomSamples.isEmpty() && skillSamples.isEmpty()) return "";
+
+        StringBuilder sb = new StringBuilder(
+                "\nFor atmospheric inspiration (do not copy — use as style reference only):\n");
+
+        if (!roomSamples.isEmpty()) {
+            sb.append("Room atmosphere examples:\n");
+            roomSamples.forEach(r ->
+                    sb.append(String.format("- \"%s\": %s%n", r.title(), r.description())));
+        }
+
+        if (!skillSamples.isEmpty()) {
+            sb.append("Skill opportunity ideas to consider:\n");
+            skillSamples.forEach(s -> sb.append("- ").append(s).append("\n"));
+        }
+
+        return sb.toString();
+    }
+
+    private void harvestInspiration(Room room) {
+        inspirationService.addRoom(room.title(), room.description());
+        inspirationService.addSkillOpportunities(room.skillOpportunities());
     }
 
     /**
@@ -196,9 +213,6 @@ public class RoomGenerationService {
         // Remove trailing numbers and underscore
         String withoutNumber = id.replaceAll("_\\d+$", "");
         // Replace underscores with spaces and capitalize
-        return java.util.Arrays.stream(withoutNumber.split("_"))
-                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
-                .reduce((a, b) -> a + " " + b)
-                .orElse(id);
+        return java.util.Arrays.stream(withoutNumber.split("_")).map(word -> word.substring(0, 1).toUpperCase() + word.substring(1)).reduce((a, b) -> a + " " + b).orElse(id);
     }
 }

@@ -47,14 +47,43 @@ public class GameController {
      * GET endpoint to trigger CSRF token generation and game initialization
      */
     @GetMapping("/init")
-    public String initGame(HttpServletRequest request) {
+    public InitResponse initGame(HttpServletRequest request) {
         // Access the CSRF token to force Spring Security to generate and set it in a cookie
         CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
         if (csrfToken != null) {
             // Token is now available in the XSRF-TOKEN cookie for the frontend to use
             csrfToken.getToken();
         }
-        return "{\"status\": \"initialized\"}";
+
+        if (!state.isInitialized()) {
+            startRoomGeneration();
+        }
+
+        return new InitResponse("initializing");
+    }
+
+    @GetMapping("/ready")
+    public ReadyResponse isReady() {
+        return new ReadyResponse(state.isInitialized(),
+                state.isInitialized() ? state.getCurrentRoom().description() : null);
+    }
+
+    public record InitResponse(String status) {
+    }
+
+    public record ReadyResponse(boolean ready, String firstRoomDescription) {
+    }
+
+    // Extract the generation logic from handleAction into a shared method:
+    private synchronized void startRoomGeneration() {
+        if (state.isInitialized()) return; // guard against double-init
+        Exit startExit = new Exit("The Beginning", "A mysterious starting point");
+        roomGenerationService.generateRoomAsync(startExit, state.getPlayer())
+                .thenAccept(room -> {
+                    state.updateRoom(room);
+                    state.setInitialized(true);
+                    roomGenerationService.prepareAdjacentRooms(room, state.getPlayer(), roomRepository);
+                });
     }
 
     @PostMapping("/action")
@@ -129,5 +158,51 @@ public class GameController {
         RoomView view = RoomViewMapper.toRoomView(state.getCurrentRoom(), libraryService);
 
         return new GameResponse(desc, state.getPlayer(), view, isDead);
+    }
+
+    @PostMapping("/save")
+    public GameResponse saveGame() {
+        request.changeSessionId();
+        Exit exit;
+        try {
+            exit = new Exit("Saving", "Your progress is being saved...");
+            Room saveRoom = roomGenerationService.generateRoomAsync(exit, state.getPlayer()).get();
+            roomRepository.saveGeneratedRoom(saveRoom);
+            String saveCode = request.getSession().getId();
+            // Save the current game state and the active rooms in the repository
+            SaveGameService saveGameService = new SaveGameService();
+            saveGameService.save(saveCode, state, roomRepository);
+            return createResponse("Your journey is preserved. Use this code to load later: " + saveCode);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error("Game saving interrupted", e);
+            return createResponse("The void resists your attempt to save. (Error during save)");
+        } catch (Exception e) {
+            log.error("Failed to save game", e);
+            return createResponse("The void resists your attempt to save. (Error during save)");
+        }
+    }
+
+    @PostMapping("/load")
+    public GameResponse loadGame(@RequestBody SaveCodeRequest req) {
+        try {
+            request.changeSessionId();
+            SaveGameService saveGameService = new SaveGameService();
+            Optional<SaveGameService.SaveData> saveData = saveGameService.load(req.saveCode());
+
+            if (saveData.isEmpty()) {
+                return createResponse("The void holds no record of this journey. Are you sure of that code?");
+            }
+
+            SaveGameService.SaveData data = saveData.get();
+            state.restore(data.state());
+            roomRepository.restore(data.repo());
+
+            Room loadedRoom = state.getCurrentRoom();
+            return createResponse("Your journey resumes... " + loadedRoom.description());
+        } catch (Exception e) {
+            log.error("Failed to load game", e);
+            return createResponse("The void resists your attempt to restore. (Error during load)");
+        }
     }
 }

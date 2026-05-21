@@ -33,4 +33,14 @@ public class GameState implements Serializable {
     public boolean isGameOver() {
         return player.isDead();
     }
+
+    public void restore(GameState saved) {
+        this.player.setCurrentHealth(saved.player.getCurrentHealth());
+        this.player.setMaxHealth(saved.player.getMaxHealth());
+        this.player.setInjuryReduction(saved.player.getInjuryReduction());
+        this.player.getSkills().putAll(saved.player.getSkills());
+        saved.player.getSkillXp().forEach(this.player::updateSkillXp);
+        this.currentRoom = saved.currentRoom;
+        this.initialized = saved.initialized;
+    }
 }
