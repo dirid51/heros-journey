@@ -1,512 +1,718 @@
 game-library:
   npcs:
-  - id: shadow_merchant_01
-    name: Silas the Shady
-    goal: To trade forbidden artifacts for life essence.
-    description: A hooded figure leaning against a wall, clinking coins.
-  - id: cursed_magic_merchant_01
-    name: Uncle Jenkins
-    goal: To find someone who will unknowingly bring him an item that can break his
-      cursed earring.
-    description: A halfling wizard vibrating with badly-concealed agony, behind a
-      cluttered stall of rare magical goods. Screams at low offers.
-  - id: mildly_cursed_shopkeeper_01
-    name: Eddy of the Emporium
-    goal: To sell things, make modest profit, and figure out why there are noises
-      coming from the basement.
-    description: A sweating half-elf in plaid robes and a loosened tie, grinning like
-      a man who has accepted his circumstances. His shop is enormous and inexplicable.
-  - id: halfblood_trader_01
-    name: Trugagh Ironfury
-    goal: To sell his wares — real, fanciful, and outright fabricated — to anyone
-      who will buy.
-    description: A towering, red-haired half-orc trader with a scar on his chest and
-      a smile that means business. Smarter than he looks and well aware of it.
-  - id: candy_mule_01
-    name: Dottie
-    goal: To keep her employer happy and her protected arrangement intact, because
-      three meals a day is everything.
-    description: A bright-eyed girl with pigtails and a tray of confections hanging
-      from her neck, skipping down the street. Not everything in that tray is candy.
-  - id: swashbuckler_cursed_01
-    name: Lorenzo the Blade
-    goal: To find the evil wizard who planted a soul-draining gem in his chest and
-      kill him dramatically.
-    description: A flamboyant half-orc in a plumed hat and frilled cuffs, who narrates
-      his own heroics in real time. The gem glowing in his sternum is not an accessory.
-  - id: bounty_hunter_01
-    name: Balmour
-    goal: To bring in his mark cleanly, by the code — no sucker punches, no ranged
-      attacks, no compromises.
-    description: A hulking blue dragonborn wrapped in a cloak that conceals an alarming
-      quantity of weapons. Methodical, almost meditative, until he isn't.
-  - id: grieving_sailor_01
-    name: Thommik the Bull
-    goal: To ruin Captain Turvad the Bold's life, reputation, and livelihood by any
-      creative means available.
-    description: A scarred, broad-shouldered sailor with a blonde braid and a star
-      tattoo across his throat, friendly to a fault until Turvad's name comes up.
-  - id: long_winded_ranger_01
-    name: Berwynn Maddox
-    goal: To find his missing brother Maddox Maddox, who vanished on a hunt.
-    description: A handsome young hunter from the deep backwoods who cannot tell a
-      short story. He is currently telling you one right now and shows no signs of
-      stopping.
-  - id: halfling_vigilante_01
-    name: Roscoe Whitethorn
-    goal: To protect the innocent and humiliate the guilty, especially from elevated
-      positions with buckets.
-    description: A mild-mannered halfling leatherworker by day. By night, a deranged
-      mime in leather armor who drops things on criminals from rooftops.
-  - id: hazel_halfling_01
-    name: Hazel Walnut
-    goal: To find a good enough excuse to get into a proper fight, ideally today.
-    description: A rosy-cheeked halfling who picks daisies between brawls and carries
-      a bottomless flask of ale. Do not let the flowers fool you.
-  - id: fortune_teller_01
-    name: Madame Rhavari
-    goal: To uncover the truth of the universe through forgotten dungeons, ancient
-      scrolls, and occasional prophecy.
-    description: A middle-aged tiefling woman with a smoky voice and violet eyes,
-      traveling in a wagon stuffed with divining equipment and hard liquor. Always
-      smiling, as if she knows the punchline.
-  - id: travelling_scholar_01
-    name: Riala the Grim
-    goal: To hunt the Fey creature that cursed her — every word she speaks becomes
-      a lie, warping reality around her.
-    description: A stern, dark-haired woman who communicates almost entirely in writing,
-      with a scroll case perpetually strapped to her back. She gestures a lot.
-  - id: half_drow_scribe_01
-    name: Mynos
-    goal: To acquire any artifact, book, or testimony concerning the Drow, the people
-      he will never be allowed to visit.
-    description: A quiet figure in heavy robes and wrapped scarves, who avoids eye
-      contact and pays well for information. The daggers concealed in his robes are
-      a formality.
-  - id: construct_librarian_01
-    name: Cypher
-    goal: To protect the knowledge inside the library at any cost, and wait for whoever
-      the creator foretold.
-    description: A still, expressionless woman with amethyst eyes who appears from
-      nowhere inside the library's walls. She blinks politely but does not breathe
-      unless she remembers to.
-  - id: tarot_mage_01
-    name: Chihiro
-    goal: To find a mythical cursed tarot deck rumored to have an evil god sealed
-      inside it.
-    description: A sharp-featured half-elf in flowing skirts and leather armor, who
-      reads fortunes for coin and fights with battle-magic cards. Her collection of
-      trapped magical things is extensive and alarming.
-  - id: peaceful_cleric_01
-    name: Brother Aron
-    goal: To help the sick and the poor, by any nonviolent means available, even inconvenient
-      ones.
-    description: An elderly man in frayed brown robes with bandage-wrapped hands,
-      accompanied by a well-meaning young goblin who is still learning what 'good'
-      means.
-  - id: white_necromancer_01
-    name: Voduna
-    goal: To use the willing dead to protect and serve the living, and to eventually
-      be accepted for it.
-    description: A dark-skinned woman with baggy eyes and old stitch scars, dressed
-      in practical mortician's clothes. Her undead all wear silver half-moon amulets.
-      She is very lonely.
-  - id: blacksmith_paladin_01
-    name: Barryn Buantillo
-    goal: To spread the light of the Moon Goddess to every corner of the world, one
-      good deed at a time.
-    description: A nearly blind dwarf woman in scalemail, with a silver-plated hammer
-      and deep, passionate opinions about quiche. Her eyes are filmed with white from
-      too many divine visions.
-  - id: vengeful_paladin_01
-    name: Va'nise the Cold
-    goal: To find the Lich whose deal consumed his wife and daughter, and unmake it.
-    description: A pale eladrin with black fey markings and a permanent expression
-      of profound disappointment. His dry wit is indistinguishable from contempt,
-      which creates social complications.
-  - id: butler_spy_01
-    name: Richard Cufflink
-    goal: To quietly resolve situations that might embarrass his graduates, using
-      adventurers as plausible intermediaries.
-    description: An impeccably dressed elderly man with a patient smile and golden
-      cufflinks, who runs a school for butlers that is also, quietly, the most comprehensive
-      intelligence network in the region.
-  - id: auntie_jade_01
-    name: Nana Jade
-    goal: To enjoy a peaceful retirement, tend her knitting circle spy network, and
-      occasionally help a rogue in need.
-    description: A wrinkled grandmother with lock picks hidden in her bun, offering
-      tea from a 'World's Best Granny' mug. She is completely unbothered by threats.
-      This should worry you.
-  - id: halfblood_thief_01
-    name: Ricardo the Handsome Bandit
-    goal: To rob you cleanly, give you a fair chance to surrender, and leave with
-      everyone's dignity mostly intact.
-    description: A foppish tiefling in a red bandana mask who introduces himself at
-      every opportunity with the same scripted speech. He means every word of it.
-  - id: nonchalant_dealer_01
-    name: Tim Gade
-    goal: To find something genuinely interesting to do, in between the death threats.
-    description: A man who dresses like someone who has given up, and speaks like
-      someone who finds the whole situation mildly amusing. He has worked for both
-      sides of every conflict and is still here.
-  - id: doppelganger_bandit_01
-    name: Alianor Lunadream
-    goal: To use this group of do-gooder bandits as a tool, and be gone before anyone
-      figures out what happened to the real Alianor.
-    description: A red-haired elven woman with a Robin Hood reputation and eyes that
-      are slightly too still when she isn't speaking. The original is gone. This one
-      is better organized.
-  - id: kobold_warlock_01
-    name: Thoggugz
-    goal: To raise an army for Mephistopheles, using whatever face is most convenient
-      today.
-    description: Almost always appears as a fat halfling with a pleasant smile. The
-      real form — a runty, birthmarked kobold — only surfaces when something goes
-      wrong.
-  - id: cook_barbarian_01
-    name: Bjorn Ironladle
-    goal: To cook with this one rare spice, fight whoever disagrees with his methods,
-      and celebrate both outcomes.
-    description: A goliath the size of a wardrobe who smells permanently of cumin
-      and mead, with cooking knives and a bone greatsword sharing the same belt. Competitive
-      in both professions.
-  - id: bartender_ranger_01
-    name: Geoman Redleathers
-    goal: To keep the region safe, find that stolen bottle of 300-year-old Elven port,
-      and hear a good story.
-    description: A greying, broad-shouldered bartender who occasionally vaults the
-      counter and runs into the woods without explanation. He always comes back. He
-      never explains.
-  - id: elderly_fisherman_01
-    name: Frightenin' Joe
-    goal: To fish in peace, dispense bayou wisdom, and find someone young enough to
-      deal with whatever is sinking the trade boats.
-    description: An ancient frogfolk elder in a wide rice hat with a beard down to
-      his knees, sitting in a boat. Polite, quippy, and entirely too comfortable with
-      death.
-  - id: halfling_playwright_01
-    name: Wil Waterhous
-    goal: To stage a production that exposes a conspiracy, using adventurers as unwitting
-      actors.
-    description: A small halfling in an embroidered waistcoat and lacy ascot, with
-      heavy-lidded eyes that miss nothing and a wit sharper than his silvered rapier.
-  - id: candyshop_barmaid_01
-    name: Sadeh Son'n
-    goal: To find out what really happened to her childhood friend, without having
-      to go anywhere dangerous herself.
-    description: A quiet barmaid who speaks her mind when it matters and goes silent
-      the rest of the time. She has a page from a spellbook she cannot read and refuses
-      to give up.
-  - id: feral_wolf_01
-    name: Hungry Wolf
-    goal: To find its next meal.
-    description: A lean, grey-furred beast with glowing amber eyes.
-  - id: giant_crow_spirit_01
-    name: Mara
-    goal: To guard her nesting grove and eat things that are already dead, ideally
-      well-fermented.
-    description: A horse-sized crow with amber eyes that look through you rather than
-      at you, and a beak still decorated with old evidence. She finds mortals interesting.
-      Pre-eaten ones, especially.
-  - id: lost_druid_01
-    name: Fweeward of the Swamp
-    goal: To protect the Great Prince, whose identity he has just now decided is you.
-    description: A tiny, filthy old man who smells of bog water and carries jars of
-      frogs, convinced his cosmic masters are searching for him. Extraordinarily powerful.
-      Hopelessly confused.
-  - id: storm_giant_wrestler_01
-    name: Ruski
-    goal: To wrestle something interesting and, if it impresses him, help it with
-      whatever it needs.
-    description: A pale blue-grey giant with green hair and kraken-hide trousers,
-      lying in a hammock in a tavern that was not built to accommodate him. He will
-      not speak to you until you've had a proper go at him.
-  - id: curse_magic_merchant_01
-    name: Curse Magic Merchant
-    goal: To sell cursed magical items to adventurers, and to find someone who will buy the
-      one item he has that can break his own curse.
-    description: A mysterious entity encountered during exploration.
+    - id: shadow_merchant_01
+      name: Silas the Shady
+      goal: To trade forbidden artifacts for life essence.
+      description: A hooded figure leaning against a wall, clinking coins.
+    - id: cursed_magic_merchant_01
+      name: Uncle Jenkins
+      goal: To find someone who will unknowingly bring him an item that can break his cursed earring.
+      description: A halfling wizard vibrating with badly-concealed agony, behind a cluttered stall of rare magical goods. Screams at low offers.
+    - id: mildly_cursed_shopkeeper_01
+      name: Eddy of the Emporium
+      goal: To sell things, make modest profit, and figure out why there are noises coming from the basement.
+      description: A sweating half-elf in plaid robes and a loosened tie, grinning like a man who has accepted his circumstances. His shop is enormous and inexplicable.
+    - id: halfblood_trader_01
+      name: Trugagh Ironfury
+      goal: To sell his wares — real, fanciful, and outright fabricated — to anyone who will buy.
+      description: A towering, red-haired half-orc trader with a scar on his chest and a smile that means business. Smarter than he looks and well aware of it.
+    - id: candy_mule_01
+      name: Dottie
+      goal: To keep her employer happy and her protected arrangement intact, because three meals a day is everything.
+      description: A bright-eyed girl with pigtails and a tray of confections hanging from her neck, skipping down the street. Not everything in that tray is candy.
+    - id: swashbuckler_cursed_01
+      name: Lorenzo the Blade
+      goal: To find the evil wizard who planted a soul-draining gem in his chest and kill him dramatically.
+      description: A flamboyant half-orc in a plumed hat and frilled cuffs, who narrates his own heroics in real time. The gem glowing in his sternum is not an accessory.
+    - id: bounty_hunter_01
+      name: Balmour
+      goal: To bring in his mark cleanly, by the code — no sucker punches, no ranged attacks, no compromises.
+      description: A hulking blue dragonborn wrapped in a cloak that conceals an alarming quantity of weapons. Methodical, almost meditative, until he isn't.
+    - id: grieving_sailor_01
+      name: Thommik the Bull
+      goal: To ruin Captain Turvad the Bold's life, reputation, and livelihood by any creative means available.
+      description: A scarred, broad-shouldered sailor with a blonde braid and a star tattoo across his throat, friendly to a fault until Turvad's name comes up.
+    - id: long_winded_ranger_01
+      name: Berwynn Maddox
+      goal: To find his missing brother Maddox Maddox, who vanished on a hunt.
+      description: A handsome young hunter from the deep backwoods who cannot tell a short story. He is currently telling you one right now and shows no signs of stopping.
+    - id: halfling_vigilante_01
+      name: Roscoe Whitethorn
+      goal: To protect the innocent and humiliate the guilty, especially from elevated positions with buckets.
+      description: A mild-mannered halfling leatherworker by day. By night, a deranged mime in leather armor who drops things on criminals from rooftops.
+    - id: hazel_halfling_01
+      name: Hazel Walnut
+      goal: To find a good enough excuse to get into a proper fight, ideally today.
+      description: A rosy-cheeked halfling who picks daisies between brawls and carries a bottomless flask of ale. Do not let the flowers fool you.
+    - id: fortune_teller_01
+      name: Madame Rhavari
+      goal: To uncover the truth of the universe through forgotten dungeons, ancient scrolls, and occasional prophecy.
+      description: A middle-aged tiefling woman with a smoky voice and violet eyes, traveling in a wagon stuffed with divining equipment and hard liquor. Always smiling, as if she knows the punchline.
+    - id: travelling_scholar_01
+      name: Riala the Grim
+      goal: To hunt the Fey creature that cursed her — every word she speaks becomes a lie, warping reality around her.
+      description: A stern, dark-haired woman who communicates almost entirely in writing, with a scroll case perpetually strapped to her back. She gestures a lot.
+    - id: half_drow_scribe_01
+      name: Mynos
+      goal: To acquire any artifact, book, or testimony concerning the Drow, the people he will never be allowed to visit.
+      description: A quiet figure in heavy robes and wrapped scarves, who avoids eye contact and pays well for information. The daggers concealed in his robes are a formality.
+    - id: construct_librarian_01
+      name: Cypher
+      goal: To protect the knowledge inside the library at any cost, and wait for whoever the creator foretold.
+      description: A still, expressionless woman with amethyst eyes who appears from nowhere inside the library's walls. She blinks politely but does not breathe unless she remembers to.
+    - id: tarot_mage_01
+      name: Chihiro
+      goal: To find a mythical cursed tarot deck rumored to have an evil god sealed inside it.
+      description: A sharp-featured half-elf in flowing skirts and leather armor, who reads fortunes for coin and fights with battle-magic cards. Her collection of trapped magical things is extensive and alarming.
+    - id: peaceful_cleric_01
+      name: Brother Aron
+      goal: To help the sick and the poor, by any nonviolent means available, even inconvenient ones.
+      description: An elderly man in frayed brown robes with bandage-wrapped hands, accompanied by a well-meaning young goblin who is still learning what 'good' means.
+    - id: white_necromancer_01
+      name: Voduna
+      goal: To use the willing dead to protect and serve the living, and to eventually be accepted for it.
+      description: A dark-skinned woman with baggy eyes and old stitch scars, dressed in practical mortician's clothes. Her undead all wear silver half-moon amulets. She is very lonely.
+    - id: blacksmith_paladin_01
+      name: Barryn Buantillo
+      goal: To spread the light of the Moon Goddess to every corner of the world, one good deed at a time.
+      description: A nearly blind dwarf woman in scalemail, with a silver-plated hammer and deep, passionate opinions about quiche. Her eyes are filmed with white from too many divine visions.
+    - id: vengeful_paladin_01
+      name: Va'nise the Cold
+      goal: To find the Lich whose deal consumed his wife and daughter, and unmake it.
+      description: A pale eladrin with black fey markings and a permanent expression of profound disappointment. His dry wit is indistinguishable from contempt, which creates social complications.
+    - id: butler_spy_01
+      name: Richard Cufflink
+      goal: To quietly resolve situations that might embarrass his graduates, using adventurers as plausible intermediaries.
+      description: An impeccably dressed elderly man with a patient smile and golden cufflinks, who runs a school for butlers that is also, quietly, the most comprehensive intelligence network in the region.
+    - id: auntie_jade_01
+      name: Nana Jade
+      goal: To enjoy a peaceful retirement, tend her knitting circle spy network, and occasionally help a rogue in need.
+      description: A wrinkled grandmother with lock picks hidden in her bun, offering tea from a 'World's Best Granny' mug. She is completely unbothered by threats. This should worry you.
+    - id: halfblood_thief_01
+      name: Ricardo the Handsome Bandit
+      goal: To rob you cleanly, give you a fair chance to surrender, and leave with everyone's dignity mostly intact.
+      description: A foppish tiefling in a red bandana mask who introduces himself at every opportunity with the same scripted speech. He means every word of it.
+    - id: nonchalant_dealer_01
+      name: Tim Gade
+      goal: To find something genuinely interesting to do, in between the death threats.
+      description: A man who dresses like someone who has given up, and speaks like someone who finds the whole situation mildly amusing. He has worked for both sides of every conflict and is still here.
+    - id: doppelganger_bandit_01
+      name: Alianor Lunadream
+      goal: To use this group of do-gooder bandits as a tool, and be gone before anyone figures out what happened to the real Alianor.
+      description: A red-haired elven woman with a Robin Hood reputation and eyes that are slightly too still when she isn't speaking. The original is gone. This one is better organized.
+    - id: kobold_warlock_01
+      name: Thoggugz
+      goal: To raise an army for Mephistopheles, using whatever face is most convenient today.
+      description: Almost always appears as a fat halfling with a pleasant smile. The real form — a runty, birthmarked kobold — only surfaces when something goes wrong.
+    - id: cook_barbarian_01
+      name: Bjorn Ironladle
+      goal: To cook with this one rare spice, fight whoever disagrees with his methods, and celebrate both outcomes.
+      description: A goliath the size of a wardrobe who smells permanently of cumin and mead, with cooking knives and a bone greatsword sharing the same belt. Competitive in both professions.
+    - id: bartender_ranger_01
+      name: Geoman Redleathers
+      goal: To keep the region safe, find that stolen bottle of 300-year-old Elven port, and hear a good story.
+      description: A greying, broad-shouldered bartender who occasionally vaults the counter and runs into the woods without explanation. He always comes back. He never explains.
+    - id: elderly_fisherman_01
+      name: Frightenin' Joe
+      goal: To fish in peace, dispense bayou wisdom, and find someone young enough to deal with whatever is sinking the trade boats.
+      description: An ancient frogfolk elder in a wide rice hat with a beard down to his knees, sitting in a boat. Polite, quippy, and entirely too comfortable with death.
+    - id: halfling_playwright_01
+      name: Wil Waterhous
+      goal: To stage a production that exposes a conspiracy, using adventurers as unwitting actors.
+      description: A small halfling in an embroidered waistcoat and lacy ascot, with heavy-lidded eyes that miss nothing and a wit sharper than his silvered rapier.
+    - id: candyshop_barmaid_01
+      name: Sadeh Son'n
+      goal: To find out what really happened to her childhood friend, without having to go anywhere dangerous herself.
+      description: A quiet barmaid who speaks her mind when it matters and goes silent the rest of the time. She has a page from a spellbook she cannot read and refuses to give up.
+    - id: feral_wolf_01
+      name: Hungry Wolf
+      goal: To find its next meal.
+      description: A lean, grey-furred beast with glowing amber eyes.
+    - id: giant_crow_spirit_01
+      name: Mara
+      goal: To guard her nesting grove and eat things that are already dead, ideally well-fermented.
+      description: A horse-sized crow with amber eyes that look through you rather than at you, and a beak still decorated with old evidence. She finds mortals interesting. Pre-eaten ones, especially.
+    - id: lost_druid_01
+      name: Fweeward of the Swamp
+      goal: To protect the Great Prince, whose identity he has just now decided is you.
+      description: A tiny, filthy old man who smells of bog water and carries jars of frogs, convinced his cosmic masters are searching for him. Extraordinarily powerful. Hopelessly confused.
+    - id: storm_giant_wrestler_01
+      name: Ruski
+      goal: To wrestle something interesting and, if it impresses him, help it with whatever it needs.
+      description: A pale blue-grey giant with green hair and kraken-hide trousers, lying in a hammock in a tavern that was not built to accommodate him. He will not speak to you until you've had a proper go at him.
+    - id: curse_magic_merchant_01
+      name: Curse Magic Merchant
+      goal: To sell cursed magical items to adventurers, and to find someone who will buy the one item he has that can break his own curse.
+      description: A mysterious entity encountered during exploration.
+    - id: retired_assassin_baker_01
+      name: Marta Ashveil
+      goal: To run a quiet bakery, retire completely, and never be found by anyone from her previous life.
+      description: A small, soft-spoken woman with flour on her apron and a knife callus on every finger. Her bread is magnificent. Her smile does not reach her eyes. The man who came looking for her last spring has not been seen since.
+    - id: incompetent_optimist_knight_01
+      name: Sir Aldric the Unbroken
+      goal: To prove himself worthy of a knighthood he has technically already been granted, in the face of mounting evidence.
+      description: A gangly young man in armour held together with baling wire and earnest intention, who has never once won a fight by skill alone. He has, however, won several by accident, and he counts them all.
+    - id: bored_immortal_elf_01
+      name: Elesindra of the Long Watch
+      goal: To find one — just one — thing that still surprises her.
+      description: An ancient elven woman dressed in quietly expensive clothes, who listens to everything you say with the expression of someone who has heard this exact story nine hundred times. She is rooting for you. She just cannot quite hide that she already knows how it ends.
+    - id: gnome_inventor_01
+      name: Cobble
+      goal: To solve the bridge problem, the cart problem, the drainage problem, and whatever new problem his solution to the first three creates.
+      description: A gnome permanently dusted in ash and grease, who speaks in blueprints and whose inventions work precisely as designed, which is never quite how anyone expected. His hands are missing two fingers. He calls this a good ratio.
+    - id: embarrassed_werewolf_01
+      name: Gared Fenn
+      goal: To make it through the full moon without anyone noticing, which has worked exactly twice.
+      description: A broad, gentle farmhand with apologetic eyes and an inexplicable amount of mud on him at all hours. He over-tips at taverns. He always sits near the exit.
+    - id: fake_guild_conman_01
+      name: Maester Dolvane
+      goal: To collect registration fees for the Adventurers' Guild of Pelwick, which he founded, owns, and is the only member of.
+      description: A portly man in robes he had tailored to suggest authority, with a wax-sealed charter he wrote himself and a handshake that goes on two beats too long. He is not a fraud, he insists. He is a networking opportunity.
+    - id: polite_vampire_01
+      name: Countess Serael
+      goal: To establish legitimate residency, pay her taxes, and be accepted as a normal member of the community, despite everything.
+      description: A pale noblewoman of impeccable manners and uncertain age who only comes out after dark, keeps the shutters drawn, and whose housekeeper has never been seen twice. She sends very nice notes to her neighbours. She would like to have them over for dinner.
+    - id: obsessive_cartographer_01
+      name: Pell Ironside
+      goal: To map every road, ruin, and river in the known world except the village she grew up in, which she refuses to discuss.
+      description: A lean, sun-scorched woman covered in ink stains who can tell you the elevation of anywhere you've ever been, unless you mention Yarwick Fen. Then she just looks out the window for a while.
+    - id: merfolk_diplomat_01
+      name: Kessrix of the Tidal Seat
+      goal: To negotiate a trade agreement, if he can just figure out why land-people insist on wearing so much cloth.
+      description: A blue-green merfolk in a custom wheeled salt tank, formally dressed from the waist up and confused about everything else at a fundamental level. He is an excellent diplomat. Chairs remain a personal enemy.
+    - id: bad_oracle_01
+      name: Orvessa the Foreseen
+      goal: To deliver accurate prophecy, which she always does, in the meter of a limerick, which she cannot help.
+      description: A hollow-eyed seer who speaks only in verse that scans perfectly and rhymes impeccably and makes it almost impossible to determine what she actually means until it is too late. This frustrates her as much as anyone.
+    - id: death_duelist_01
+      name: Henrick the Still Standing
+      goal: To live long enough to make Death feel genuinely embarrassed about the whole thing.
+      description: An old soldier who challenged Death to a formal duel forty years ago, won on a technicality, and has been pointedly not dying ever since. He checks over his shoulder a lot. He has good reason to.
+    - id: forgotten_spy_01
+      name: Vesna Clasp
+      goal: To figure out who she is actually working for at this point, before it becomes a problem.
+      description: A woman with three sets of documents, five accents, and a habit of pausing mid-sentence as though she is remembering which version of herself is currently speaking. She is very good at her job. She is no longer sure what her job is.
+    - id: reformed_cultist_01
+      name: Brother Elwick
+      goal: To run a support group for ex-cult members without accidentally starting another one.
+      description: A twitchy man in plain clothes who speaks with the cadence of someone who used to give sermons and hasn't fully shaken the habit. His meetings have three rules, a reading list, and a very troubling amount of chanting.
+    - id: deluded_guardsman_01
+      name: Corporal Rennick
+      goal: To fulfill the prophecy he is certain applies to him, specifically, before his shift ends.
+      description: A city guardsman of absolutely average ability who found a torn piece of prophecy in a gutter six months ago and has been connecting dots ever since. He is always slightly out of breath. He carries the paper everywhere.
+    - id: one_dish_chef_01
+      name: Ulli Stonemouth
+      goal: To cook her dish — the one dish, the only dish, the correct dish — for someone who deserves it.
+      description: A barrel-shaped woman who cooks exactly one thing - a braised root stew of such transcendent perfection that people have changed religions after eating it. She will not tell you what is in it. She will not make anything else. She will not explain herself to you.
+    - id: structurally_impossible_mason_01
+      name: Dorak Vaulthammer
+      goal: To finish the tower, which will stand because he says it will stand, and that's the end of it.
+      description: A one-eyed dwarven mason who builds things that violate four separate principles of load and stress and have not, to date, fallen down. Architects who review his work develop a nervous tic. His buildings outlast their critics.
+    - id: river_spirit_merchant_01
+      name: Liss of the Bend
+      goal: To understand commerce, which she has been studying for eleven years with increasing bafflement.
+      description: A river spirit in human shape who grasps bartering perfectly but finds the concept of interest morally baffling and taxation actively offensive at a spiritual level. She pays for things in excellent river stones and cannot understand why this creates problems.
+    - id: aged_swordsmaster_01
+      name: Daina Felcross
+      goal: To find one student worth teaching before her hands give out entirely.
+      description: A small, grey-haired woman who moves like water and has not lost a fight since she was nineteen. She watches fighters with the expression of a master carpenter watching someone whittle with a spoon. She does not compliment easily. She has not complimented anyone in four years.
+    - id: gnome_locksmith_01
+      name: Pricket
+      goal: To design the lock that has never been picked, then prove it cannot be picked, then be picked, then do better.
+      description: A gnome locksmith who has spent forty years in an ongoing personal war with the concept of security. Every lock in his shop is one he built and that someone beat. The trophies are arranged by how long they held. His current project has been holding for three years. He looks tired.
+    - id: dwarven_nursemaid_01
+      name: Durra Stoneshield
+      goal: To keep these children alive, fed, and out of the well, in that order.
+      description: A gruff, barrel-shaped dwarf with braided grey hair, who has raised seventeen children not her own and has strong opinions about everything they are doing wrong. Her hugs have been described as being embraced by a wall. The children ask for them anyway.
+    - id: weather_musician_01
+      name: Finn Cloudwhisper
+      goal: To perform the piece that ends the drought, without performing the one that ended the town of Mervale.
+      description: A reed-thin man with storm-grey eyes who plays instruments nobody recognizes, and whose music literally alters local weather. He has his setlist very carefully managed. He does not take requests.
+    - id: plague_doctor_retired_01
+      name: Sable Mourning
+      goal: To practice normal medicine now, if people would stop bringing him things that are not normal medicine.
+      description: A tired physician who still wears the coat and who will tell you, very patiently, that he no longer does outbreak work. He will then spend all night on the outbreak. He always looks like he just came from somewhere terrible, because he usually has.
+    - id: half_giant_small_shop_01
+      name: Greuvah
+      goal: To run a fine watchmaker's shop and retire comfortably, if customers would stop ducking when they walk in.
+      description: A stone giant who sits on the floor because the ceiling does not accommodate standing, and works on watches with tools custom-made for hands the size of cutting boards. His work is extraordinarily precise. Everything else about his presence is not.
+    - id: debtor_gambler_01
+      name: Seff Wren
+      goal: To win back the things he has lost, in reverse order, starting with his name.
+      description: A cheerful man of perpetually uncertain finances who has bet away his house, his horse, one of his names, and what he describes only as 'a year.' He wins often enough to keep playing and loses often enough to be interesting.
+    - id: apprentice_gone_wrong_01
+      name: Tiv
+      goal: To finish the spell his master started and definitely not make it worse.
+      description: A teenager in robes two sizes too large, alone in a workshop with a problem that is slightly too large for his current ability and completely too large for his current confidence. He is trying very hard. Something is on fire. It was on fire when he arrived.
+    - id: war_historian_01
+      name: Bregga Inkhand
+      goal: To document every battle ever fought, correctly, no matter who it embarrasses.
+      description: A stout dwarven historian with an iron-bound journal and a gift for making heroes uncomfortable by being accurate about them. She is not unkind. She is just unwilling to write down anything that didn't happen.
+    - id: reluctant_prophet_01
+      name: Isadora Vell
+      goal: To stop being right about things, or at minimum to stop saying them out loud before they happen.
+      description: A young woman with a haunted expression who keeps starting sentences she clearly wishes she hadn't started. She asks a lot of 'hypothetical' questions. She is never, in fact, asking hypothetically.
+    - id: fence_antiquities_01
+      name: Zolmar the Considerate
+      goal: To move rare, legally ambiguous items between parties in a way that all parties can claim they didn't know about.
+      description: A deeply formal man in spectacles and archive gloves who deals in provenance and euphemism. He never lies. He curates the truth into a shape that is technically accurate and practically useful for everyone involved.
+    - id: exiled_chef_royale_01
+      name: Picante du Bless
+      goal: To reclaim his position as Royal Chef, clear his name of the poisoning charge, and serve a four-course meal that constitutes an apology and a threat simultaneously.
+      description: A man of immaculate bearing and scorched pride, who speaks entirely in culinary metaphor and carries his knives in a velvet roll monogrammed with a crown he no longer has any right to use.
+    - id: talking_cat_familiar_01
+      name: Nox
+      goal: To find the wizard who lost him, or failing that, someone worthy of his company, which has taken longer than expected.
+      description: A midnight-black cat with amber eyes and a manner that suggests he has heard everything you're about to say before and found it wanting. He speaks when he chooses to. This is rarely when you want him to.
+    - id: healer_debt_collector_01
+      name: Faris of the Gentle Hand
+      goal: To heal the sick and the wounded, and then immediately present them with an itemized invoice.
+      description: A gifted healer with warm eyes and a leather satchel containing both medicinal supplies and a ledger of outstanding debts. He genuinely cares about his patients. He also genuinely cares about being paid. He sees no conflict here.
+    - id: cursed_portrait_subject_01
+      name: Lord Halverd Crane (Deceased)
+      goal: To advise whoever currently owns his portrait, whether or not they want advising.
+      description: A haughty nobleman visible only from within the oil painting he is trapped in, who rotates to face whoever enters the room and offers unsolicited commentary on their choices. He has been dead for two hundred years. He has not run out of opinions.
+    - id: deserter_too_long_01
+      name: Mose
+      goal: To find out if the war he deserted is still happening, and if not, whether the relevant parties are still angry.
+      description: A man who has been hiding in a particular forest for so long that he has become genuinely good at it. He is polite, resourceful, a little feral, and has no idea what year it is. He is working on it.
+    - id: inquisitor_turned_innkeeper_01
+      name: Wren Caelis
+      goal: To run a clean inn, keep the books balanced, and politely discourage anyone from asking about the years before the inn.
+      description: A precise, watchful woman who manages her establishment with a thoroughness that suggests a professional background in something that required thoroughness. She misses nothing. She says very little. The cellar has a door she does not open in front of guests.
+    - id: ghost_bureaucrat_01
+      name: The Late Assessor Mirk
+      goal: To process the paperwork that has been pending since his death, thirty-seven years ago, before he can move on.
+      description: A translucent man in spectral bureaucratic robes who haunts the third floor of the municipal offices, stamping forms that no longer matter for a system that no longer exists. He is very polite about the backlog. He is also not going anywhere until it's done.
+    - id: blind_archer_01
+      name: Varek of the Still Air
+      goal: To find whoever took his sight, using the skills they left him with.
+      description: A lean, unhurried archer who has not missed a shot in six years, since losing his eyes to a hex that also gave him something he won't name. He aims before you finish drawing breath. He never explains how.
+    - id: innkeeper_monster_hunter_01
+      name: Bess Clearwater
+      goal: To keep her rooms let and her guests alive, in the most efficient sequence possible.
+      description: A cheerful, broad innkeeper who quotes room rates and monster-clearing fees with equal comfort. She has a tariff board for both. Regular guests get a loyalty discount on either.
+    - id: street_kid_information_broker_01
+      name: Pip
+      goal: To know everything, sell only what is safe to sell, and stay two alleys ahead of everyone who would prefer she know nothing.
+      description: A gap-toothed child of indeterminate age who is always exactly where you didn't notice, and knows everything you said since you arrived, and the name of your horse. She charges in copper but her information is silver quality.
+    - id: collector_of_last_words_01
+      name: Eulessa the Attentive
+      goal: To record the final words of the dying, for reasons she describes as scholarly and are actually something more personal.
+      description: A quiet woman with ink-stained fingers who appears at bedsides and battlefields with a notebook and a manner that does not disturb the dying. She is not a vulture. She is a witness. The distinction matters to her.
+    - id: arena_retired_champion_01
+      name: Dusk
+      goal: To be left alone, which everyone who knows his record is sensible enough to do, except for the people who don't know his record.
+      description: A massive figure of indeterminate species with too many scars and a calm so deep it reads as absence. He was champion of the Amber Arena for eleven years. He quit. He does not discuss why. He does not discuss anything, mostly, but this especially.
+    - id: aggressive_tax_auditor_01
+      name: Barnaby Crunchgrazier
+      goal: To audit the local dragon's hoard for unpaid commerce tariffs over the last three centuries.
+      description: A clipboard-wielding goblin with ink stains up to his elbows and an absolute, terrifying lack of self-preservation.
+    - id: fashion_forward_necromancer_01
+      name: Valerius the Dapper
+      goal: To ensure every skeleton in his vanguard is dressed in immaculate, color-coordinated seasonal couture.
+      description: A pale, beautifully tailored human who spends more time adjusting his zombies' silk cravats than actually casting spells.
+    - id: clumsy_assassin_01
+      name: Pippin Silentstride
+      goal: To successfully complete one contract without accidentally knocking over a loud vase or alerting the guards.
+      description: A nervous-looking halfling clad in dark leather that creaks aggressively every time he moves. He carries far too many hidden daggers that rattle.
+    - id: unenthusiastic_demon_01
+      name: Malgazar the Mild
+      goal: To fulfill his summoning contract as quickly as possible so he can return to his subterranean couch and finish his nap.
+      description: A towering, sulfur-scented fiend who spends most of his time sighing deeply, checking a pocket watch, and offering low-effort legal advice.
+    - id: over_prepared_adventurer_01
+      name: Barnaby Buckleworth
+      goal: To find a specific niche situation where his 47th backup tool—a specialized left-handed underwater crowbar—is finally useful.
+      description: A human trader buried under so many backpacks, pouches, and strapped-on frying pans that he resembles a slow-moving pile of camping equipment.
+    - id: anxious_mimic_pet_01
+      name: Boxy
+      goal: To find a nice quiet corner where nobody tries to store sharp swords or heavy gold inside him anymore.
+      description: A small oak chest with a row of shiny pearl teeth that wags its lid like an excited dog when fed table scraps.
+    - id: hypochondriac_troll_01
+      name: Grumble the Fragile
+      goal: To find a legendary moisturizer that can cure his "unbearably dry" stone-like skin.
+      description: A massive, moss-covered troll wearing an oversized silk scarf, constantly dabbing his nose with a giant handkerchief and complaining about minor drafts.
+    - id: accidental_deity_01
+      name: Barnaby the Blessed
+      goal: To convince the local cult that he is just an ordinary pigeon who accidentally knocked over their sacred altar.
+      description: A plump gray pigeon sitting on a velvet cushion, surrounded by offerings of premium birdseed and incredibly intense chanting acolytes.
+    - id: existential_skeleton_01
+      name: Marrow
+      goal: To determine if he is walking because of dark necromancy, lingering soul residue, or just sheer stubbornness.
+      description: A polished skeleton sitting on a tavern stool, idly tapping his ribcage like a xylophone while reading a philosophy book upside down.
+    - id: overly_honest_bard_01
+      name: Lyra the Blunt
+      goal: To write a completely historically accurate ballad that highlights how embarrassing the local hero's victory actually was.
+      description: A sharp-eyed half-elf tuning a lute, who refuses to rhyme any word if it compromises the brutal, unvarnished truth of the narrative.
+
   items:
-  - id: rusty_key_01
-    name: Rusty Iron Key
-    description: A heavy, pitted key that looks like it belongs to a jail cell. The
-      bow is stamped with the number 7.
-  - id: locked_chest_01
-    name: Locked Iron Chest
-    description: A palm-sized iron chest with no visible keyhole. It hums faintly
-      when held near fire.
-  - id: puzzle_box_01
-    name: Sandalwood Puzzle Box
-    description: A small box of interlocking sandalwood panels. Someone has clearly
-      tried and failed to force it open.
-  - id: magically_locked_coffer_01
-    name: Bone-Clasped Coffer
-    description: A leather coffer sealed with a clasp carved from finger bone. The
-      hasp will not yield to any mundane key.
-  - id: essence_vial_01
-    name: Glowing Blue Vial
-    description: A small glass bottle filled with swirling cerulean smoke. It pulses
-      with a faint heartbeat.
-  - id: wound_salve_01
-    name: Healer's Clay Pot
-    description: A sealed clay pot of pungent greenish salve. Three applications remain.
-      The label reads 'For clean wounds only.'
-  - id: phantom_ink_01
-    name: Vial of Phantom Ink
-    description: Ink that causes any writing to fade and vanish within one hour of
-      drying. Beloved by spies and scorned by scholars.
-  - id: expired_poison_01
-    name: Vial of Dreamdust Venom
-    description: A labeled vial of translucent orange liquid. A date is scratched
-      into the glass — and then scratched through again.
-  - id: alchemist_runoff_01
-    name: Flask of Alchemical Runoff
-    description: An unmarked flask of cloudy liquid, smelling faintly of sulfur and
-      lavender. Its effects are entirely unknown.
-  - id: ancient_wine_01
-    name: Wax-Sealed Wine Bottle
-    description: A dark bottle sealed with black wax, the vintage scratched off the
-      label. Could be magnificent. Could be vinegar.
-  - id: everburning_candle_01
-    name: Everburning Candle
-    description: A white candle that never melts and never goes out on its own. The
-      flame burns cold to the touch.
-  - id: whispering_coin_01
-    name: Whispering Copper Coin
-    description: A worn copper coin that murmurs faint, half-heard warnings when danger
-      is near. Most people just think it's the wind.
-  - id: compass_of_wants_01
-    name: Compass of Wanting
-    description: A tarnished copper compass whose needle ignores north entirely, pointing
-      instead toward whatever the holder desires most.
-  - id: memory_stone_01
-    name: Memory Stone
-    description: A smooth river stone that, when held in a closed fist, shows a brief
-      vision of a stranger's most painful memory.
-  - id: travelers_lantern_01
-    name: Traveler's Lightless Lantern
-    description: A iron lantern that burns with a pale blue flame without fuel — but
-      only while underground.
-  - id: binding_cord_01
-    name: Silken Binding Cord
-    description: A cord of braided silver silk, thirty feet long. It cannot be cut
-      by any mundane blade, though it unties freely enough.
-  - id: speaking_skull_01
-    name: Carved Bone Skull
-    description: A palm-sized skull carved from yellowed bone. It occasionally mutters
-      half-sentences in a language you almost recognize.
-  - id: dream_feather_01
-    name: Iridescent Dream Feather
-    description: A feather that shifts between violet and gold. Placed under a pillow,
-      it causes vivid, prophetic dreams. Or just nightmares.
-  - id: map_of_lies_01
-    name: Map of Subtle Lies
-    description: A beautifully illustrated map of a region you recognize — except
-      every road, river, and settlement is shifted by exactly half a league.
-  - id: bottled_scream_01
-    name: Bottled Scream
-    description: A corked green bottle containing a visible but silent scream, frozen
-      at the moment of impact. The mouth is still open.
-  - id: frozen_shadow_01
-    name: Shard of Frozen Shadow
-    description: A piece of dark glass in which a shadow is permanently frozen mid-gesture
-      — reaching for something just outside the frame.
-  - id: shrinking_cloak_01
-    name: Adjusting Grey Cloak
-    description: A dull grey cloak that slowly shrinks or expands over the course
-      of an hour to fit any wearer perfectly.
-  - id: paperweight_grows_01
-    name: Growing Paperweight
-    description: A smooth obsidian sphere that imperceptibly increases in size each
-      time it is observed. Currently the size of a fist.
-  - id: snowglobe_mirror_01
-    name: Impossible Snow Globe
-    description: A snow globe containing what appears to be a perfect miniature of
-      wherever you currently are, down to the people inside it.
-  - id: crumbling_prophecy_01
-    name: Fragment of Prophecy
-    description: 'A scrap of ancient parchment bearing the second half of a prophecy,
-      the first half burned away. It ends mid-sentence: ''...and the last door shall
-      open when—'''
-  - id: merchants_debt_scroll_01
-    name: Debt Scroll
-    description: A scroll certifying a debt of forty gold pieces, signed by someone
-      whose name you recognize. Someone important.
-  - id: last_will_01
-    name: Sealed Death Letter
-    description: 'A letter sealed with black wax, marked: ''To Be Opened Upon My Death.''
-      The seal is unbroken. The date is three years ago.'
-  - id: bestiary_fragment_01
-    name: Torn Bestiary Pages
-    description: Several pages torn from a bestiary, describing a creature in meticulous
-      detail — except every space where its name should appear has been scratched
-      out.
-  - id: criminal_manifest_01
-    name: Water-Damaged Name List
-    description: A list of names, most crossed out with dried red ink. Three names
-      near the bottom are circled. One of them might be familiar.
-  - id: herbal_remedies_01
-    name: Corrected Herbal Handbook
-    description: A hand-copied book of herbal remedies. A second, more careful hand
-      has corrected several entries — and crossed out three with the note 'POISONOUS.'
-  - id: sailors_knot_manual_01
-    name: Incomplete Knot Manual
-    description: A waterlogged manual on nautical knot-tying. The final pages — titled
-      'Knots That Should Not Be Tied' — have been torn out.
-  - id: spellbook_stained_01
-    name: Ink-Stained Spellbook
-    description: A spellbook with several low-level spells — all partially illegible
-      due to a massive ink stain that consumed most of the pages. One spell remains
-      perfectly readable.
-  - id: star_chart_01
-    name: Annotated Star Chart
-    description: A folded star chart marked with familiar constellations — and three
-      others that do not exist in any sky you have ever seen. Someone has circled
-      them in red.
-  - id: chipped_dagger_01
-    name: Bone-Handled Dagger
-    description: A short dagger with a yellowed bone handle and a notched blade. Still
-      sharp enough. Still dangerous.
-  - id: weighted_sling_01
-    name: Braided Leather Sling
-    description: A finely braided sling with a worn pouch. A canvas bag of twenty
-      smooth river stones accompanies it.
-  - id: cracked_buckler_01
-    name: Bronze-Banded Buckler
-    description: A small wooden shield reinforced with aged bronze bands. A crack
-      runs through the wood, plugged with what looks like hardened resin.
-  - id: bone_arrow_quiver_01
-    name: Quiver of Black-Fletched Arrows
-    description: A quiver of twelve arrows with black feather fletchings and tips
-      ground from sharpened bone. Light but terrifyingly sharp.
-  - id: silver_sword_fake_01
-    name: Shiny Steel Sword
-    description: A well-crafted sword polished to a mirror shine. Sold — repeatedly
-      — as silver. It is not silver. Still a good sword.
-  - id: enchanted_boots_01
-    name: Indestructible Walking Boots
-    description: Battered leather boots that show no wear despite clearly years of
-      hard travel. The soles never thin. The stitching never frays.
-  - id: noble_ring_01
-    name: Oversized Emerald Ring
-    description: A gold ring set with a dark green emerald. It is slightly too large
-      for any normal human finger. Whoever wore it had unusual hands.
-  - id: scholar_robe_01
-    name: Moth-Eaten Arcane Robe
-    description: Frayed grey robes embroidered with arcane symbols in silver thread.
-      Despite the moth damage, the silver embroidery is perfectly intact.
-  - id: gloves_of_warmth_01
-    name: All-Weather Wool Gloves
-    description: Thick, undyed wool gloves that stay warm in any cold and never absorb
-      moisture. Useful. Entirely unremarkable looking.
-  - id: lovers_locket_01
-    name: Brass Locket with Portraits
-    description: A brass locket containing two tiny, immaculate portraits. The two
-      figures are strangers. Or they were, at first glance.
-  - id: wax_seal_ring_01
-    name: Unknown Noble's Signet Ring
-    description: 'A heavy silver ring bearing a signet stamp: a rearing horse above
-      crossed keys. The house is not one you recognize.'
-  - id: rose_glasses_01
-    name: Rose-Tinted Spectacles
-    description: Small round spectacles with rose-tinted lenses. While worn, colours
-      are warmer, shadows are softer, and strangers seem more trustworthy.
-  - id: top_hat_01
-    name: Pristine Black Top Hat
-    description: 'A tall gentleman''s top hat in suspiciously perfect condition, as
-      if it has never been worn. The interior is inscribed: ''Property of T.'''
-  - id: thieves_tools_01
-    name: Leather Roll of Lockpicks
-    description: A worn leather roll containing nine lockpicks and a tension wrench.
-      Three picks are bent. The others are fine.
-  - id: alchemist_scales_01
-    name: Brass Weighing Scales
-    description: A set of compact brass scales in a felt-lined case. One pan is imperceptibly
-      heavier than the other. Imperceptibly, that is, unless precision matters.
-  - id: rope_fifty_feet_01
-    name: Hempen Rope (50 ft)
-    description: Fifty feet of sturdy hempen rope, coiled neatly and slightly frayed
-      at one end. The other end has been cut cleanly — very recently.
-  - id: climbing_pitons_01
-    name: Bag of Climbing Pitons
-    description: A canvas bag of twelve iron pitons and a small driving hammer. Several
-      pitons are bent at the tip from heavy use.
-  - id: healer_kit_01
-    name: Field Healer's Pouch
-    description: 'A leather pouch with linen bandages, a curved needle, and gut thread.
-      Also contains a small folded note that reads: ''You''re going to need this.'''
-  - id: fire_starter_01
-    name: Waterproof Fire Kit
-    description: A dented tin containing a flint, a steel striker, and a packet of
-      char cloth. The tin's seal is tight enough to survive submersion.
-  - id: collapsible_cup_01
-    name: Folded Leather Cup
-    description: A traveler's cup of stiffened leather that collapses flat. It holds
-      liquid without leaking. Inexplicably, it always smells faintly of mint.
-  - id: ivory_dice_01
-    name: Ivory Dice Set
-    description: Six ivory dice, perfectly weighted, carved with uncommon precision.
-      They roll statistically perfect results. This strikes some people as suspicious.
-  - id: silver_mirror_01
-    name: Ornate Silver Hand Mirror
-    description: A tarnished silver hand mirror with scrollwork vines on the handle.
-      The reflection is always slightly behind where you actually are.
-  - id: music_box_01
-    name: Mechanical Music Box
-    description: A small brass music box that plays a waltz when wound. The melody
-      is pleasant for the first minute, then shifts to something almost sad.
-  - id: taxidermied_imp_01
-    name: Poorly Taxidermied Imp
-    description: A small impish creature, inexpertly preserved and posed in a mocking
-      salute. The eyes are glass. They feel like they aren't.
-  - id: merchants_ledger_01
-    name: Coded Merchant's Ledger
-    description: A merchant's ledger written in a personal cipher. The numbers visible
-      at the edges suggest something significant was being tracked.
-  - id: spice_tin_01
-    name: Tin of Rare Saffron
-    description: A sealed tin containing several grams of saffron — the genuine article,
-      from a distant region. Worth more than it looks.
-  - id: hatching_egg_01
-    name: Warm Speckled Egg
-    description: A dark-speckled egg, roughly the size of two fists. It is warm to
-      the touch and occasionally produces a faint tapping sound from within.
-  - id: noble_chess_set_01
-    name: Elven Ivory Chess Set
-    description: 'An exquisite chess set: white ivory, black obsidian, each piece
-      a hand-carved miniature. It is missing one black bishop, replaced with a crude
-      wooden plug.'
-  - id: countdown_clock_01
-    name: Countdown Automaton Clock
-    description: An ornate brass clock that does not tell the time. It is counting
-      down to something, with precision. No one who sold it would say what.
-  - id: dragon_tooth_crown_01
-    name: Crown of Dragon Teeth
-    description: A circlet set with five large, yellowed teeth from a creature of
-      considerable size. Whether they are genuinely draconic is a matter of expensive
-      debate.
-  - id: nesting_dolls_01
-    name: Animated Nesting Dolls
-    description: Seven hand-painted nesting dolls. The painted figures are animated
-      — their eyes follow you, and their mouths move silently, as if trying to warn
-      you of something.
-  - id: travelers_rations_01
-    name: Three Days of Trail Rations
-    description: A waxed-cloth bundle of hardtack, dried meat, and two strips of something
-      that might be fruit. Dense, unpleasant, and life-saving in the right circumstances.
-  - id: honey_jar_01
-    name: Herb-Infused Honey Jar
-    description: A sealed clay jar of amber honey infused with dried herbs. The seal
-      is intact. Someone has drawn a small heart on the lid in ink.
-  - id: cartographer_compass_01
-    name: Brass Compass with Cracked Crystal
-    description: A fine cartographer's compass, the crystal face cracked diagonally.
-      The needle still points true. Someone's initials are engraved on the back.
-  - id: dried_herbs_bundle_01
-    name: Bundle of Dried Herbs
-    description: Twelve different herbs tied with red string. A healer or herbalist
-      would recognize most of them — and be very curious about the one they don't.
-  - id: cursed_magic_merchant_01
-    name: Cursed Magic Merchant
-    description: A mysterious item discovered during exploration.
+    - id: rusty_key_01
+      name: Rusty Iron Key
+      description: A heavy, pitted key that looks like it belongs to a jail cell. The bow is stamped with the number 7.
+    - id: locked_chest_01
+      name: Locked Iron Chest
+      description: A palm-sized iron chest with no visible keyhole. It hums faintly when held near fire.
+    - id: puzzle_box_01
+      name: Sandalwood Puzzle Box
+      description: A small box of interlocking sandalwood panels. Someone has clearly tried and failed to force it open.
+    - id: magically_locked_coffer_01
+      name: Bone-Clasped Coffer
+      description: A leather coffer sealed with a clasp carved from finger bone. The hasp will not yield to any mundane key.
+    - id: essence_vial_01
+      name: Glowing Blue Vial
+      description: A small glass bottle filled with swirling cerulean smoke. It pulses with a faint heartbeat.
+    - id: wound_salve_01
+      name: Healer's Clay Pot
+      description: A sealed clay pot of pungent greenish salve. Three applications remain. The label reads 'For clean wounds only.'
+    - id: phantom_ink_01
+      name: Vial of Phantom Ink
+      description: Ink that causes any writing to fade and vanish within one hour of drying. Beloved by spies and scorned by scholars.
+    - id: expired_poison_01
+      name: Vial of Dreamdust Venom
+      description: A labeled vial of translucent orange liquid. A date is scratched into the glass — and then scratched through again.
+    - id: alchemist_runoff_01
+      name: Flask of Alchemical Runoff
+      description: An unmarked flask of cloudy liquid, smelling faintly of sulfur and lavender. Its effects are entirely unknown.
+    - id: ancient_wine_01
+      name: Wax-Sealed Wine Bottle
+      description: A dark bottle sealed with black wax, the vintage scratched off the label. Could be magnificent. Could be vinegar.
+    - id: everburning_candle_01
+      name: Everburning Candle
+      description: A white candle that never melts and never goes out on its own. The flame burns cold to the touch.
+    - id: whispering_coin_01
+      name: Whispering Copper Coin
+      description: A worn copper coin that murmurs faint, half-heard warnings when danger is near. Most people just think it's the wind.
+    - id: compass_of_wants_01
+      name: Compass of Wanting
+      description: A tarnished copper compass whose needle ignores north entirely, pointing instead toward whatever the holder desires most.
+    - id: memory_stone_01
+      name: Memory Stone
+      description: A smooth river stone that, when held in a closed fist, shows a brief vision of a stranger's most painful memory.
+    - id: travelers_lantern_01
+      name: Traveler's Lightless Lantern
+      description: A iron lantern that burns with a pale blue flame without fuel — but only while underground.
+    - id: binding_cord_01
+      name: Silken Binding Cord
+      description: A cord of braided silver silk, thirty feet long. It cannot be cut by any mundane blade, though it unties freely enough.
+    - id: speaking_skull_01
+      name: Carved Bone Skull
+      description: A palm-sized skull carved from yellowed bone. It occasionally mutters half-sentences in a language you almost recognize.
+    - id: dream_feather_01
+      name: Iridescent Dream Feather
+      description: A feather that shifts between violet and gold. Placed under a pillow, it causes vivid, prophetic dreams. Or just nightmares.
+    - id: map_of_lies_01
+      name: Map of Subtle Lies
+      description: A beautifully illustrated map of a region you recognize — except every road, river, and settlement is shifted by exactly half a league.
+    - id: bottled_scream_01
+      name: Bottled Scream
+      description: A corked green bottle containing a visible but silent scream, frozen at the moment of impact. The mouth is still open.
+    - id: frozen_shadow_01
+      name: Shard of Frozen Shadow
+      description: A piece of dark glass in which a shadow is permanently frozen mid-gesture — reaching for something just outside the frame.
+    - id: shrinking_cloak_01
+      name: Adjusting Grey Cloak
+      description: A dull grey cloak that slowly shrinks or expands over the course of an hour to fit any wearer perfectly.
+    - id: paperweight_grows_01
+      name: Growing Paperweight
+      description: A smooth obsidian sphere that imperceptibly increases in size each time it is observed. Currently the size of a fist.
+    - id: snowglobe_mirror_01
+      name: Impossible Snow Globe
+      description: A snow globe containing what appears to be a perfect miniature of wherever you currently are, down to the people inside it.
+    - id: crumbling_prophecy_01
+      name: Fragment of Prophecy
+      description: "A scrap of ancient parchment bearing the second half of a prophecy, the first half burned away. It ends mid-sentence: '...and the last door shall open when—'"
+    - id: merchants_debt_scroll_01
+      name: Debt Scroll
+      description: A scroll certifying a debt of forty gold pieces, signed by someone whose name you recognize. Someone important.
+    - id: last_will_01
+      name: Sealed Death Letter
+      description: "A letter sealed with black wax, marked: 'To Be Opened Upon My Death.' The seal is unbroken. The date is three years ago."
+    - id: bestiary_fragment_01
+      name: Torn Bestiary Pages
+      description: Several pages torn from a bestiary, describing a creature in meticulous detail — except every space where its name should appear has been scratched out.
+    - id: criminal_manifest_01
+      name: Water-Damaged Name List
+      description: A list of names, most crossed out with dried red ink. Three names near the bottom are circled. One of them might be familiar.
+    - id: herbal_remedies_01
+      name: Corrected Herbal Handbook
+      description: A hand-copied book of herbal remedies. A second, more careful hand has corrected several entries — and crossed out three with the note 'POISONOUS.'
+    - id: sailors_knot_manual_01
+      name: Incomplete Knot Manual
+      description: A waterlogged manual on nautical knot-tying. The final pages — titled 'Knots That Should Not Be Tied' — have been torn out.
+    - id: spellbook_stained_01
+      name: Ink-Stained Spellbook
+      description: A spellbook with several low-level spells — all partially illegible due to a massive ink stain that consumed most of the pages. One spell remains perfectly readable.
+    - id: star_chart_01
+      name: Annotated Star Chart
+      description: A folded star chart marked with familiar constellations — and three others that do not exist in any sky you have ever seen. Someone has circled them in red.
+    - id: chipped_dagger_01
+      name: Bone-Handled Dagger
+      description: A short dagger with a yellowed bone handle and a notched blade. Still sharp enough. Still dangerous.
+    - id: weighted_sling_01
+      name: Braided Leather Sling
+      description: A finely braided sling with a worn pouch. A canvas bag of twenty
+        smooth river stones accompanies it.
+    - id: cracked_buckler_01
+      name: Bronze-Banded Buckler
+      description: A small wooden shield reinforced with aged bronze bands. A crack runs through the wood, plugged with what looks like hardened resin.
+    - id: bone_arrow_quiver_01
+      name: Quiver of Black-Fletched Arrows
+      description: A quiver of twelve arrows with black feather fletchings and tips ground from sharpened bone. Light but terrifyingly sharp.
+    - id: silver_sword_fake_01
+      name: Shiny Steel Sword
+      description: A well-crafted sword polished to a mirror shine. Sold — repeatedly — as silver. It is not silver. Still a good sword.
+    - id: enchanted_boots_01
+      name: Indestructible Walking Boots
+      description: Battered leather boots that show no wear despite clearly years of hard travel. The soles never thin. The stitching never frays.
+    - id: noble_ring_01
+      name: Oversized Emerald Ring
+      description: A gold ring set with a dark green emerald. It is slightly too large for any normal human finger. Whoever wore it had unusual hands.
+    - id: scholar_robe_01
+      name: Moth-Eaten Arcane Robe
+      description: Frayed grey robes embroidered with arcane symbols in silver thread. Despite the moth damage, the silver embroidery is perfectly intact.
+    - id: gloves_of_warmth_01
+      name: All-Weather Wool Gloves
+      description: Thick, undyed wool gloves that stay warm in any cold and never absorb moisture. Useful. Entirely unremarkable looking.
+    - id: lovers_locket_01
+      name: Brass Locket with Portraits
+      description: A brass locket containing two tiny, immaculate portraits. The two figures are strangers. Or they were, at first glance.
+    - id: wax_seal_ring_01
+      name: Unknown Noble's Signet Ring
+      description: "A heavy silver ring bearing a signet stamp: a rearing horse above crossed keys. The house is not one you recognize."
+    - id: rose_glasses_01
+      name: Rose-Tinted Spectacles
+      description: Small round spectacles with rose-tinted lenses. While worn, colours are warmer, shadows are softer, and strangers seem more trustworthy.
+    - id: top_hat_01
+      name: Pristine Black Top Hat
+      description: "A tall gentleman's top hat in suspiciously perfect condition, as if it has never been worn. The interior is inscribed: 'Property of T.'"
+    - id: thieves_tools_01
+      name: Leather Roll of Lockpicks
+      description: A worn leather roll containing nine lockpicks and a tension wrench. Three picks are bent. The others are fine.
+    - id: alchemist_scales_01
+      name: Brass Weighing Scales
+      description: A set of compact brass scales in a felt-lined case. One pan is imperceptibly heavier than the other. Imperceptibly, that is, unless precision matters.
+    - id: rope_fifty_feet_01
+      name: Hempen Rope (50 ft)
+      description: Fifty feet of sturdy hempen rope, coiled neatly and slightly frayed at one end. The other end has been cut cleanly — very recently.
+    - id: climbing_pitons_01
+      name: Bag of Climbing Pitons
+      description: A canvas bag of twelve iron pitons and a small driving hammer. Several pitons are bent at the tip from heavy use.
+    - id: healer_kit_01
+      name: Field Healer's Pouch
+      description: "A leather pouch with linen bandages, a curved needle, and gut thread. Also contains a small folded note that reads: 'You're going to need this.'"
+    - id: fire_starter_01
+      name: Waterproof Fire Kit
+      description: A dented tin containing a flint, a steel striker, and a packet of char cloth. The tin's seal is tight enough to survive submersion.
+    - id: collapsible_cup_01
+      name: Folded Leather Cup
+      description: A traveler's cup of stiffened leather that collapses flat. It holds liquid without leaking. Inexplicably, it always smells faintly of mint.
+    - id: ivory_dice_01
+      name: Ivory Dice Set
+      description: Six ivory dice, perfectly weighted, carved with uncommon precision. They roll statistically perfect results. This strikes some people as suspicious.
+    - id: silver_mirror_01
+      name: Ornate Silver Hand Mirror
+      description: A tarnished silver hand mirror with scrollwork vines on the handle. The reflection is always slightly behind where you actually are.
+    - id: music_box_01
+      name: Mechanical Music Box
+      description: A small brass music box that plays a waltz when wound. The melody is pleasant for the first minute, then shifts to something almost sad.
+    - id: taxidermied_imp_01
+      name: Poorly Taxidermied Imp
+      description: A small impish creature, inexpertly preserved and posed in a mocking salute. The eyes are glass. They feel like they aren't.
+    - id: merchants_ledger_01
+      name: Coded Merchant's Ledger
+      description: A merchant's ledger written in a personal cipher. The numbers visible at the edges suggest something significant was being tracked.
+    - id: spice_tin_01
+      name: Tin of Rare Saffron
+      description: A sealed tin containing several grams of saffron — the genuine article, from a distant region. Worth more than it looks.
+    - id: hatching_egg_01
+      name: Warm Speckled Egg
+      description: A dark-speckled egg, roughly the size of two fists. It is warm to the touch and occasionally produces a faint tapping sound from within.
+    - id: noble_chess_set_01
+      name: Elven Ivory Chess Set
+      description: "An exquisite chess set: white ivory, black obsidian, each piece a hand-carved miniature. It is missing one black bishop, replaced with a crude wooden plug."
+    - id: countdown_clock_01
+      name: Countdown Automaton Clock
+      description: An ornate brass clock that does not tell the time. It is counting down to something, with precision. No one who sold it would say what.
+    - id: dragon_tooth_crown_01
+      name: Crown of Dragon Teeth
+      description: A circlet set with five large, yellowed teeth from a creature of considerable size. Whether they are genuinely draconic is a matter of expensive debate.
+    - id: nesting_dolls_01
+      name: Animated Nesting Dolls
+      description: Seven hand-painted nesting dolls. The painted figures are animated — their eyes follow you, and their mouths move silently, as if trying to warn you of something.
+    - id: travelers_rations_01
+      name: Three Days of Trail Rations
+      description: A waxed-cloth bundle of hardtack, dried meat, and two strips of something that might be fruit. Dense, unpleasant, and life-saving in the right circumstances.
+    - id: honey_jar_01
+      name: Herb-Infused Honey Jar
+      description: A sealed clay jar of amber honey infused with dried herbs. The seal is intact. Someone has drawn a small heart on the lid in ink.
+    - id: cartographer_compass_01
+      name: Brass Compass with Cracked Crystal
+      description: A fine cartographer's compass, the crystal face cracked diagonally. The needle still points true. Someone's initials are engraved on the back.
+    - id: dried_herbs_bundle_01
+      name: Bundle of Dried Herbs
+      description: Twelve different herbs tied with red string. A healer or herbalist would recognize most of them — and be very curious about the one they don't.
+    - id: cursed_magic_merchant_01
+      name: Cursed Magic Merchant
+      description: A mysterious item discovered during exploration.
+    - id: cowardly_sword_01
+      name: Sword of Regrettable Instincts
+      description: A finely made longsword that begins to tremble in the scabbard when a fight is likely and vibrates urgently toward the nearest exit when one begins. It is otherwise an excellent sword. It would simply rather not.
+    - id: wrong_footprints_boots_01
+      name: Boots of Another's Passing
+      description: Worn leather boots of no particular distinction that leave, in mud or soft earth, the footprints of whoever previously owned them. The previous owner was significantly shorter and apparently ran everywhere.
+    - id: sleep_journal_01
+      name: Dreamer's Confession Book
+      description: A slim journal with a soft leather cover that, when left open beside a sleeping person, writes down what they say in the night. The handwriting always matches the speaker's. The content is frequently alarming.
+    - id: unremarkable_ring_01
+      name: Ring of Gentle Forgetting
+      description: A plain iron ring that makes its wearer marginally easier to overlook — faces slide off them in memory, names don't stick. Not invisibility. Just the comfortable social erasure of someone nobody feels the need to remember.
+    - id: single_use_master_key_01
+      name: The One Key
+      description: "A slender iron key that will open any lock precisely once, after which it falls to dust. The blank tag tied to it reads, in small careful letters, 'Choose carefully.' There is a small smear of blood on the tag."
+    - id: edge_landing_coin_01
+      name: The Patient Coin
+      description: A heavy silver coin that, when flipped, lands on its edge. Every time. Without fail. It has no further properties. It is impossible to not flip it again just to be sure.
+    - id: wrong_city_clock_01
+      name: Clock of the Other Place
+      description: A handsome brass pocket watch that keeps perfect time — for a city four hundred miles away that you have never visited. The name of the city is engraved inside the case. It is not a city on any map you own.
+    - id: bottled_darkness_01
+      name: Bottled Dark
+      description: A black glass bottle sealed with wax, containing what appears to be actual darkness — not dark liquid, but the absence itself, pressed into glass. Uncorked, it releases a small area of perfect, sourceless shadow that lasts until the bottle is resealed.
+    - id: mirror_elsewhere_01
+      name: Lateral Mirror
+      description: A hand mirror that reflects, with perfect clarity, a different room in the same building — always the same room, always from an angle where something is just out of frame. It never shows the room you're in.
+    - id: intention_seed_01
+      name: Thought-Planted Seed
+      description: A single seed in a folded paper packet, which grows into whatever plant you were genuinely thinking of when you planted it. Vague thoughts produce vague plants. A distracted planting once grew something no herbalist could name.
+    - id: lie_detecting_bell_01
+      name: Honest Bell
+      description: A small silver bell on a leather cord that rings — once, softly — when someone in earshot tells a deliberate lie. It does not ring for self-deception. It has been noted that this makes it more useful in some contexts and less in others.
+    - id: velvet_touch_gloves_01
+      name: Gloves of Universal Softness
+      description: Thin grey gloves that cause everything touched while wearing them to feel like high-grade velvet — stone, rust, ice, fur, wood. The sensation is pleasant and profoundly disorienting when touching something that should hurt.
+    - id: situationally_correct_hat_01
+      name: Hat of Right Occasions
+      description: A nondescript travelling hat that, by the time you arrive anywhere, turns out to be exactly the appropriate headgear for that context. It has been a mourning cap, a chef's toque, a military beret, and once something that was apparently a religious requirement. It offers no explanation.
+    - id: seawater_canteen_01
+      name: Sailor's Cursed Canteen
+      description: A battered tin canteen that refills itself overnight — with cold seawater, regardless of how far from the sea you are. The water is unusable for drinking. Several people have found this interesting and kept it anyway.
+    - id: delayed_returning_coin_01
+      name: Coin of Later Return
+      description: A copper coin that, when spent, vanishes from the recipient's possession within the hour and reappears in your pocket. The delay is inconsistent — anywhere from six minutes to three days. Merchants have begun refusing it by description.
+    - id: future_cookbook_01
+      name: Recipes Not Yet Made
+      description: A cookbook written entirely in the future tense, describing dishes in vivid sensory detail — dishes that, as far as any chef can determine, do not yet exist. The ingredients are real. The techniques are sound. Nobody has dared try one yet.
+    - id: unbuilt_city_map_01
+      name: Map of Somewhere Soon
+      description: A detailed map of a city — streets named, districts marked, a river in the right place — that does not exist. The region it depicts is currently empty farmland. The map is not old. The parchment is fresh.
+    - id: grudge_stone_01
+      name: Stone of Accumulation
+      description: A smooth grey river stone that grows measurably, imperceptibly heavier the longer a single person holds it. Set down and picked up by someone new, it resets. It has no obvious use. It is very difficult to put down once you've noticed.
+    - id: exit_thread_01
+      name: Unraveling Compass Thread
+      description: A spool of red thread that, when a length is pulled free and released, slowly rolls or drifts across the floor toward the nearest exit from the structure you're in. It does not distinguish between 'nearest' and 'safest.'
+    - id: ten_year_lantern_01
+      name: Lantern of What Was
+      description: An iron lantern that, when lit, illuminates the space not as it is now but as it appeared exactly ten years before this moment. It burns for one hour. The flame is amber. People who use it in old buildings generally wish they hadn't.
+    - id: forced_smile_mirror_01
+      name: Mirror of Good Cheer
+      description: A small oval mirror in a painted wooden frame that reflects the viewer smiling warmly, regardless of their actual expression. Sustained eye contact with it is reported to be unsettling in a way that is difficult to articulate.
+    - id: seal_preserving_opener_01
+      name: Unopener's Letter Knife
+      description: A slim bone-handled letter opener that opens any folded, sealed, or wax-stamped document without disturbing the seal, which can then be re-pressed shut. The blade is not especially sharp. The enchantment is extremely precise.
+    - id: subtitle_spectacles_01
+      name: Spectacles of Subtext
+      description: Brass-framed reading spectacles that, when worn, display faint text below each speaking person — a brief, literal summary of what they actually mean. The text is rarely the same as what they're saying. The spectacles are difficult to look away from.
+    - id: animal_speech_drum_01
+      name: Drum of Brief Translation
+      description: A small hand drum of stretched hide that, when struck three times, allows all animals within earshot to speak in the common tongue for approximately two minutes. Most animals use this time to complain. Horses have a great deal to say.
+    - id: self_knotting_rope_01
+      name: Diligent Rope
+      description: A twenty-foot length of supple rope that ties itself into knots when left unattended — always different knots, always correct and well-executed. The knots serve no apparent purpose. Sailors find this deeply aggravating or quietly comforting, depending on their disposition.
+    - id: infinite_salt_shaker_01
+      name: Salt Cellar of Plenty
+      description: A small ceramic salt shaker that never empties, no matter how much salt is dispensed. The salt is ordinary. The shaker is not. It was left at a restaurant table some years ago and has changed hands thirty-one times since, always left behind by accident.
+    - id: touch_read_book_01
+      name: Book of the Unseen Page
+      description: A book with no printed text, whose pages appear entirely blank — but which, when the pages are touched with a fingertip and eyes closed, conveys meaning directly to the reader. What each reader receives is not always the same passage.
+    - id: followed_pendant_01
+      name: Tracker's Warning Pendant
+      description: A copper pendant on a braided cord that grows warm against the skin when someone has been following the wearer for more than ten minutes. It does not grow warm for people who were simply walking the same direction. The distinction appears intentional.
+    - id: promiscuous_fishhook_01
+      name: Hook of Certain Catch
+      description: A plain iron fishing hook that always catches something when cast — but not always fish. Previous catches include a boot, a letter, a sleeping river eel the size of a man's arm, a dagger, three coins, and something that was released immediately and not spoken of again.
+    - id: past_shadow_candle_01
+      name: Candle of Previous Company
+      description: A black wax candle whose light, rather than casting the shadows of those present, shows the shadows of everyone who has stood in the same spot before. In old rooms, the walls crowd with them. The shadows do not move unless watched directly.
+    - id: apologetic_grimoire_01
+      name: Grimoire of Partial Regret
+      description: A spellbook in which the spells are all functional but accompanied by lengthy marginal notes from the original author explaining why he shouldn't have written this one, and the ethical complications of that one, and what happened when he tried this other one at the Midsummer feast. The spells still work. The notes are difficult to stop reading.
+    - id: weight_measure_lie_01
+      name: Scales of Honest Mass
+      description: A compact brass balance that measures weight correctly — but also, if both pans hold objects of equal physical weight, tips toward whichever is worth more in truth. Merchants consider it invaluable. Merchants also consider it deeply inconvenient.
+    - id: cracked_compass_true_01
+      name: Loyal Broken Compass
+      description: A compass with a hairline crack across the face and a needle that wobbles for several seconds before settling — but always settles true. It has been dropped, submerged, frozen, and struck by lightning. It has not once been wrong.
+    - id: contractual_quill_01
+      name: Binding Quill
+      description: A grey quill that, when used to sign a document, causes that document to become supernaturally binding on all signatories — they will feel a persistent unease whenever they consider breaking it. It cannot compel. It can only remind. This is, in practice, very effective.
+    - id: borrowed_memory_ring_01
+      name: Ring of Inherited Recollection
+      description: A thin silver ring engraved with a name that has been filed off. The wearer, upon falling asleep, receives one memory per night belonging to the ring's previous owner — in chronological order, from earliest to last. The series has not been completed. There are many memories left.
+    - id: everchanging_tattoo_01
+      name: Shifting Ink in a Bottle
+      description: A small bottle of black ink that, when used to tattoo a symbol or image on skin, causes it to slowly shift and evolve over weeks — never disappearing, but never staying still. The end state of the process is unknown. Several people are partway through finding out.
+    - id: honest_portrait_01
+      name: Portrait of True Character
+      description: A painted portrait of no one in particular — a blank canvas in an ornate frame — that, when hung in a room for three days, begins to paint a likeness of whoever spends the most time there. The likeness is not how they look. It is, by all accounts, how they are.
+    - id: tasting_spoon_01
+      name: Spoon of Origin
+      description: A wooden spoon that, when used to taste any dish, conveys to the taster the emotional state of the person who cooked it. Not a recipe. Not an ingredient list. Just what they were feeling, specifically, while they stirred. Most food is neutral. Some is not.
+    - id: shrinking_door_01
+      name: Door That Fits
+      description: A freestanding wooden door frame, foldable, that when placed in a doorway adjusts to exactly accommodate the largest person who needs to pass through — or exactly not accommodate the person it has decided it dislikes. It has strong opinions. It cannot be reasoned with.
+    - id: unlucky_coin_01
+      name: Coin of Precisely Average Fortune
+      description: An ancient gold coin whose face is worn smooth. Carrying it does not improve luck. It merely averages it — remarkable streaks in either direction collapse toward the median. Gamblers consider it a curse. Surgeons consider it a blessing.
+    - id: lantern_finds_lost_01
+      name: Seeker's Pale Lantern
+      description: A small lantern with blue-white flame that, when carried, slowly drifts ahead of its holder toward whatever they are looking for — not where it is now, but where it will be in approximately one hour. The distinction has caused problems.
+    - id: voiceless_bell_01
+      name: Bell of the Unspoken
+      description: A brass bell that makes no sound when rung — but causes everyone within thirty feet to feel, briefly and without source, that something important has just been said and they missed it. It is very useful and very irritating.
+    - id: persistent_chalk_01
+      name: Chalk of Permanence
+      description: A stick of ordinary-looking white chalk that cannot be erased. Not by water, not by rubbing, not by the passage of time. Anything drawn or written with it is there until the surface itself is destroyed. The previous owner did not read the label carefully.
+    - id: dream_address_book_01
+      name: Directory of the Sleeping
+      description: A slim address book filled with names and addresses, none of which correspond to real locations in the waking world. Dreams, allegedly, are different. The entries are in several different handwritings and include brief notes like 'will negotiate' and 'do NOT mention the goat.'
+    - id: judgmental_mirror_01
+      name: Mirror of Passive Aggression
+      description: A small pocket mirror that reflects your appearance accurately but lets out a heavy, disappointed sigh whenever you look into it with messy hair or unbrushed teeth.
+    - id: acoustic_biscuit_01
+      name: Crunchy Biscuit of Silence
+      description: An ordinary hardtack biscuit that makes absolutely no sound when bitten, completely muting all ambient noise within a ten-foot radius for the exact duration of the chew.
+    - id: reverse_mug_01
+      name: Bottomless Cup of Inconvenience
+      description: A beautifully crafted ceramic mug that remains entirely full of lukewarm water no matter how much you pour out, but becomes instantly empty the moment you attempt to drink from it.
+    - id: overly_dramatic_cape_01
+      name: Cape of Final Acts
+      description: A crimson silk cape that billows majestically even in completely windless rooms, accompanied by the faint, distant sound of a pipe organ whenever the wearer turns around quickly.
+    - id: literal_pocket_watch_01
+      name: Watch of Realized Pockets
+      description: A brass pocket watch that completely ignores time, instead displaying a digital ticker of how many lint balls, loose threads, and stolen coins are resting in your actual pockets.
+    - id: hyperactive_boulder_01
+      name: Pebble of Momentum
+      description: A small smooth stone that, when thrown, stubbornly refuses to stop rolling until it hits something inherently funny, such as a formal top hat or a balanced stack of expensive plates.
+    - id: unhelpful_compass_01
+      name: Compass of Retrospect
+      description: A silver-plated compass whose needle ignores magnetic north to firmly point toward the exact geographic location where you made your worst life choice.
+    - id: polite_dagger_01
+      name: Courteous Shortsword
+      description: A finely balanced steel blade that whispers "Terribly sorry" and "Pardon me" in a soft, elegant voice every single time it pierces an enemy's defenses.
+    - id: endless_soup_spoon_01
+      name: Spoon of Endless Broth
+      description: A wooden spoon that generates a single drop of perfectly seasoned chicken noodle soup every time it is flicked. Highly inefficient for starvation, but excellent for long, boring conversations.
+    - id: chameleon_socks_01
+      name: Socks of Social Blending
+      description: Woolen socks that dynamically shift color to match the pattern of whatever rug you are currently standing on, rendering your ankles entirely invisible to onlookers.
