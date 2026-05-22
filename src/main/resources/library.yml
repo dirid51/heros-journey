@@ -224,7 +224,8 @@ game-library:
       not speak to you until you've had a proper go at him.
   - id: curse_magic_merchant_01
     name: Curse Magic Merchant
-    goal: Unknown.
+    goal: To sell cursed magical items to adventurers, and to find someone who will buy the
+      one item he has that can break his own curse.
     description: A mysterious entity encountered during exploration.
   items:
   - id: rusty_key_01
