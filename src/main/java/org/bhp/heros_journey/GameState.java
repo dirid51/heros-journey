@@ -15,6 +15,10 @@ public class GameState implements Serializable {
     // and needs to maintain room state across multiple HTTP requests within the same player session
     private Room currentRoom;
     private boolean initialized = false;
+    // TODO: NAMED NPCS - Add Map<String, String> npcHistory keyed by NPC ID to track relationship/interaction history per NPC
+// TODO: COMBAT - Add CombatState activeCombat field and boolean inCombat flag; route actions through CombatService when inCombat is true
+// TODO: MAP - Add a graph structure (Map<String, List<String>>) tracking visited room IDs and their connections for map visualization
+// TODO: POST-RUN SUMMARY - Add run statistics fields: roomsVisited, enemiesDefeated, itemsUsed, totalDamageTaken; increment throughout the run
 
     public GameState() {
         this.player = new Player();

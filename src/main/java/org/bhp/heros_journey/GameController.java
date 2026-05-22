@@ -122,6 +122,8 @@ public class GameController {
         String narrative = gameService.processAction(cmd, state.getPlayer(), state.getCurrentRoom());
         return createResponse(narrative);
     }
+    // TODO: MAP - Add GET /api/game/map endpoint returning the visited room graph from GameState for client-side rendering
+// TODO: POST-RUN SUMMARY - When isGameOver becomes true, return a structured summary payload (rooms visited, skills gained, damage taken) alongside the game over response
 
     private GameResponse startNewGame() {
         request.changeSessionId(); // Start a new session for this player

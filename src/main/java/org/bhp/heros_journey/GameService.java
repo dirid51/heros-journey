@@ -63,7 +63,8 @@ public class GameService {
         if (localResponse.isPresent()) {
             return localResponse.get();
         }
-        
+        // TODO: COMBAT - If state is inCombat, delegate to CombatService instead of generic action resolution
+// TODO: NAMED NPCS - Inject relevant NPC history from GameState into the action resolution prompt
         ActionOutcome outcome = withRetries(() -> chatClient.prompt()
                 .user(u -> u.text(ACTION_RESOLUTION_PROMPT)
                         .param("roomDesc", currentRoom.description())

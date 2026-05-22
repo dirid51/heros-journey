@@ -32,6 +32,7 @@ public class LocalActionHandler {
             "wait", "rest", "catch my breath", "catch breath",
             "pause", "stand still", "do nothing"
     );
+    // TODO: INVENTORY - Add item use handling here for common items (e.g. healing potions, keys) before falling through to LLM
 
     // Tiny passive heal when resting — keeps the player engaged without LLM cost
     private static final int REST_HEAL_AMOUNT = 1;

@@ -11,5 +11,6 @@ public record Room(
         List<String> npcIds,  // IDs from your NPCs YAML
         List<String> itemIds, // IDs from your Items YAML
         List<String> skillOpportunities
+        // TODO: BIOME - Add String biome field; seed randomly on first room, pass into adjacent room generation prompts so rooms transition gradually
 ) implements Serializable {
 }

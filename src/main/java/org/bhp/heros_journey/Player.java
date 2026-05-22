@@ -20,6 +20,7 @@ public class Player implements Serializable {
 
     private Map<String, Integer> skills = new HashMap<>(); // skill name, level
     private Map<String, Integer> skillXp = new HashMap<>(); // skill name, xp
+    // TODO: INVENTORY - Add List<String> inventory field to hold collected item IDs
 
     /**
      * Logic: The game ends only if health is BELOW zero.

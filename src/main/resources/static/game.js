@@ -109,6 +109,9 @@ function appendLog(text, className) {
 }
 
 function updateUI(state) {
+    // TODO: INVENTORY - Render inventory items from state.player.inventory in the inventory panel
+// TODO: MAP - Update map visualization with newly visited room and its connections
+// TODO: POST-RUN SUMMARY - When state.isGameOver is true, render a styled end screen showing the run summary before the game over message
     appendLog(state.description, 'response-text');
 
     // Update Stats

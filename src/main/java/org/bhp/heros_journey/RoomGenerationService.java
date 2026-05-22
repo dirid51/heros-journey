@@ -49,6 +49,8 @@ public class RoomGenerationService {
             Exit exit = currentRoom.exits().get(exitIndex);
             String exitKey = generateExitKey(currentRoom.id(), exitIndex);
 
+            // TODO: BIOME - Pass currentRoom.biome() into the generation prompt for each exit so adjacent rooms inherit or gradually transition the biome
+// TODO: NAMED NPCS - Filter available NPCs to prefer ones the player has already met (from GameState NPC history map) to enable reappearance
             // Only generate if we haven't already
             if (roomRepository.getLinkedRoomId(exitKey) == null) {
                 CompletableFuture<Void> future = generateRoomAsyncInternal(exit, player).thenAccept(generatedRoom -> {

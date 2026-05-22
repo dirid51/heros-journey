@@ -18,5 +18,6 @@ public record ActionOutcome(
         double injuryReductionGain,
 
         String description
+        // TODO: INVENTORY - Add itemPickedUp, itemDropped, itemUsed fields to capture item interaction results
 ) {
 }
