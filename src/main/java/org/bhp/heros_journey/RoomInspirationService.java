@@ -36,7 +36,7 @@ public class RoomInspirationService {
     private static final int MAX_ROOM_ENTRIES = 200;
     private static final int MAX_SKILL_ENTRIES = 150;
 
-    @Value("${game.inspirations.path:inspirations.json}")
+    @Value("${game.inspirations.path:src/main/resources/inspirations.json}")
     private String inspirationsPath;
 
     private final ObjectMapper objectMapper;
@@ -46,6 +46,7 @@ public class RoomInspirationService {
     // frequent random-index removal, which COW handles poorly.
     private final List<RoomInspiration> rooms = Collections.synchronizedList(new ArrayList<>());
     private final List<String> skillPatterns = Collections.synchronizedList(new ArrayList<>());
+    private final List<String> skillNames = Collections.synchronizedList(new ArrayList<>());
 
     public RoomInspirationService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
@@ -62,6 +63,8 @@ public class RoomInspirationService {
             InspirationCorpus corpus = objectMapper.readValue(path.toFile(), InspirationCorpus.class);
             if (corpus.rooms() != null) rooms.addAll(corpus.rooms());
             if (corpus.skillPatterns() != null) skillPatterns.addAll(corpus.skillPatterns());
+            if (corpus.skillNames() != null) skillNames.addAll(corpus.skillNames());
+            log.info("Loaded {} skill names from corpus.", skillNames.size());
             log.info("Loaded {} room inspirations and {} skill patterns from corpus.",
                     rooms.size(), skillPatterns.size());
         } catch (IOException e) {
@@ -148,7 +151,13 @@ public class RoomInspirationService {
         InspirationCorpus corpus;
         synchronized (rooms) {
             synchronized (skillPatterns) {
-                corpus = new InspirationCorpus(new ArrayList<>(rooms), new ArrayList<>(skillPatterns));
+                synchronized (skillNames) {
+                    corpus = new InspirationCorpus(
+                            new ArrayList<>(rooms),
+                            new ArrayList<>(skillPatterns),
+                            new ArrayList<>(skillNames)
+                    );
+                }
             }
         }
         try {
@@ -172,6 +181,31 @@ public class RoomInspirationService {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public record InspirationCorpus(List<RoomInspiration> rooms, List<String> skillPatterns) {
+    public record InspirationCorpus(
+            List<RoomInspiration> rooms,
+            List<String> skillPatterns,
+            List<String> skillNames
+    ) {}
+
+    public void addSkillName(String name) {
+        if (name == null || name.isBlank()) return;
+        synchronized (skillNames) {
+            boolean exists = skillNames.stream().anyMatch(n -> n.equalsIgnoreCase(name));
+            if (exists) return;
+            if (skillNames.size() >= 300) {
+                skillNames.remove(random.nextInt(skillNames.size()));
+            }
+            skillNames.add(name.trim());
+        }
+        saveAsync();
+    }
+
+    public List<String> sampleSkillNames(int count) {
+        synchronized (skillNames) {
+            if (skillNames.isEmpty()) return List.of();
+            List<String> copy = new ArrayList<>(skillNames);
+            Collections.shuffle(copy, random);
+            return List.copyOf(copy.subList(0, Math.min(count, copy.size())));
+        }
     }
 }

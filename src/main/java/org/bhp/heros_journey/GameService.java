@@ -10,6 +10,7 @@ import java.util.concurrent.Callable;
 public class GameService {
     private final ChatClient chatClient;
     private final LocalActionHandler localActionHandler;
+    private final RoomInspirationService inspirationService;
     private static final int MAX_RETRIES = 3;
     private static final long BASE_DELAY_MS = 500L;
 
@@ -24,6 +25,7 @@ public class GameService {
             Player stats: {stats}
             Player's known skills: {skills}
             Player action: "{action}"
+            Previously seen skill names (reuse exact names where applicable): {knownSkillNames}
             
             First, check if the player's known skills list contains a skill
             applicable to this action (be reasonable with synonyms, e.g.
@@ -32,8 +34,11 @@ public class GameService {
             Return JSON with all fields.
             """;
 
-    public GameService(ChatClient.Builder builder, PromptLoader promptLoader, LocalActionHandler localActionHandler) {
+    public GameService(ChatClient.Builder builder, PromptLoader promptLoader,
+                       LocalActionHandler localActionHandler,
+                       RoomInspirationService inspirationService) {
         this.localActionHandler = localActionHandler;
+        this.inspirationService = inspirationService;
         this.chatClient = builder
                 .defaultSystem(promptLoader.getActionResolutionSystemPrompt())
                 .build();
@@ -71,7 +76,8 @@ public class GameService {
                         .param("entities", getEntityDetails(currentRoom))
                         .param("stats", player.toString())
                         .param("skills", player.getSkills().toString())
-                        .param("action", PromptInjectionProtection.sanitizeWithLabel(userAction)))
+                        .param("action", PromptInjectionProtection.sanitizeWithLabel(userAction))
+                        .param("knownSkillNames", inspirationService.sampleSkillNames(20).toString()))
                 .call()
                 .entity(ActionOutcome.class));
 
@@ -95,6 +101,7 @@ public class GameService {
         // 2. Single Source of Truth: Skill XP determines skill level
         // Using formula: skill_level = floor(sqrt(XP / 10))
         String skill = result.skillName();
+
         int currentXP = player.getSkillXp().getOrDefault(skill, 0);
         int newXP = currentXP + result.xpGained();
 
@@ -102,6 +109,8 @@ public class GameService {
 
         // Calculate new level - single source of truth
         int newLevel = (int) Math.floor(Math.sqrt(newXP / 10.0));
+        player.getSkills().put(skill, newLevel);
+        inspirationService.addSkillName(skill);
         player.getSkills().put(skill, newLevel);
     }
 
