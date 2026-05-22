@@ -10,7 +10,8 @@ body {
 #game-container { display: flex; width: 100%; }
 
 #stats-panel {
-    width: 250px;
+    min-width: 250px;
+    width: 25%;
     border-right: 1px solid #333;
     padding: 20px;
     background: #1a1a1a;
