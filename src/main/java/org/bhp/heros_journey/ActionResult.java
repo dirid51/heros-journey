@@ -8,8 +8,6 @@ package org.bhp.heros_journey;
 public record ActionResult(
         int xpGained,
         boolean success,
-        boolean levelIncreased,
-        int newLevel,
         int damageTaken,
         int healthBoost,
         int maxHealthIncrease,

@@ -12,7 +12,7 @@ class ActionOutcomeValidatorTests {
 
     private static final ActionOutcome VALID_OUTCOME = new ActionOutcome(
             true, "Swordsmanship", 10, false,
-            50, true, true, 12, 0, 0, 0, 0.0,
+            50, true, 0, 0, 0, 0.0,
             "You swing your blade with increasing confidence."
     );
 
@@ -37,7 +37,7 @@ class ActionOutcomeValidatorTests {
     void testNullSkillName() {
         ActionOutcome outcome = new ActionOutcome(
                 true, null, 10, false,
-                50, true, true, 12, 0, 0, 0, 0.0,
+                50, true, 0, 0, 0, 0.0,
                 "You swing your blade."
         );
         IllegalArgumentException ex = assertThrows(
@@ -52,7 +52,7 @@ class ActionOutcomeValidatorTests {
     void testBlankSkillName() {
         ActionOutcome outcome = new ActionOutcome(
                 true, "  ", 10, false,
-                50, true, true, 12, 0, 0, 0, 0.0,
+                50, true, 0, 0, 0, 0.0,
                 "You swing your blade."
         );
         IllegalArgumentException ex = assertThrows(
@@ -67,7 +67,7 @@ class ActionOutcomeValidatorTests {
     void testNullDescription() {
         ActionOutcome outcome = new ActionOutcome(
                 true, "Swordsmanship", 10, false,
-                50, true, true, 12, 0, 0, 0, 0.0,
+                50, true, 0, 0, 0, 0.0,
                 null
         );
         IllegalArgumentException ex = assertThrows(
@@ -82,7 +82,7 @@ class ActionOutcomeValidatorTests {
     void testInconsistentAttemptFlag() {
         ActionOutcome outcome = new ActionOutcome(
                 false, "Swordsmanship", 10, false,
-                50, true, true, 12, 0, 0, 0, 0.0,
+                50, true, 0, 0, 0, 0.0,
                 "You cannot do this."
         );
         IllegalArgumentException ex = assertThrows(
@@ -98,20 +98,7 @@ class ActionOutcomeValidatorTests {
     void testInvalidSkillInitialLevel(int level) {
         ActionOutcome outcome = new ActionOutcome(
                 true, "Swordsmanship", level, false,
-                50, true, true, 12, 0, 0, 0, 0.0,
-                "You swing your blade."
-        );
-        assertThrows(IllegalArgumentException.class,
-                () -> ActionOutcomeValidator.validate(outcome));
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {-1, 101})
-    @DisplayName("Should reject invalid newLevel")
-    void testInvalidNewLevel(int level) {
-        ActionOutcome outcome = new ActionOutcome(
-                true, "Swordsmanship", 10, false,
-                50, true, true, level, 0, 0, 0, 0.0,
+                50, true, 0, 0, 0, 0.0,
                 "You swing your blade."
         );
         assertThrows(IllegalArgumentException.class,
@@ -124,7 +111,7 @@ class ActionOutcomeValidatorTests {
     void testInvalidDamageTaken(int damage) {
         ActionOutcome outcome = new ActionOutcome(
                 true, "Dodge", 10, false,
-                0, false, false, 10, damage, 0, 0, 0.0,
+                0, false, damage, 0, 0, 0.0,
                 "You tried to dodge."
         );
         assertThrows(IllegalArgumentException.class,
@@ -137,7 +124,7 @@ class ActionOutcomeValidatorTests {
     void testInvalidHealthBoost(int boost) {
         ActionOutcome outcome = new ActionOutcome(
                 true, "Healing", 10, false,
-                0, true, true, 11, 0, boost, 0, 0.0,
+                0, true, 0, boost, 0, 0.0,
                 "You healed."
         );
         assertThrows(IllegalArgumentException.class,
@@ -150,7 +137,7 @@ class ActionOutcomeValidatorTests {
     void testInvalidMaxHealthIncrease(int increase) {
         ActionOutcome outcome = new ActionOutcome(
                 true, "Vitality", 10, false,
-                0, true, true, 11, 0, 0, increase, 0.0,
+                0, true, 0, 0, increase, 0.0,
                 "You gained vitality."
         );
         assertThrows(IllegalArgumentException.class,
@@ -162,7 +149,7 @@ class ActionOutcomeValidatorTests {
     void testNegativeInjuryReductionGain() {
         ActionOutcome outcome = new ActionOutcome(
                 true, "Armor", 10, false,
-                0, true, true, 11, 0, 0, 0, -0.1,
+                0, true,0, 0, 0, -0.1,
                 "You equipped armor."
         );
         assertThrows(IllegalArgumentException.class,
@@ -174,7 +161,7 @@ class ActionOutcomeValidatorTests {
     void testExcessiveInjuryReductionGain() {
         ActionOutcome outcome = new ActionOutcome(
                 true, "Armor", 10, false,
-                0, true, true, 11, 0, 0, 0, 1.0,
+                0, true, 0, 0, 0, 1.0,
                 "You became godlike."
         );
         assertThrows(IllegalArgumentException.class,
@@ -186,7 +173,7 @@ class ActionOutcomeValidatorTests {
     void testNegativeXpGained() {
         ActionOutcome outcome = new ActionOutcome(
                 true, "Swordsmanship", 10, false,
-                -50, true, true, 12, 0, 0, 0, 0.0,
+                -50, true, 0, 0, 0, 0.0,
                 "You swung your blade."
         );
         assertThrows(IllegalArgumentException.class,
@@ -198,7 +185,7 @@ class ActionOutcomeValidatorTests {
     void testZeroValuesAccepted() {
         ActionOutcome outcome = new ActionOutcome(
                 false, "ImpossibleAction", 0, false,
-                0, false, false, 0, 0, 0, 0, 0.0,
+                0, false, 0, 0, 0, 0.0,
                 "This action is impossible."
         );
         assertDoesNotThrow(() -> ActionOutcomeValidator.validate(outcome));
@@ -209,7 +196,7 @@ class ActionOutcomeValidatorTests {
     void testMaximumValidValues() {
         ActionOutcome outcome = new ActionOutcome(
                 true, "Legendary", 100, false,
-                500, true, true, 100, 1000, 500, 500, 0.9,
+                500, true, 1000, 500, 500, 0.9,
                 "You achieved legendary status."
         );
         assertDoesNotThrow(() -> ActionOutcomeValidator.validate(outcome));

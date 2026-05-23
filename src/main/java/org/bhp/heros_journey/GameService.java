@@ -108,13 +108,14 @@ public class GameService {
         int currentXP = player.getSkillXp().getOrDefault(skill, 0);
         int newXP = currentXP + result.xpGained();
 
-        player.updateSkillXp(skill, newXP);
-
-        // Calculate new level - single source of truth
-        int newLevel = (int) Math.floor(Math.sqrt(newXP / 10.0));
-        player.getSkills().put(skill, newLevel);
-        inspirationService.addSkillName(skill);
-        player.getSkills().put(skill, newLevel);
+        if (result.isExistingSkill()) {
+            player.updateSkillXp(skill, newXP);
+        } else {
+            // Calculate new level - single source of truth
+            int newLevel = (int) Math.floor(Math.sqrt(newXP / 10.0));
+            player.getSkills().put(skill, newLevel);
+            inspirationService.addSkillName(skill);
+        }
     }
 
     private String getEntityDetails(Room room) {

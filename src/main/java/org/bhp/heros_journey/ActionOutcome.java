@@ -10,8 +10,6 @@ public record ActionOutcome(
         // Result phase (only populated if canAttempt=true)
         int xpGained,
         boolean success,
-        boolean levelIncreased,
-        int newLevel,
         int damageTaken,
         int healthBoost,
         int maxHealthIncrease,

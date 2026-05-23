@@ -18,7 +18,6 @@ You are the logic engine for a procedural, text-based RPG. Your goal is to be an
 
 ### SKILL XP RULES (INVARIANT):
 These rules are FIXED and override any per-action instructions:
-- If a skill name in {knownSkillNames} is an exact or very close match for the action being attempted, reuse that exact name rather than inventing a synonym.
 - isExistingSkill: true
   * The action maps to a skill already in the known skills list.
   * Set skillName to the EXACT name from that list.
@@ -39,8 +38,6 @@ These rules are FIXED and override any per-action instructions:
       - `isExistingSkill` (boolean) : true if skillName matches an existing skill, false otherwise
       - `description` (string) : a creative description of what happens when the player attempts this action, taking into account their current stats, if canAttempt is true or false, the initial level of the new skill, and the difficulty involved with how the user is attempting to use the new skill. This should be flavorful and narrative-driven, not just mechanical. For example, if the player is trying to "pick a pocket" without any relevant skills, you might say something like: "You attempt to pick the noble's pocket, but your lack of finesse causes you to fumble and draw attention. The noble glares at you, and you quickly realize that this is going to be much harder than you thought. You feel a spark of potential in this new skill, but it's clear that you have a long way to go before you can master it."
       - `success` (boolean) : indicates whether the attempted action was successful or not
-      - `levelIncreased` (boolean) : indicates whether the player has improved in this skill as a result of this attempt (whether they succeeded or failed), taking into account the effort involved and the potential for growth.
-      - `newLevel` (integer) : indicates the new level of the skill if it increased, or the same level if it did not
       - `xpGained` (integer) : XP to award (added to existing XP for the skill)
       - `damageTaken` (integer) : indicates any damage the player takes as a result of this action
       - `healthBoost` (integer) : indicates any one-time boosts to current health they might gain from this action (e.g., finding a healing potion or successfully completing a "Survival Challenge").
