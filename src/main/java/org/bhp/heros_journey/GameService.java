@@ -1,11 +1,13 @@
 package org.bhp.heros_journey;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.concurrent.Callable;
 
+@Slf4j
 @Service
 public class GameService {
     private final ChatClient chatClient;
@@ -57,6 +59,7 @@ public class GameService {
                 // Break out of retry loop once interrupted
                 throw new LlmCallFailedException("LLM call interrupted", MAX_RETRIES, e);
             } catch (Exception e) {
+                log.warn("LLM call attempt {} of {} failed: {}", i + 1, MAX_RETRIES, e.getMessage());
                 last = e;
             }
         }
