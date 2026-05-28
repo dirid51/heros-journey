@@ -20,11 +20,19 @@ public class LocalActionHandler {
             "whats here", "describe room", "observe"
     );
 
-    // Commands that return player status
+    // Commands that return player status (health, injury reduction, skills)
     private static final Set<String> STATUS_COMMANDS = Set.of(
-            "status", "stats", "check stats", "check status", "inventory",
-            "check health", "health", "my stats", "player stats", "skills",
-            "check skills", "what do i have", "what do i know"
+            "check stats",
+            "check status",
+            "check health",
+            "check skills"
+    );
+
+    // Commands that show the player's held items
+    private static final Set<String> INVENTORY_COMMANDS = Set.of(
+            "inventory", "i", "check inventory", "show inventory",
+            "what do i have", "what am i carrying", "my items", "what do i know",
+            "my inventory", "items"
     );
 
     // Commands that trigger a rest/wait with deterministic outcome
@@ -48,6 +56,9 @@ public class LocalActionHandler {
     public Optional<String> tryHandle(String cmd, Player player, Room room) {
         if (matchesAny(cmd, LOOK_COMMANDS)) {
             return Optional.of(handleLook(room));
+        }
+        if (matchesAny(cmd, INVENTORY_COMMANDS)) {
+            return Optional.of(handleInventory(player));
         }
         if (matchesAny(cmd, STATUS_COMMANDS)) {
             return Optional.of(handleStatus(player));
@@ -96,6 +107,16 @@ public class LocalActionHandler {
                     sb.append(String.format("%n  %s: %d", skill, level)));
         }
         return sb.toString();
+    }
+
+    private String handleInventory(Player player) {
+        if (player.getInventory().isEmpty()) {
+            return "You search your pockets and pack. You carry nothing of note — only the weight of what lies ahead.";
+        }
+        StringBuilder sb = new StringBuilder("You take stock of what you carry:\n");
+        player.getInventory().forEach(itemId ->
+                sb.append(String.format("  - %s%n", itemId)));
+        return sb.toString().trim();
     }
 
     private String handleRest(Player player) {

@@ -9,5 +9,6 @@
     "title" : "Abyssal Cavern Passage",
     "description" : "You find yourself standing before a narrow staircase descending deeper into the earth, its walls lined with ancient runes that seem to pulse faintly."
   } ],
-  "skillPatterns" : [ "climbing", "lightning_forgotten_trail" ]
+  "skillPatterns" : [ "climbing", "lightning_forgotten_trail" ],
+  "skillNames" : [ "Crystal Insight" ]
 }

@@ -109,9 +109,8 @@ function appendLog(text, className) {
 }
 
 function updateUI(state) {
-    // TODO: INVENTORY - Render inventory items from state.player.inventory in the inventory panel
-// TODO: MAP - Update map visualization with newly visited room and its connections
-// TODO: POST-RUN SUMMARY - When state.isGameOver is true, render a styled end screen showing the run summary before the game over message
+    // TODO: MAP - Update map visualization with newly visited room and its connections
+    // TODO: POST-RUN SUMMARY - When state.isGameOver is true, render a styled end screen showing the run summary before the game over message
     appendLog(state.description, 'response-text');
 
     // Update Stats
@@ -120,12 +119,30 @@ function updateUI(state) {
     document.getElementById('ir-val').innerText = (state.player.injuryReduction * 100).toFixed(0);
 
     // Update Skills
-    const list = document.getElementById('skills-list');
-    list.innerHTML = '';
+    const skillList = document.getElementById('skills-list');
+    skillList.innerHTML = '';
     for (const [name, level] of Object.entries(state.player.skills)) {
         const li = document.createElement('li');
         li.innerText = `${name}: ${level}`;
-        list.appendChild(li);
+        skillList.appendChild(li);
+    }
+
+    // Update Inventory
+    const inventoryList = document.getElementById('inventory-list');
+    inventoryList.innerHTML = '';
+    const items = state.player.inventory;
+    if (!items || items.length === 0) {
+        const li = document.createElement('li');
+        li.className = 'empty-inventory';
+        li.innerText = '— empty —';
+        inventoryList.appendChild(li);
+    } else {
+        items.forEach(itemId => {
+            const li = document.createElement('li');
+            li.innerText = itemId;
+            li.title = `Type "use ${itemId}" or "drop ${itemId}"`;
+            inventoryList.appendChild(li);
+        });
     }
 
     if (state.player.currentHealth < 0) {

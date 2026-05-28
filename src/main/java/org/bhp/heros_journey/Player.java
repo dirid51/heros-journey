@@ -3,8 +3,10 @@ package org.bhp.heros_journey;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -20,7 +22,7 @@ public class Player implements Serializable {
 
     private Map<String, Integer> skills = new HashMap<>(); // skill name, level
     private Map<String, Integer> skillXp = new HashMap<>(); // skill name, xp
-    // TODO: INVENTORY - Add List<String> inventory field to hold collected item IDs
+    private List<String> inventory = new ArrayList<>(); // item IDs currently held by the player
 
     /**
      * Logic: The game ends only if health is BELOW zero.
@@ -86,5 +88,37 @@ public class Player implements Serializable {
      */
     public void updateSkillXp(String skillName, int xp) {
         this.skillXp.put(skillName, xp);
+    }
+
+    /**
+     * Adds an item to the player's inventory.
+     * Silently ignores null, blank, or already-held item IDs.
+     *
+     * @param itemId the ID of the item to add
+     */
+    public void addToInventory(String itemId) {
+        if (itemId != null && !itemId.isBlank() && !inventory.contains(itemId)) {
+            inventory.add(itemId);
+        }
+    }
+
+    /**
+     * Removes an item from the player's inventory.
+     *
+     * @param itemId the ID of the item to remove
+     * @return true if the item was present and removed, false otherwise
+     */
+    public boolean removeFromInventory(String itemId) {
+        return inventory.remove(itemId);
+    }
+
+    /**
+     * Checks whether the player is currently holding a specific item.
+     *
+     * @param itemId the ID of the item to check
+     * @return true if the item is in inventory
+     */
+    public boolean hasItem(String itemId) {
+        return inventory.contains(itemId);
     }
 }

@@ -14,13 +14,16 @@
 </div>
 <div id="game-container">
     <aside id="stats-panel">
-        <!-- TODO: INVENTORY - Add inventory section displaying held item names with use/drop buttons -->
         <!-- TODO: MAP - Add a map panel (canvas or SVG) rendering the visited room graph as a node/edge diagram -->
         <h2>Player Stats</h2>
         <div class="stat">Health: <span id="hp-val">100</span> / <span id="max-hp-val">100</span></div>
         <div class="stat">Injury Reduction: <span id="ir-val">0</span>%</div>
         <h3>Skills</h3>
         <ul id="skills-list"></ul>
+        <h3>Inventory</h3>
+        <ul id="inventory-list">
+            <li class="empty-inventory">— empty —</li>
+        </ul>
     </aside>
 
     <main id="main-area">

@@ -49,10 +49,6 @@ public class ActionOutcomeValidator {
         }
 
         // --- Result-phase fields (only meaningful when canAttempt=true, but still bounded) ---
-        if (outcome.newLevel() < 0 || outcome.newLevel() > MAX_SKILL_LEVEL) {
-            throw new IllegalArgumentException(
-                    "newLevel must be between 0 and " + MAX_SKILL_LEVEL + ", got: " + outcome.newLevel());
-        }
         if (outcome.damageTaken() < 0 || outcome.damageTaken() > MAX_DAMAGE) {
             throw new IllegalArgumentException(
                     "damageTaken must be between 0 and " + MAX_DAMAGE + ", got: " + outcome.damageTaken());
@@ -71,6 +67,17 @@ public class ActionOutcomeValidator {
         }
         if (outcome.xpGained() < 0) {
             throw new IllegalArgumentException("xpGained must be non-negative, got: " + outcome.xpGained());
+        }
+
+        // --- Inventory fields: if present, must not be blank ---
+        if (outcome.itemPickedUp() != null && outcome.itemPickedUp().isBlank()) {
+            throw new IllegalArgumentException("ActionOutcome.itemPickedUp must not be blank if set");
+        }
+        if (outcome.itemDropped() != null && outcome.itemDropped().isBlank()) {
+            throw new IllegalArgumentException("ActionOutcome.itemDropped must not be blank if set");
+        }
+        if (outcome.itemUsed() != null && outcome.itemUsed().isBlank()) {
+            throw new IllegalArgumentException("ActionOutcome.itemUsed must not be blank if set");
         }
     }
 
@@ -115,10 +122,6 @@ public class ActionOutcomeValidator {
         }
         if (result.description() == null || result.description().isBlank()) {
             throw new IllegalArgumentException("ActionResult.description must not be empty");
-        }
-        if (result.newLevel() < 0 || result.newLevel() > MAX_SKILL_LEVEL) {
-            throw new IllegalArgumentException(
-                    "newLevel must be between 0 and " + MAX_SKILL_LEVEL + ", got: " + result.newLevel());
         }
         if (result.damageTaken() < 0 || result.damageTaken() > MAX_DAMAGE) {
             throw new IllegalArgumentException(

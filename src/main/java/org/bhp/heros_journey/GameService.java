@@ -26,6 +26,7 @@ public class GameService {
             Entities present: {entities}
             Player stats: {stats}
             Player's known skills: {skills}
+            Player's current inventory (item IDs): {inventory}
             Player action: "{action}"
             Previously seen skill names (reuse exact names where applicable): {knownSkillNames}
             
@@ -45,7 +46,6 @@ public class GameService {
                 .defaultSystem(promptLoader.getActionResolutionSystemPrompt())
                 .build();
     }
-
 
     private <T> T withRetries(Callable<T> action) {
         Exception last = null;
@@ -72,13 +72,15 @@ public class GameService {
             return localResponse.get();
         }
         // TODO: COMBAT - If state is inCombat, delegate to CombatService instead of generic action resolution
-// TODO: NAMED NPCS - Inject relevant NPC history from GameState into the action resolution prompt
+        // TODO: NAMED NPCS - Inject relevant NPC history from GameState into the action resolution prompt
+
         ActionOutcome outcome = withRetries(() -> chatClient.prompt()
                 .user(u -> u.text(ACTION_RESOLUTION_PROMPT)
                         .param("roomDesc", currentRoom.description())
                         .param("entities", getEntityDetails(currentRoom))
                         .param("stats", player.toString())
                         .param("skills", player.getSkills().toString())
+                        .param("inventory", player.getInventory().isEmpty() ? "empty" : player.getInventory().toString())
                         .param("action", PromptInjectionProtection.sanitizeWithLabel(userAction))
                         .param("knownSkillNames", inspirationService.sampleSkillNames(20).toString()))
                 .call()
@@ -115,6 +117,18 @@ public class GameService {
             int newLevel = (int) Math.floor(Math.sqrt(newXP / 10.0));
             player.getSkills().put(skill, newLevel);
             inspirationService.addSkillName(skill);
+        }
+
+        // 3. Inventory changes
+        if (result.itemPickedUp() != null) {
+            player.addToInventory(result.itemPickedUp());
+        }
+        if (result.itemUsed() != null) {
+            // Item consumed on use — remove from inventory
+            player.removeFromInventory(result.itemUsed());
+        }
+        if (result.itemDropped() != null) {
+            player.removeFromInventory(result.itemDropped());
         }
     }
 

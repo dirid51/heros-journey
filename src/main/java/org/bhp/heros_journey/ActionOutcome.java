@@ -15,7 +15,11 @@ public record ActionOutcome(
         int maxHealthIncrease,
         double injuryReductionGain,
 
+        // Inventory phase (null if no item interaction occurred)
+        String itemPickedUp,  // item ID from the room's itemIds list (null if none picked up)
+        String itemDropped,   // item ID from the player's inventory (null if none dropped)
+        String itemUsed,      // item ID consumed from the player's inventory (null if none used)
+
         String description
-        // TODO: INVENTORY - Add itemPickedUp, itemDropped, itemUsed fields to capture item interaction results
 ) {
 }

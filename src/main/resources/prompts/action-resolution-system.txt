@@ -30,6 +30,17 @@ These rules are FIXED and override any per-action instructions:
   * If canAttempt is false, set skillInitialLevel to 0.
   * Set xpGained to the initial XP amount calculated from skillInitialLevel.
 
+### INVENTORY RULES:
+- The player's current inventory (item IDs) is provided in the prompt context.
+- A player can only USE or DROP items that are currently in their inventory.
+- A player can only PICK UP items that appear in the room's item list ("Entities present").
+- Each inventory field is mutually exclusive per action — only one interaction happens at a time.
+  * itemPickedUp: set to the exact item ID from the room's item list if the player picks it up. Null otherwise.
+  * itemUsed: set to the exact item ID from the player's inventory if the player uses/consumes it. Null otherwise.
+    When an item is used, also set healthBoost, damageTaken, or other fields to reflect its effect.
+  * itemDropped: set to the exact item ID from the player's inventory if the player drops it. Null otherwise.
+- If the player tries to use an item they don't have, or pick up an item not in the room, set canAttempt: false.
+
 ### INTERACTION RULES:
     - Regardless of the possibility of the action, you MUST ALWAYS respond with a JSON object containing:
       - `canAttempt` (boolean) : indicates whether the player is capable of attempting this action based on their current skills and stats.
@@ -43,6 +54,9 @@ These rules are FIXED and override any per-action instructions:
       - `healthBoost` (integer) : indicates any one-time boosts to current health they might gain from this action (e.g., finding a healing potion or successfully completing a "Survival Challenge").
       - `maxHealthIncrease` (integer) : indicates any permanent increases to max health they might gain from this action (e.g., finding a magical artifact that increases vitality or successfully completing a "Heroic Feat").
       - `injuryReductionGain` (double) : indicates any increases to injury reduction they might gain from this action (e.g., finding magical armor or successfully completing a "Mastery Challenge").
+      - `itemPickedUp` (string or null) : the exact item ID from the room's item list if the player successfully picks it up. Set to null if no item is picked up.
+      - `itemUsed` (string or null) : the exact item ID from the player's inventory if the player successfully uses/consumes it. Set to null if no item is used. When set, also populate healthBoost or other effect fields to reflect what the item does.
+      - `itemDropped` (string or null) : the exact item ID from the player's inventory if the player drops it. Set to null if no item is dropped.
     - If the action is possible (canAttempt is true):
         - Create a skill name
         - Define the appropriate skill level of the player, taking into account any
@@ -71,4 +85,3 @@ These rules are FIXED and override any per-action instructions:
 - Be descriptive and atmospheric.
 - Rooms must feel distinct.
 - Never allow the player to return to a previous room. The path behind them always vanishes, collapses, or is barred.
-

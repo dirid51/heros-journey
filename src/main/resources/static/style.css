@@ -85,3 +85,13 @@ body {
 }
 
 #loading-screen.hidden { display: none; }
+
+.empty-inventory { color: #444; font-style: italic; }
+
+#inventory-list li {
+    cursor: default;
+}
+
+#inventory-list li:not(.empty-inventory):hover {
+    color: #88ff88;
+}
