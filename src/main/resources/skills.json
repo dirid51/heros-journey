@@ -1,0 +1,2269 @@
+[
+  {
+    "id": 1,
+    "name": "Cooking",
+    "description": "The art of preparing food through the application of heat to raw ingredients.",
+    "prerequisites": []
+  },
+  {
+    "id": 2,
+    "name": "Baking",
+    "description": "The precise practice of cooking food via dry heat within an enclosed kiln or oven.",
+    "prerequisites": [
+      "Cooking"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Gardening",
+    "description": "The intentional cultivation of small, localized soil plots to yield flora and herbs.",
+    "prerequisites": []
+  },
+  {
+    "id": 4,
+    "name": "Cleaning",
+    "description": "The routine extraction of grime, soot, and clutter from living spaces and gear.",
+    "prerequisites": []
+  },
+  {
+    "id": 5,
+    "name": "Laundry",
+    "description": "The physical washing and purification of stained garments and fabrics.",
+    "prerequisites": [
+      "Cleaning"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Ironing",
+    "description": "The flattening and smoothing of cloth textures using heavy, heated iron tools.",
+    "prerequisites": [
+      "Laundry"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Sewing",
+    "description": "The binding of fabrics and hides using a handheld needle and thread.",
+    "prerequisites": []
+  },
+  {
+    "id": 8,
+    "name": "Knitting",
+    "description": "The systemic interlacing of yarn loops into flexible, warm apparel.",
+    "prerequisites": [
+      "Sewing"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Crocheting",
+    "description": "The creation of patterned textiles using a single specialized hook to loop thread.",
+    "prerequisites": [
+      "Sewing"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Woodworking",
+    "description": "The rudimentary shaping, whittling, and carving of raw lumber into basic objects.",
+    "prerequisites": []
+  },
+  {
+    "id": 11,
+    "name": "Carpentry",
+    "description": "The structural assembly of complex wooden frameworks, structural joints, and furniture.",
+    "prerequisites": [
+      "Woodworking"
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Painting walls",
+    "description": "The uniform coating of indoor or outdoor architectural surfaces with protective color.",
+    "prerequisites": []
+  },
+  {
+    "id": 13,
+    "name": "Elemental Aqueduct Fitting",
+    "description": "The installation and repair of heavy conduits designed to route clean water or liquid mana flows.",
+    "prerequisites": [
+      "Carpentry"
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Lightning Rune Grounding",
+    "description": "The delicate calibration and neutralization of active shock elements within magical wards or traps.",
+    "prerequisites": [
+      "Enchantment Logic Weaving"
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Clockwork Mount Upkeep",
+    "description": "The mechanical maintenance and engineering repair of autonomous brass steeds and constructs.",
+    "prerequisites": [
+      "Woodworking"
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Runic Wheel Attunement",
+    "description": "The specialized alignment of reinforced elemental bands onto heavy carriage and chariot wheels.",
+    "prerequisites": [
+      "Clockwork Mount Upkeep"
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Alchemical Fluid Flushing",
+    "description": "The draining and replacement of degraded core vital essences within magical machinations.",
+    "prerequisites": [
+      "Clockwork Mount Upkeep"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Vessel Piloting",
+    "description": "The manual steering and operational management of overland wagons, skiffs, or floating hulls.",
+    "prerequisites": []
+  },
+  {
+    "id": 19,
+    "name": "Runic Tethering",
+    "description": "The secure spiritual anchoring of floating craft or magical constructs to prevent drifting.",
+    "prerequisites": [
+      "Vessel Piloting"
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Broomstick Realignment",
+    "description": "The structural rebalancing of the wooden shafts and flying flight runes on personal aerial apparatuses.",
+    "prerequisites": [
+      "Vessel Piloting"
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Fishing",
+    "description": "The procurement of aquatic wildlife using a single line, hook, and hidden bait.",
+    "prerequisites": []
+  },
+  {
+    "id": 22,
+    "name": "Hunting",
+    "description": "The active tracking, stalking, and harvesting of wild game for meats and pelts.",
+    "prerequisites": []
+  },
+  {
+    "id": 23,
+    "name": "Camping",
+    "description": "The successful creation of an unmapped, safe wilderness shelter and functional campsite.",
+    "prerequisites": []
+  },
+  {
+    "id": 24,
+    "name": "Hiking",
+    "description": "The physical endurance required to travel across harsh, unpaved terrains on foot.",
+    "prerequisites": []
+  },
+  {
+    "id": 25,
+    "name": "Swimming",
+    "description": "The self-propelled navigation through bodies of open water without drowning.",
+    "prerequisites": []
+  },
+  {
+    "id": 26,
+    "name": "Running",
+    "description": "The high-velocity propulsion of oneself on foot to cover distance or escape immediate threats.",
+    "prerequisites": []
+  },
+  {
+    "id": 27,
+    "name": "Walking long distances",
+    "description": "The strict preservation of baseline physical stamina during grueling, multi-day foot journeys.",
+    "prerequisites": [
+      "Hiking"
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Stretching",
+    "description": "The deliberate elongation of muscles to optimize agility and reduce structural fatigue.",
+    "prerequisites": []
+  },
+  {
+    "id": 29,
+    "name": "Weightlifting",
+    "description": "The incremental physical conditioning of muscular force by manipulating heavy loads.",
+    "prerequisites": []
+  },
+  {
+    "id": 30,
+    "name": "Yoga",
+    "description": "The combination of physical balance, posturing, and intense breathing discipline.",
+    "prerequisites": [
+      "Stretching"
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Meditation",
+    "description": "The intentional calming of the mind to replenish mental stamina and restore spiritual focus.",
+    "prerequisites": []
+  },
+  {
+    "id": 32,
+    "name": "First aid",
+    "description": "The swift, non-magical stabilization of dynamic wounds, bleeding, and minor trauma in the field.",
+    "prerequisites": []
+  },
+  {
+    "id": 33,
+    "name": "Babysitting",
+    "description": "The vigilant guarding and safety monitoring of young, vulnerable children.",
+    "prerequisites": []
+  },
+  {
+    "id": 34,
+    "name": "Pet care",
+    "description": "The general upkeep, nourishment, and physical hygiene of a domesticated animal.",
+    "prerequisites": []
+  },
+  {
+    "id": 35,
+    "name": "Dog training",
+    "description": "The behavioral conditioning of canines to accurately respond to verbal and physical prompts.",
+    "prerequisites": [
+      "Pet care"
+    ]
+  },
+  {
+    "id": 36,
+    "name": "Bird watching",
+    "description": "The quiet visual recognition and habitual categorization of wild avian species.",
+    "prerequisites": []
+  },
+  {
+    "id": 37,
+    "name": "Soul-Glass Imprinting",
+    "description": "The rapid capture of an unchanging visual image onto an alchemically silvered crystal plate.",
+    "prerequisites": []
+  },
+  {
+    "id": 38,
+    "name": "Illusion Phantasm Recording",
+    "description": "The continuous storage of a moving illusory memory inside a stationary scrying orb.",
+    "prerequisites": [
+      "Soul-Glass Imprinting"
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Drawing",
+    "description": "The direct rendering of outlines and two-dimensional figures onto parchment using charcoal or ink.",
+    "prerequisites": []
+  },
+  {
+    "id": 40,
+    "name": "Painting art",
+    "description": "The creative composition of complex pigments onto canvas to represent scenery or concepts.",
+    "prerequisites": [
+      "Drawing"
+    ]
+  },
+  {
+    "id": 41,
+    "name": "Sculpting",
+    "description": "The physical extraction or molding of material to fashion physical three-dimensional likenesses.",
+    "prerequisites": []
+  },
+  {
+    "id": 42,
+    "name": "Writing",
+    "description": "The fundamental transcription of spoken words and abstract thoughts into text characters.",
+    "prerequisites": []
+  },
+  {
+    "id": 43,
+    "name": "Swift Rune-Scribing",
+    "description": "The deployment of enchanted ink-wells to scribe regular scripts or low-tier runes at immense speeds.",
+    "prerequisites": [
+      "Writing"
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Public speaking",
+    "description": "The clear projection of intent, charisma, and voice to large, dense crowds of listeners.",
+    "prerequisites": []
+  },
+  {
+    "id": 45,
+    "name": "Storytelling",
+    "description": "The imaginative verbal performance of legends, plots, and lore to maintain an audience's focus.",
+    "prerequisites": [
+      "Public speaking"
+    ]
+  },
+  {
+    "id": 46,
+    "name": "Negotiation",
+    "description": "The verbal navigation of trade terms or pacts to secure a balanced compromise.",
+    "prerequisites": []
+  },
+  {
+    "id": 47,
+    "name": "Persuasion",
+    "description": "The psychological framing of points to shift an individual's personal alignment to your own.",
+    "prerequisites": []
+  },
+  {
+    "id": 48,
+    "name": "Haggling",
+    "description": "The aggressive mercantile debate of commodity costs to force a direct price drops.",
+    "prerequisites": [
+      "Negotiation"
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Salesmanship",
+    "description": "The targeted pitching of goods or resources to ensure highly profitable commerce.",
+    "prerequisites": [
+      "Persuasion"
+    ]
+  },
+  {
+    "id": 50,
+    "name": "Customer service",
+    "description": "The calculated preservation of politeness and absolute patience when managing hostile patrons.",
+    "prerequisites": []
+  },
+  {
+    "id": 51,
+    "name": "Teaching",
+    "description": "The systemic transfer of concepts and skills to uneducated pupils.",
+    "prerequisites": [
+      "Public speaking"
+    ]
+  },
+  {
+    "id": 52,
+    "name": "Tutoring",
+    "description": "The intense, focused academic development of a single apprentice's talents.",
+    "prerequisites": [
+      "Teaching"
+    ]
+  },
+  {
+    "id": 53,
+    "name": "Studying",
+    "description": "The solitary mental discipline of processing educational texts and charts to retain core definitions.",
+    "prerequisites": []
+  },
+  {
+    "id": 54,
+    "name": "Research",
+    "description": "The thorough cross-referencing of scattered logs and archives to verify obscure lore.",
+    "prerequisites": [
+      "Studying"
+    ]
+  },
+  {
+    "id": 55,
+    "name": "Scroll Archiving",
+    "description": "The meticulous safety sorting, magical indexing, and categorization of fragile papyrus or grimoires.",
+    "prerequisites": [
+      "Studying"
+    ]
+  },
+  {
+    "id": 56,
+    "name": "Organization",
+    "description": "The spatial categorization of item stashes to maximize quick retrieval.",
+    "prerequisites": []
+  },
+  {
+    "id": 57,
+    "name": "Time management",
+    "description": "The optimal division of daily routines to avoid wasting active daylight hours.",
+    "prerequisites": []
+  },
+  {
+    "id": 58,
+    "name": "Budgeting",
+    "description": "The calculation of total coin pools to control expenses and maintain clear liquid wealth.",
+    "prerequisites": []
+  },
+  {
+    "id": 59,
+    "name": "Accounting",
+    "description": "The ledger tracking of corporate profits, expenses, and transaction logs across merchants.",
+    "prerequisites": [
+      "Budgeting"
+    ]
+  },
+  {
+    "id": 60,
+    "name": "Investing",
+    "description": "The tactical placement of coin into trade fleets or guild expeditions to reap dividends.",
+    "prerequisites": [
+      "Accounting"
+    ]
+  },
+  {
+    "id": 61,
+    "name": "Couponing",
+    "description": "The smart stacking of kingdom vouchers and trade seals to secure minor item price drops.",
+    "prerequisites": [
+      "Haggling"
+    ]
+  },
+  {
+    "id": 62,
+    "name": "Shopping efficiently",
+    "description": "The swift traversing of busy merchant sectors to find targeted items without spending excess coin.",
+    "prerequisites": [
+      "Time management"
+    ]
+  },
+  {
+    "id": 63,
+    "name": "Grocery planning",
+    "description": "The systematic calculation of necessary bulk food items required to sustain a party or camp.",
+    "prerequisites": [
+      "Organization"
+    ]
+  },
+  {
+    "id": 64,
+    "name": "Meal prepping",
+    "description": "The advanced processing and dry-packing of travel rations to prevent field spoilage.",
+    "prerequisites": [
+      "Cooking",
+      "Grocery planning"
+    ]
+  },
+  {
+    "id": 65,
+    "name": "Inventory tracking",
+    "description": "The mechanical auditing of stockpiled gear, weight loads, and raw ingredients.",
+    "prerequisites": [
+      "Organization"
+    ]
+  },
+  {
+    "id": 66,
+    "name": "Lockpicking",
+    "description": "The deliberate bypass of physical mechanical keylocks using specialized pick tools.",
+    "prerequisites": []
+  },
+  {
+    "id": 67,
+    "name": "Map reading",
+    "description": "The proper interpretation of cartographical glyphs, elevations, and trail markings.",
+    "prerequisites": []
+  },
+  {
+    "id": 68,
+    "name": "Navigation",
+    "description": "The continuous plotting of a clear line of travel across unknown geographic coordinates.",
+    "prerequisites": [
+      "Map reading"
+    ]
+  },
+  {
+    "id": 69,
+    "name": "Orienteering",
+    "description": "The art of discovering your position in the wilderness using terrain features or compass points.",
+    "prerequisites": [
+      "Navigation"
+    ]
+  },
+  {
+    "id": 70,
+    "name": "Survival skills",
+    "description": "The adaptive field tactics used to sustain physical health while marooned in deep wilderness.",
+    "prerequisites": []
+  },
+  {
+    "id": 71,
+    "name": "Fire starting",
+    "description": "The manual rubbing of kindling or striking of flint to create warmth or cooking flames.",
+    "prerequisites": [
+      "Survival skills"
+    ]
+  },
+  {
+    "id": 72,
+    "name": "Knot tying",
+    "description": "The reliable loop binding of ropes to handle heavy cargo loads or assist climbing.",
+    "prerequisites": []
+  },
+  {
+    "id": 73,
+    "name": "Climbing ladders",
+    "description": "The stable vertical escalation of ladders or basic scaffolds without losing footing.",
+    "prerequisites": []
+  },
+  {
+    "id": 74,
+    "name": "Digging",
+    "description": "The manual moving and excavation of topsoil or clay via iron shovels.",
+    "prerequisites": []
+  },
+  {
+    "id": 75,
+    "name": "Shoveling snow",
+    "description": "The rapid removal of heavy snow layers to keep encampments and thoroughfares passable.",
+    "prerequisites": [
+      "Digging"
+    ]
+  },
+  {
+    "id": 76,
+    "name": "Grass Shearing",
+    "description": "The manual maintenance of palace lawns using handheld hedge shears or scythes.",
+    "prerequisites": []
+  },
+  {
+    "id": 77,
+    "name": "Hedge trimming",
+    "description": "The precise shearing of overgrowing shrubbery and decorative estate bushes.",
+    "prerequisites": [
+      "Grass Shearing"
+    ]
+  },
+  {
+    "id": 78,
+    "name": "Glazier Cleaning",
+    "description": "The purification of glass windows or glass dome panels to secure crystal clarity.",
+    "prerequisites": [
+      "Cleaning"
+    ]
+  },
+  {
+    "id": 79,
+    "name": "Refuse Sorting",
+    "description": "The systematic separation of raw garbage into scrap wood, metal, or purely decaying waste.",
+    "prerequisites": [
+      "Organization"
+    ]
+  },
+  {
+    "id": 80,
+    "name": "Material Salvaging",
+    "description": "The stripping of broken materials to recover core foundational components for smithing.",
+    "prerequisites": [
+      "Refuse Sorting"
+    ]
+  },
+  {
+    "id": 81,
+    "name": "Composting",
+    "description": "The deliberate degradation of natural plant matter to generate highly fertile farm soil.",
+    "prerequisites": [
+      "Refuse Sorting"
+    ]
+  },
+  {
+    "id": 82,
+    "name": "Furniture assembly",
+    "description": "The piece-by-piece structural fitting of prepared wooden boards into household items.",
+    "prerequisites": [
+      "Carpentry"
+    ]
+  },
+  {
+    "id": 83,
+    "name": "Chamber Adornment",
+    "description": "The artistic composition of banners, rugs, and furniture layouts to beautify castle halls.",
+    "prerequisites": [
+      "Organization"
+    ]
+  },
+  {
+    "id": 84,
+    "name": "Garment Coordination",
+    "description": "The strategic selection of attire combinations to elevate social standings in court circles.",
+    "prerequisites": []
+  },
+  {
+    "id": 85,
+    "name": "Cosmetics Application",
+    "description": "The painting of facial contours using organic powders or slight masking pigments.",
+    "prerequisites": []
+  },
+  {
+    "id": 86,
+    "name": "Hair cutting",
+    "description": "The neat trimming and shortening of hair using sharp blades or scissors.",
+    "prerequisites": []
+  },
+  {
+    "id": 87,
+    "name": "Shaving",
+    "description": "The smooth removal of whiskers or body hair via clean straight razors.",
+    "prerequisites": []
+  },
+  {
+    "id": 88,
+    "name": "Tavern Tending",
+    "description": "The rapid pouring and allocation of alcoholic brews to thirsty tavern patrons.",
+    "prerequisites": []
+  },
+  {
+    "id": 89,
+    "name": "Stimulant Brewing",
+    "description": "The boiling and precise concentration of roasted dark beans into energy-inducing drinks.",
+    "prerequisites": [
+      "Cooking"
+    ]
+  },
+  {
+    "id": 90,
+    "name": "Infusion Brewing",
+    "description": "The delicate steeping of floral leaves in boiling water to craft relaxing remedies.",
+    "prerequisites": [
+      "Cooking"
+    ]
+  },
+  {
+    "id": 91,
+    "name": "Card Play",
+    "description": "The memorization of tavern rules, hidden dealing, and poker faces during card games.",
+    "prerequisites": []
+  },
+  {
+    "id": 92,
+    "name": "Chess",
+    "description": "The strategic simulation of battlefield encounters played on a checkered grid board.",
+    "prerequisites": []
+  },
+  {
+    "id": 93,
+    "name": "Tabletop Strategy",
+    "description": "The thorough analysis of complex board systems to optimize winning positions in tavern dice games.",
+    "prerequisites": []
+  },
+  {
+    "id": 94,
+    "name": "Crystal Matrix Debugging",
+    "description": "The repair and diagnostic mending of broken thought-lines inside cracked scrying shards.",
+    "prerequisites": [
+      "Enchantment Logic Weaving"
+    ]
+  },
+  {
+    "id": 95,
+    "name": "Enchantment Logic Weaving",
+    "description": "The composition of functional script conditional pathways that direct automated trap runes or golems.",
+    "prerequisites": [
+      "Swift Rune-Scribing"
+    ]
+  },
+  {
+    "id": 96,
+    "name": "Grimoire Ledgering",
+    "description": "The rapid data recording of mana readings, monster counts, and spell formulas into codices.",
+    "prerequisites": [
+      "Swift Rune-Scribing"
+    ]
+  },
+  {
+    "id": 97,
+    "name": "Divination Grid Analysis",
+    "description": "The cross-examination of complex magical map webs to monitor widespread outpost holdings.",
+    "prerequisites": [
+      "Research"
+    ]
+  },
+  {
+    "id": 98,
+    "name": "Whispering-Wind Moderation",
+    "description": "The mental management and structural balance of royal telepathic broad-cast networks.",
+    "prerequisites": [
+      "Public speaking"
+    ]
+  },
+  {
+    "id": 99,
+    "name": "Gala Coordination",
+    "description": "The macro-management of schedules, feast caterers, and invites for sovereign banquets.",
+    "prerequisites": [
+      "Time management"
+    ]
+  },
+  {
+    "id": 100,
+    "name": "Queue patience",
+    "description": "The intense mental fortitude needed to stand in long guild lines without gaining fatigue.",
+    "prerequisites": [
+      "Meditation"
+    ]
+  },
+  {
+    "id": 101,
+    "name": "Basket weaving",
+    "description": "The basic interlacing of flexible wooden splints to form sturdy carrying baskets.",
+    "prerequisites": []
+  },
+  {
+    "id": 102,
+    "name": "Reed weaving",
+    "description": "The gathering and parsing of marsh reeds into woven mats or breathable hats.",
+    "prerequisites": [
+      "Basket weaving"
+    ]
+  },
+  {
+    "id": 103,
+    "name": "Rope making",
+    "description": "The binding and twisting of tough hemp fibers into coiled, high-tensile utility ropes.",
+    "prerequisites": []
+  },
+  {
+    "id": 104,
+    "name": "Net weaving",
+    "description": "The knotting of strings into wide mesh arrays ideal for maritime fish trapping.",
+    "prerequisites": [
+      "Rope making"
+    ]
+  },
+  {
+    "id": 105,
+    "name": "Cloth weaving",
+    "description": "The structural intersection of threads to form expansive pieces of wearable cloth fabric.",
+    "prerequisites": []
+  },
+  {
+    "id": 106,
+    "name": "Spinning wool",
+    "description": "The refining of raw sheep fleece into consistent skeins of wool yarn.",
+    "prerequisites": []
+  },
+  {
+    "id": 107,
+    "name": "Spinning flax",
+    "description": "The twisting of raw plant flax fibers into strong linen strands.",
+    "prerequisites": []
+  },
+  {
+    "id": 108,
+    "name": "Dye making",
+    "description": "The chemical crushing of roots, berries, and minerals into lasting clothing pigments.",
+    "prerequisites": []
+  },
+  {
+    "id": 109,
+    "name": "Tanning leather",
+    "description": "The chemical processing of raw beast skins in tannin baths to craft durable leather.",
+    "prerequisites": []
+  },
+  {
+    "id": 110,
+    "name": "Hide scraping",
+    "description": "The mechanical removal of flesh remnants from animal skins using flint or metal tools.",
+    "prerequisites": []
+  },
+  {
+    "id": 111,
+    "name": "Fur curing",
+    "description": "The treatment of thick pelts to retain soft hairs while stabilizing the skin backing.",
+    "prerequisites": [
+      "Hide scraping"
+    ]
+  },
+  {
+    "id": 112,
+    "name": "Shoemaking",
+    "description": "The measurement, cutting, and stitching of heavy leathers into protective travelers' boots.",
+    "prerequisites": [
+      "Tanning leather",
+      "Sewing"
+    ]
+  },
+  {
+    "id": 113,
+    "name": "Sandal making",
+    "description": "The assembly of simple strapped footwear utilizing leather strips or woven reeds.",
+    "prerequisites": [
+      "Tanning leather"
+    ]
+  },
+  {
+    "id": 114,
+    "name": "Tailoring",
+    "description": "The custom alteration and precision styling of cloth fabrics into fitted court attire.",
+    "prerequisites": [
+      "Sewing",
+      "Cloth weaving"
+    ]
+  },
+  {
+    "id": 115,
+    "name": "Embroidery",
+    "description": "The stitching of ornate patterns and decorative threads onto fine cloaks.",
+    "prerequisites": [
+      "Sewing"
+    ]
+  },
+  {
+    "id": 116,
+    "name": "Loom operation",
+    "description": "The mechanized management of a large weaving loom frame to produce mass sheets of cloth.",
+    "prerequisites": [
+      "Cloth weaving"
+    ]
+  },
+  {
+    "id": 117,
+    "name": "Felt making",
+    "description": "The compression and wet matting of loose wool fibers into thick sheets of insulation felt.",
+    "prerequisites": [
+      "Spinning wool"
+    ]
+  },
+  {
+    "id": 118,
+    "name": "Pottery",
+    "description": "The spinning and wet shaping of clay into useful vessels on a fly-wheel.",
+    "prerequisites": []
+  },
+  {
+    "id": 119,
+    "name": "Kiln firing",
+    "description": "The operation of specialized stone furnaces to bake pottery into hard, ceramic wares.",
+    "prerequisites": [
+      "Pottery"
+    ]
+  },
+  {
+    "id": 120,
+    "name": "Brick making",
+    "description": "The casting of clay and mud into rectangular blocks for building infrastructure.",
+    "prerequisites": [
+      "Digging"
+    ]
+  },
+  {
+    "id": 121,
+    "name": "Mud plastering",
+    "description": "The thick layer sealing of rough stone walls using mortar mixtures to preserve warmth.",
+    "prerequisites": []
+  },
+  {
+    "id": 122,
+    "name": "Stone carving",
+    "description": "The detailed chiseling of granite or marble blocks into architectural decor.",
+    "prerequisites": []
+  },
+  {
+    "id": 123,
+    "name": "Masonry",
+    "description": "The structural setting and cementing of heavy stones to build fortresses or bridges.",
+    "prerequisites": [
+      "Stone carving",
+      "Brick making"
+    ]
+  },
+  {
+    "id": 124,
+    "name": "Quarrying",
+    "description": "The dangerous fracturing and retrieval of massive raw stone slabs from mountain deposits.",
+    "prerequisites": [
+      "Digging"
+    ]
+  },
+  {
+    "id": 125,
+    "name": "Road paving",
+    "description": "The layered alignment of smooth gravel and cobblestones to form permanent highways.",
+    "prerequisites": [
+      "Masonry"
+    ]
+  },
+  {
+    "id": 126,
+    "name": "Bridge building",
+    "description": "The engineering application of masonry and timber to build safe paths over chasms.",
+    "prerequisites": [
+      "Masonry",
+      "Carpentry"
+    ]
+  },
+  {
+    "id": 127,
+    "name": "Hut building",
+    "description": "The swift construction of a simple single-room shelter utilizing branches and soil mud.",
+    "prerequisites": [
+      "Carpentry"
+    ]
+  },
+  {
+    "id": 128,
+    "name": "Timber framing",
+    "description": "The assembly of heavy structural support beams to hoist double-story halls.",
+    "prerequisites": [
+      "Carpentry"
+    ]
+  },
+  {
+    "id": 129,
+    "name": "Thatching",
+    "description": "The weaving of overlapping layers of dry straw to craft weather-proof roofs.",
+    "prerequisites": [
+      "Reed weaving"
+    ]
+  },
+  {
+    "id": 130,
+    "name": "Wattle-and-daub construction",
+    "description": "The building of cottage walls using interlocking twigs sealed with clay mud composites.",
+    "prerequisites": [
+      "Hut building"
+    ]
+  },
+  {
+    "id": 131,
+    "name": "Roofing",
+    "description": "The secure installation of wood planks or baked slate tiles across building rafters.",
+    "prerequisites": [
+      "Thatching"
+    ]
+  },
+  {
+    "id": 132,
+    "name": "Well digging",
+    "description": "The structural sinking of a lined vertical shaft down to clean underground water tables.",
+    "prerequisites": [
+      "Digging"
+    ]
+  },
+  {
+    "id": 133,
+    "name": "Irrigation trenching",
+    "description": "The ditch layout planning used to route river waters evenly into thirsty crop fields.",
+    "prerequisites": [
+      "Digging"
+    ]
+  },
+  {
+    "id": 134,
+    "name": "Canal maintenance",
+    "description": "The systematic dredging of artificial shipping lanes to clear mud blockages.",
+    "prerequisites": [
+      "Irrigation trenching"
+    ]
+  },
+  {
+    "id": 135,
+    "name": "Aqueduct maintenance",
+    "description": "The structural repair of raised concrete arches carrying water to major cities.",
+    "prerequisites": [
+      "Masonry",
+      "Elemental Aqueduct Fitting"
+    ]
+  },
+  {
+    "id": 136,
+    "name": "Fence building",
+    "description": "The fast construction of post barriers to establish borders or secure livestock.",
+    "prerequisites": [
+      "Carpentry"
+    ]
+  },
+  {
+    "id": 137,
+    "name": "Cart building",
+    "description": "The manufacture of wooden flatbeds, axletrees, and enclosures for farm haulage.",
+    "prerequisites": [
+      "Carpentry"
+    ]
+  },
+  {
+    "id": 138,
+    "name": "Wheel making",
+    "description": "The complex joinery of curved wooden felloes and center hubs to create stable wheels.",
+    "prerequisites": [
+      "Carpentry"
+    ]
+  },
+  {
+    "id": 139,
+    "name": "Chariot repair",
+    "description": "The structural refitting of reinforcing bars on speed-based war chassis.",
+    "prerequisites": [
+      "Cart building",
+      "Wheel making"
+    ]
+  },
+  {
+    "id": 140,
+    "name": "Ship caulking",
+    "description": "The packing of oakum fibers and pine tar into ship hulls to ensure waterproof seals.",
+    "prerequisites": [
+      "Carpentry"
+    ]
+  },
+  {
+    "id": 141,
+    "name": "Sail mending",
+    "description": "The heavy-duty patch stitching of dense canvas sheets to handle ocean gales.",
+    "prerequisites": [
+      "Sewing"
+    ]
+  },
+  {
+    "id": 142,
+    "name": "Boat rowing",
+    "description": "The manual syncing of heavy wooden oars to propel small crafts across flat waters.",
+    "prerequisites": []
+  },
+  {
+    "id": 143,
+    "name": "Steering rivercraft",
+    "description": "The use of a stern tiller paddle to guide heavy transport barges through river currents.",
+    "prerequisites": [
+      "Boat rowing"
+    ]
+  },
+  {
+    "id": 144,
+    "name": "Harbor loading",
+    "description": "The safe distribution of heavy cargo crates onto ship decks to avoid listing.",
+    "prerequisites": [
+      "Weightlifting"
+    ]
+  },
+  {
+    "id": 145,
+    "name": "Animal packing",
+    "description": "The proper balancing of bags across pack mules to avoid giving them back injuries.",
+    "prerequisites": [
+      "Pet care"
+    ]
+  },
+  {
+    "id": 146,
+    "name": "Camel handling",
+    "description": "The specific care, taming, and desert guiding of tempered camel herds.",
+    "prerequisites": [
+      "Animal packing"
+    ]
+  },
+  {
+    "id": 147,
+    "name": "Elephant handling",
+    "description": "The long-term taming and tactical guiding of heavy war elephants.",
+    "prerequisites": [
+      "Animal packing"
+    ]
+  },
+  {
+    "id": 148,
+    "name": "Ox driving",
+    "description": "The steering of matched ox teams to drag heavy iron field plows.",
+    "prerequisites": [
+      "Animal packing"
+    ]
+  },
+  {
+    "id": 149,
+    "name": "Horse grooming",
+    "description": "The direct combing, hoof cleaning, and mane checking of equine mounts.",
+    "prerequisites": [
+      "Pet care"
+    ]
+  },
+  {
+    "id": 150,
+    "name": "Horse breeding",
+    "description": "The pairing of pedigree horses to produce swift mounts or strong draft lines.",
+    "prerequisites": [
+      "Horse grooming"
+    ]
+  },
+  {
+    "id": 151,
+    "name": "Falconry",
+    "description": "The taming and hunting coordination of predatory hawks or owls.",
+    "prerequisites": [
+      "Pet care"
+    ]
+  },
+  {
+    "id": 152,
+    "name": "Beekeeping",
+    "description": "The artificial management of wooden hives to harvest wax and honey safely.",
+    "prerequisites": [
+      "Pet care"
+    ]
+  },
+  {
+    "id": 153,
+    "name": "Herding goats",
+    "description": "The dynamic pasture management of stubborn goat groups across rocky slopes.",
+    "prerequisites": [
+      "Pet care"
+    ]
+  },
+  {
+    "id": 154,
+    "name": "Herding sheep",
+    "description": "The safe rotation of sheep flocks across fields using training dogs.",
+    "prerequisites": [
+      "Dog training"
+    ]
+  },
+  {
+    "id": 155,
+    "name": "Herding cattle",
+    "description": "The macro steering of cattle lines through open ranges to grazing markets.",
+    "prerequisites": [
+      "Pet care"
+    ]
+  },
+  {
+    "id": 156,
+    "name": "Pig tending",
+    "description": "The tracking, feeding, and waste cleaning of domestic forest pigs.",
+    "prerequisites": [
+      "Pet care"
+    ]
+  },
+  {
+    "id": 157,
+    "name": "Poultry keeping",
+    "description": "The gathering of eggs and secure housing of chickens, ducks, or geese.",
+    "prerequisites": [
+      "Pet care"
+    ]
+  },
+  {
+    "id": 158,
+    "name": "Fishing with nets",
+    "description": "The casting of heavy weighted mesh arrays from ships to drag up schools of fish.",
+    "prerequisites": [
+      "Net weaving",
+      "Fishing"
+    ]
+  },
+  {
+    "id": 159,
+    "name": "Fishing with spears",
+    "description": "The high-dexterity hunting of shallow fish using sharp barbed spears.",
+    "prerequisites": [
+      "Fishing"
+    ]
+  },
+  {
+    "id": 160,
+    "name": "Ice fishing",
+    "description": "The breaking of frozen lake crusts to drop baited lines into winter depths.",
+    "prerequisites": [
+      "Fishing"
+    ]
+  },
+  {
+    "id": 161,
+    "name": "Oyster gathering",
+    "description": "The tracking of tidal shorelines to break open stone oyster colonies.",
+    "prerequisites": []
+  },
+  {
+    "id": 162,
+    "name": "Pearl diving",
+    "description": "The physical diving down to coral depths to source rare pearl oysters.",
+    "prerequisites": [
+      "Swimming"
+    ]
+  },
+  {
+    "id": 163,
+    "name": "Salt harvesting",
+    "description": "The drying of tidal salt pans to scrape up pure crystalline sea salts.",
+    "prerequisites": []
+  },
+  {
+    "id": 164,
+    "name": "Rice farming",
+    "description": "The wet cultivation and water regulation of terraced paddy crop systems.",
+    "prerequisites": [
+      "Irrigation trenching"
+    ]
+  },
+  {
+    "id": 165,
+    "name": "Wheat farming",
+    "description": "The seasonal sowing, protection, and manual scythe harvesting of field wheat grains.",
+    "prerequisites": [
+      "Gardening"
+    ]
+  },
+  {
+    "id": 166,
+    "name": "Millet farming",
+    "description": "The dry soil growing of resilient millet grains in arid borderlands.",
+    "prerequisites": [
+      "Gardening"
+    ]
+  },
+  {
+    "id": 167,
+    "name": "Terrace farming",
+    "description": "The step-cutting of mountainsides to establish level, arable farming steps.",
+    "prerequisites": [
+      "Digging",
+      "Gardening"
+    ]
+  },
+  {
+    "id": 168,
+    "name": "Vineyard tending",
+    "description": "The intricate trellis pruning and disease shielding of fruit-bearing grapevines.",
+    "prerequisites": [
+      "Gardening"
+    ]
+  },
+  {
+    "id": 169,
+    "name": "Olive cultivation",
+    "description": "The long-term management and olive extraction of ancient orchard trees.",
+    "prerequisites": [
+      "Gardening"
+    ]
+  },
+  {
+    "id": 170,
+    "name": "Orchard keeping",
+    "description": "The systematic spacing, grafting, and sweet fruit harvesting of orchard fields.",
+    "prerequisites": [
+      "Gardening"
+    ]
+  },
+  {
+    "id": 171,
+    "name": "Composting fields",
+    "description": "The mass tilling of organic rot compost directly into active crop topsoils.",
+    "prerequisites": [
+      "Composting",
+      "Digging"
+    ]
+  },
+  {
+    "id": 172,
+    "name": "Seed saving",
+    "description": "The dry separation and cool storage of seasonal crop kernels for next year's crop.",
+    "prerequisites": [
+      "Gardening"
+    ]
+  },
+  {
+    "id": 173,
+    "name": "Crop rotation",
+    "description": "The strategic field swap schedule used to prevent soil nutrient exhaustion.",
+    "prerequisites": [
+      "Gardening"
+    ]
+  },
+  {
+    "id": 174,
+    "name": "Water carrying",
+    "description": "The balanced yoke hauling of filled water buckets across long paths.",
+    "prerequisites": [
+      "Weightlifting"
+    ]
+  },
+  {
+    "id": 175,
+    "name": "Grain threshing",
+    "description": "The physical beating of stalks to separate loose grain from outer chaff layers.",
+    "prerequisites": [
+      "Wheat farming"
+    ]
+  },
+  {
+    "id": 176,
+    "name": "Grain grinding",
+    "description": "The operation of stone hand-querns or millstones to crush grain into fine flour powders.",
+    "prerequisites": [
+      "Grain threshing"
+    ]
+  },
+  {
+    "id": 177,
+    "name": "Flour sifting",
+    "description": "The fine mesh processing of ground grains to separate pure baking flour from bran.",
+    "prerequisites": [
+      "Grain grinding"
+    ]
+  },
+  {
+    "id": 178,
+    "name": "Bread baking",
+    "description": "The yeast fermentation, kneading, and brick-oven baking of classic flour dough loaves.",
+    "prerequisites": [
+      "Baking",
+      "Flour sifting"
+    ]
+  },
+  {
+    "id": 179,
+    "name": "Beer brewing",
+    "description": "The complex boiling, hopping, and barrel fermenting of grain mash juices.",
+    "prerequisites": [
+      "Cooking"
+    ]
+  },
+  {
+    "id": 180,
+    "name": "Mead brewing",
+    "description": "The precise dilution, spicing, and long-term aging of honeyed spring water drinks. [cite: 3, 4]",
+    "prerequisites": [
+      "Beekeeping",
+      "Cooking"
+    ]
+  },
+  {
+    "id": 181,
+    "name": "Wine making",
+    "description": "The heavy grape treading and deep barrel aging of alcoholic fruit yields.",
+    "prerequisites": [
+      "Vineyard tending",
+      "Cooking"
+    ]
+  },
+  {
+    "id": 182,
+    "name": "Cheese making",
+    "description": "The separation of milk curds from whey to age varied cheese wheels.",
+    "prerequisites": [
+      "Cooking"
+    ]
+  },
+  {
+    "id": 183,
+    "name": "Butter churning",
+    "description": "The steady mechanical whipping of rich cream inside wooden tubs to create solid spreads.",
+    "prerequisites": []
+  },
+  {
+    "id": 184,
+    "name": "Smoking meat",
+    "description": "The enclosed oakwood smoke curing of hanging pork strips to preserve them for deep winter.",
+    "prerequisites": [
+      "Cooking"
+    ]
+  },
+  {
+    "id": 185,
+    "name": "Salting fish",
+    "description": "The heavy packing of fresh maritime catches into coarse salt crystals to block rot.",
+    "prerequisites": [
+      "Salt harvesting"
+    ]
+  },
+  {
+    "id": 186,
+    "name": "Fermenting vegetables",
+    "description": "The brine pickling of gathered roots inside clay jars to extend storage life.",
+    "prerequisites": [
+      "Cooking"
+    ]
+  },
+  {
+    "id": 187,
+    "name": "Spice blending",
+    "description": "The flavor calculation and grinding of pepper seeds, cinnamon bark, and dried herbs.",
+    "prerequisites": [
+      "Cooking"
+    ]
+  },
+  {
+    "id": 188,
+    "name": "Open-fire cooking",
+    "description": "The careful rotisserie spit management of whole carcasses over open wood fires.",
+    "prerequisites": [
+      "Cooking",
+      "Fire starting"
+    ]
+  },
+  {
+    "id": 189,
+    "name": "Soup making",
+    "description": "The long-term boiling of bones and field scraps to brew nutrient-dense stocks.",
+    "prerequisites": [
+      "Cooking"
+    ]
+  },
+  {
+    "id": 190,
+    "name": "Tea preparation",
+    "description": "The formal ceremony and temperature-controlled steeping of rare, foreign dry tea crops.",
+    "prerequisites": [
+      "Infusion Brewing"
+    ]
+  },
+  {
+    "id": 191,
+    "name": "Herbal medicine",
+    "description": "The processing of specific plants to distill natural tonics that treat sickness.",
+    "prerequisites": [
+      "Infusion Brewing"
+    ]
+  },
+  {
+    "id": 192,
+    "name": "Midwifery",
+    "description": "The delicate medical support provided during the delivery of newborn babes.",
+    "prerequisites": [
+      "First aid"
+    ]
+  },
+  {
+    "id": 193,
+    "name": "Bone setting",
+    "description": "The forceful alignment and wood splinting of shattered or dislocated limbs.",
+    "prerequisites": [
+      "First aid"
+    ]
+  },
+  {
+    "id": 194,
+    "name": "Bloodletting",
+    "description": "The careful use of leeches or razors to drain tainted humors from feverish patients.",
+    "prerequisites": [
+      "First aid"
+    ]
+  },
+  {
+    "id": 195,
+    "name": "Poultice making",
+    "description": "The mashing of medicinal leaves into hot pastes applied directly to festering flesh.",
+    "prerequisites": [
+      "Herbal medicine"
+    ]
+  },
+  {
+    "id": 196,
+    "name": "Incense making",
+    "description": "The compression of aromatic tree resins and dry gums into sweet-burning temple sticks.",
+    "prerequisites": []
+  },
+  {
+    "id": 197,
+    "name": "Perfume blending",
+    "description": "The alcohol distillation of flower oils to create fragrant sprays for wealthy nobles.",
+    "prerequisites": [
+      "Spice blending"
+    ]
+  },
+  {
+    "id": 198,
+    "name": "Soap making",
+    "description": "The chemical boiling of animal fats and wood ash lye into solid hygienic blocks.",
+    "prerequisites": [
+      "Cooking"
+    ]
+  },
+  {
+    "id": 199,
+    "name": "Bathhouse tending",
+    "description": "The constant under-floor furnace fueling used to maintain heated steam bath chambers.",
+    "prerequisites": [
+      "Elemental Aqueduct Fitting"
+    ]
+  },
+  {
+    "id": 200,
+    "name": "Hair braiding",
+    "description": "The artistic knotting of hair strands into complex patterns or warrior cords.",
+    "prerequisites": [
+      "Hair cutting"
+    ]
+  },
+  {
+    "id": 201,
+    "name": "Beard trimming",
+    "description": "The close detail trimming of facial hair using miniature combs and small shears.",
+    "prerequisites": [
+      "Shaving"
+    ]
+  },
+  {
+    "id": 202,
+    "name": "Tattooing",
+    "description": "The deliberate puncturing of skin to deposit permanent ink patterns or clan sigils.",
+    "prerequisites": [
+      "Drawing"
+    ]
+  },
+  {
+    "id": 203,
+    "name": "Ritual chanting",
+    "description": "The unified tonal projection of sacred words to focus nearby religious practitioners.",
+    "prerequisites": [
+      "Public speaking"
+    ]
+  },
+  {
+    "id": 204,
+    "name": "Drum playing",
+    "description": "The rhythmic striking of taut animal skin drums to communicate marching paces.",
+    "prerequisites": []
+  },
+  {
+    "id": 205,
+    "name": "Flute playing",
+    "description": "The breath control and fingering needed to play light melodies on hollow woodwinds.",
+    "prerequisites": []
+  },
+  {
+    "id": 206,
+    "name": "Harp playing",
+    "description": "The complex multi-finger plucking of large, stringed classical instruments.",
+    "prerequisites": []
+  },
+  {
+    "id": 207,
+    "name": "Lute playing",
+    "description": "The light strumming and neck fretting of classic stringed bard instruments.",
+    "prerequisites": []
+  },
+  {
+    "id": 208,
+    "name": "Storytelling",
+    "description": "The theatrical re-enactment of historical conquests to inspire weary tavern guests.",
+    "prerequisites": [
+      "Public speaking"
+    ]
+  },
+  {
+    "id": 209,
+    "name": "Epic recitation",
+    "description": "The memory feat of chanting multi-hour mythic historical poems without hesitation.",
+    "prerequisites": [
+      "Storytelling"
+    ]
+  },
+  {
+    "id": 210,
+    "name": "Poetry composition",
+    "description": "The rhythmic and structured alignment of written phrases to capture abstract emotions.",
+    "prerequisites": [
+      "Writing"
+    ]
+  },
+  {
+    "id": 211,
+    "name": "Calligraphy",
+    "description": "The stylized, beautiful formatting of script using expensive ink-wells and custom quills.",
+    "prerequisites": [
+      "Writing"
+    ]
+  },
+  {
+    "id": 212,
+    "name": "Manuscript copying",
+    "description": "The faithful, line-by-line duplicate reproduction of ancient holy codices.",
+    "prerequisites": [
+      "Writing"
+    ]
+  },
+  {
+    "id": 213,
+    "name": "Ink making",
+    "description": "The grinding of charred soot and walnut hulls to boil stable writing fluids.",
+    "prerequisites": []
+  },
+  {
+    "id": 214,
+    "name": "Papyrus making",
+    "description": "The flattening, weaving, and wet beating of river reeds into thin writing sheets.",
+    "prerequisites": [
+      "Reed weaving"
+    ]
+  },
+  {
+    "id": 215,
+    "name": "Parchment curing",
+    "description": "The stretching, scraping, and lime bleaching of animal skins to form elite writing vellum.",
+    "prerequisites": [
+      "Hide scraping"
+    ]
+  },
+  {
+    "id": 216,
+    "name": "Seal carving",
+    "description": "The reverse micro-chiseling of gemstone blocks to form royal signature wax stamps.",
+    "prerequisites": [
+      "Stone carving"
+    ]
+  },
+  {
+    "id": 217,
+    "name": "Wax tablet writing",
+    "description": "The temporary scratching of administrative notes into iron frames filled with soft wax.",
+    "prerequisites": [
+      "Writing"
+    ]
+  },
+  {
+    "id": 218,
+    "name": "Record keeping",
+    "description": "The organized maintenance of ongoing city livestock tallies and resource registers.",
+    "prerequisites": [
+      "Writing"
+    ]
+  },
+  {
+    "id": 219,
+    "name": "Tax counting",
+    "description": "The mathematical calculation of sovereign tithes due from visiting trade merchants.",
+    "prerequisites": [
+      "Accounting"
+    ]
+  },
+  {
+    "id": 220,
+    "name": "Market haggling",
+    "description": "The quick wit used to slash vendor margins during open plaza dealings.",
+    "prerequisites": [
+      "Haggling"
+    ]
+  },
+  {
+    "id": 221,
+    "name": "Caravan organizing",
+    "description": "The logistical preparation of packed wagons, guards, and travel passes for long routes.",
+    "prerequisites": [
+      "Vessel Piloting"
+    ]
+  },
+  {
+    "id": 122,
+    "name": "Tribute collection",
+    "description": "The official enforcement and physical secure collection of mandatory vassal state offerings.",
+    "prerequisites": [
+      "Tax counting"
+    ]
+  },
+  {
+    "id": 223,
+    "name": "Coin testing",
+    "description": "The biting or stone scratching of silver pieces to verify pure metal weight.",
+    "prerequisites": []
+  },
+  {
+    "id": 224,
+    "name": "Weight balancing",
+    "description": "The proper counter-weighting of balance scales to measure bulk grain yields.",
+    "prerequisites": []
+  },
+  {
+    "id": 225,
+    "name": "Measure calibration",
+    "description": "The regulation of official imperial measuring sticks used throughout marketplace districts.",
+    "prerequisites": [
+      "Weight balancing"
+    ]
+  },
+  {
+    "id": 226,
+    "name": "Map drawing",
+    "description": "The technical cartography skills required to draft terrain grids, forests, and roads.",
+    "prerequisites": [
+      "Drawing",
+      "Map reading"
+    ]
+  },
+  {
+    "id": 227,
+    "name": "Celestial navigation",
+    "description": "The plotting of ocean voyage vectors using positions of known sky constellations.",
+    "prerequisites": [
+      "Navigation"
+    ]
+  },
+  {
+    "id": 228,
+    "name": "Star reading",
+    "description": "The technical identification of heavenly bodies as they progress across seasonal night skies.",
+    "prerequisites": []
+  },
+  {
+    "id": 229,
+    "name": "Weather prediction",
+    "description": "The warning analysis of wind drifts, red clouds, and bone aches to forecast storms.",
+    "prerequisites": []
+  },
+  {
+    "id": 230,
+    "name": "Calendar keeping",
+    "description": "The tracking of annual moon cycles to declare planting or harvesting months.",
+    "prerequisites": [
+      "Star reading"
+    ]
+  },
+  {
+    "id": 231,
+    "name": "Sundial reading",
+    "description": "The rapid checking of shadow alignments on bronze faces to calculate daytime hours.",
+    "prerequisites": []
+  },
+  {
+    "id": 232,
+    "name": "Water clock maintenance",
+    "description": "The continuous cleaning of specialized trickling water jars used to log night hours. [cite: 4, 5]",
+    "prerequisites": [
+      "Elemental Aqueduct Fitting"
+    ]
+  },
+  {
+    "id": 233,
+    "name": "Temple cleaning",
+    "description": "The respectful scrubbing of altars and sweeping of holy inner sanctums.",
+    "prerequisites": [
+      "Cleaning"
+    ]
+  },
+  {
+    "id": 234,
+    "name": "Shrine tending",
+    "description": "The layout decoration of oil candles and floral wreaths at localized forest shrines.",
+    "prerequisites": [
+      "Temple cleaning"
+    ]
+  },
+  {
+    "id": 235,
+    "name": "Ritual sacrifice preparation",
+    "description": "The solemn cleaning and ceremonial garlanding of prize beasts chosen for altars.",
+    "prerequisites": [
+      "Temple cleaning"
+    ]
+  },
+  {
+    "id": 236,
+    "name": "Divination",
+    "description": "The reading of scattered knuckle bones or oil swirls to glean minor fate paths.",
+    "prerequisites": [
+      "Meditation"
+    ]
+  },
+  {
+    "id": 237,
+    "name": "Astrology",
+    "description": "The study of solar alignments to compile personality destinies for court babies.",
+    "prerequisites": [
+      "Star reading"
+    ]
+  },
+  {
+    "id": 238,
+    "name": "Dream interpretation",
+    "description": "The symbolic translation of personal dream events into practical omens or warnings.",
+    "prerequisites": [
+      "Meditation"
+    ]
+  },
+  {
+    "id": 239,
+    "name": "Ancestor veneration",
+    "description": "The offering of burning incenses and food plates to keep family ancestral spirits happy.",
+    "prerequisites": [
+      "Shrine tending"
+    ]
+  },
+  {
+    "id": 240,
+    "name": "Funeral preparation",
+    "description": "The formal washing and oil draping of high-status figures prior to crypt storage.",
+    "prerequisites": [
+      "First aid"
+    ]
+  },
+  {
+    "id": 241,
+    "name": "Mummification",
+    "description": "The dynamic organ extraction, natron drying, and linen wrapping of deceased royalty.",
+    "prerequisites": [
+      "Funeral preparation"
+    ]
+  },
+  {
+    "id": 242,
+    "name": "Grave digging",
+    "description": "The systematic extraction of ground plots to set standard cemetery pine boxes.",
+    "prerequisites": [
+      "Digging"
+    ]
+  },
+  {
+    "id": 243,
+    "name": "Tomb painting",
+    "description": "The fresco plaster painting of historical milestones directly onto catacomb walls.",
+    "prerequisites": [
+      "Painting art"
+    ]
+  },
+  {
+    "id": 244,
+    "name": "Banner making",
+    "description": "The textile creation of massive cloth standard flags featuring battalion symbols.",
+    "prerequisites": [
+      "Tailoring",
+      "Embroidery"
+    ]
+  },
+  {
+    "id": 245,
+    "name": "Shield painting",
+    "description": "The painting of clear faction heraldries onto iron-trimmed wooden target shields.",
+    "prerequisites": [
+      "Painting walls"
+    ]
+  },
+  {
+    "id": 246,
+    "name": "Armor polishing",
+    "description": "The abrasive scouring of steel plate armor coats with sand mixtures to delete rust patches.",
+    "prerequisites": [
+      "Cleaning"
+    ]
+  },
+  {
+    "id": 247,
+    "name": "Spear crafting",
+    "description": "The custom shaving of straight ash poles to attach pointed iron socket tips.",
+    "prerequisites": [
+      "Woodworking"
+    ]
+  },
+  {
+    "id": 248,
+    "name": "Bow making",
+    "description": "The long-term scraping and heat curing of yew staves to create powerful longbow weapons.",
+    "prerequisites": [
+      "Woodworking"
+    ]
+  },
+  {
+    "id": 249,
+    "name": "Arrow fletching",
+    "description": "The splitting of light reeds to mount iron broadheads and bird guidance feathers.",
+    "prerequisites": [
+      "Woodworking"
+    ]
+  },
+  {
+    "id": 250,
+    "name": "Sling use",
+    "description": "The rotational speed acceleration and release of polished lead stones from leather pouches.",
+    "prerequisites": []
+  },
+  {
+    "id": 251,
+    "name": "Sword sharpening",
+    "description": "The meticulous wet whetstone honing of dulled metal blades to razor sharpness.",
+    "prerequisites": []
+  },
+  {
+    "id": 252,
+    "name": "Blacksmithing",
+    "description": "The active furnace heating, anvil shaping, and quenching of heated iron bars into tools.",
+    "prerequisites": [
+      "Weightlifting"
+    ]
+  },
+  {
+    "id": 253,
+    "name": "Bronze casting",
+    "description": "The melting and clay mold injection of copper-tin alloys to forge historical armaments.",
+    "prerequisites": [
+      "Pottery"
+    ]
+  },
+  {
+    "id": 254,
+    "name": "Iron smelting",
+    "description": "The processing of raw iron ore boulders inside bloomery fires to separate slag.",
+    "prerequisites": [
+      "Blacksmithing"
+    ]
+  },
+  {
+    "id": 255,
+    "name": "Charcoal burning",
+    "description": "The oxygen-starved baking of wood stacks in dirt mounds to produce hot-burning forge fuel.",
+    "prerequisites": [
+      "Fire tending"
+    ]
+  },
+  {
+    "id": 256,
+    "name": "Bell casting",
+    "description": "The intricate acoustic manufacture and hollow casting of massive bronze citadel bells.",
+    "prerequisites": [
+      "Bronze casting"
+    ]
+  },
+  {
+    "id": 257,
+    "name": "Jewelry making",
+    "description": "The micro soldering of fine silver wires into wearable rings and necklaces.",
+    "prerequisites": [
+      "Blacksmithing"
+    ]
+  },
+  {
+    "id": 258,
+    "name": "Gem polishing",
+    "description": "The abrasive mechanical facet grinding of raw gemstone ores into glittering treasures.",
+    "prerequisites": []
+  },
+  {
+    "id": 259,
+    "name": "Glass blowing",
+    "description": "The manipulation of molten silicate sands using long hollow iron tubes to blow jars.",
+    "prerequisites": [
+      "Pottery"
+    ]
+  },
+  {
+    "id": 260,
+    "name": "Mosaic making",
+    "description": "The colorful installation of fractured tile scraps into decorative concrete floors.",
+    "prerequisites": [
+      "Masonry"
+    ]
+  },
+  {
+    "id": 261,
+    "name": "Candle making",
+    "description": "The systematic dipping of hanging hemp cords into melted beef tallow or bee waxes.",
+    "prerequisites": [
+      "Beekeeping"
+    ]
+  },
+  {
+    "id": 262,
+    "name": "Lantern maintenance",
+    "description": "The trimming of internal oil wicks and regular polishing of horn protection shields.",
+    "prerequisites": [
+      "Cleaning"
+    ]
+  },
+  {
+    "id": 263,
+    "name": "Fire tending",
+    "description": "The fuel stacking and ash clearing used to maintain large communal hearth fires overnight.",
+    "prerequisites": [
+      "Fire starting"
+    ]
+  },
+  {
+    "id": 264,
+    "name": "Snow tracking",
+    "description": "The recognition of distorted paw depressions printed across deep winter snow drifts.",
+    "prerequisites": [
+      "Hunting"
+    ]
+  },
+  {
+    "id": 265,
+    "name": "Trail marking",
+    "description": "The systematic slicing of bark scars into tree trunks to clarify forest travel routes.",
+    "prerequisites": [
+      "Hiking"
+    ]
+  },
+  {
+    "id": 266,
+    "name": "Cave exploration",
+    "description": "The tactical spatial navigation through unlit subterranean passages without getting lost.",
+    "prerequisites": [
+      "Orienteering"
+    ]
+  },
+  {
+    "id": 267,
+    "name": "Mountain climbing",
+    "description": "The physical negotiation of vertical stone cliffs using handholds and piton ropes.",
+    "prerequisites": [
+      "Climbing ladders",
+      "Knot tying"
+    ]
+  },
+  {
+    "id": 268,
+    "name": "River crossing",
+    "description": "The safe locating of shallow stone fords to lead groups through rapids.",
+    "prerequisites": [
+      "Hiking"
+    ]
+  },
+  {
+    "id": 269,
+    "name": "Swimming rivers",
+    "description": "The physical navigation across active, deep white-water rapids without getting swept away.",
+    "prerequisites": [
+      "Swimming"
+    ]
+  },
+  {
+    "id": 270,
+    "name": "Hunting with dogs",
+    "description": "The coordination of trained scent hounds to flush out hiding forest game.",
+    "prerequisites": [
+      "Hunting",
+      "Dog training"
+    ]
+  },
+  {
+    "id": 271,
+    "name": "Trapping animals",
+    "description": "The camouflage placement of weighted log deadfalls or wire snares across game trails.",
+    "prerequisites": [
+      "Hunting"
+    ]
+  },
+  {
+    "id": 272,
+    "name": "Skinning animals",
+    "description": "The careful blade separation of beast pelts from fresh carcasses without ruining the fur.",
+    "prerequisites": [
+      "Hunting",
+      "Hide scraping"
+    ]
+  },
+  {
+    "id": 273,
+    "name": "Butchering",
+    "description": "The precise anatomical jointing and extraction of choice steaks from raw game.",
+    "prerequisites": [
+      "Skinning animals"
+    ]
+  },
+  {
+    "id": 274,
+    "name": "Feather collecting",
+    "description": "The sorting and storage of waterproof goose or eagle plumages from nest sectors.",
+    "prerequisites": [
+      "Bird watching"
+    ]
+  },
+  {
+    "id": 275,
+    "name": "Dye plant gathering",
+    "description": "The wilderness harvesting of rare forest weld, woad, or madder crops used in dyes.",
+    "prerequisites": [
+      "Dye making"
+    ]
+  },
+  {
+    "id": 276,
+    "name": "Medicinal herb gathering",
+    "description": "The wild classification and safe digging of wild ginseng roots or marigold flowers.",
+    "prerequisites": [
+      "Herbal medicine"
+    ]
+  },
+  {
+    "id": 277,
+    "name": "Foraging mushrooms",
+    "description": "The dangerous sorting of edible woodland fungi from lethal toxic lookalikes.",
+    "prerequisites": [
+      "Survival skills"
+    ]
+  },
+  {
+    "id": 278,
+    "name": "Gathering shellfish",
+    "description": "The tidal collection of mud crabs and mussels clinging to coastal rock lines.",
+    "prerequisites": []
+  },
+  {
+    "id": 279,
+    "name": "Gathering firewood",
+    "description": "The identification and collection of dead dry branches that offer low-smoke fire fuel.",
+    "prerequisites": [
+      "Fire tending"
+    ]
+  },
+  {
+    "id": 280,
+    "name": "Coal hauling",
+    "description": "The back-breaking carting of raw coal ore bags out of deep tunnel mines.",
+    "prerequisites": [
+      "Weightlifting"
+    ]
+  },
+  {
+    "id": 281,
+    "name": "Messenger running",
+    "description": "The continuous, long-distance sprint pacing used to deliver vital military missives across outposts.",
+    "prerequisites": [
+      "Running",
+      "Walking long distances"
+    ]
+  },
+  {
+    "id": 282,
+    "name": "Banner signaling",
+    "description": "The physical flag semaphore patterns used to coordinate army troop movements across ridges. [cite: 5, 6]",
+    "prerequisites": [
+      "Banner making"
+    ]
+  },
+  {
+    "id": 283,
+    "name": "Beacon lighting",
+    "description": "The fast combustion ignition of mountaintop pitch oil wood pyres to alert the kingdom.",
+    "prerequisites": [
+      "Fire starting"
+    ]
+  },
+  {
+    "id": 284,
+    "name": "Drum signaling",
+    "description": "The hammering of distinct booming codes across battle lines to command structural retreats.",
+    "prerequisites": [
+      "Drum playing"
+    ]
+  },
+  {
+    "id": 285,
+    "name": "Siege ladder carrying",
+    "description": "The coordinated heavy team lifting of iron-reinforced siege assault structures.",
+    "prerequisites": [
+      "Weightlifting"
+    ]
+  },
+  {
+    "id": 286,
+    "name": "Camp setup",
+    "description": "The organized spatial planning of perimeter defensive stakes and fire rings for an army camp.",
+    "prerequisites": [
+      "Camping"
+    ]
+  },
+  {
+    "id": 287,
+    "name": "Tent repair",
+    "description": "The wax needle patching of torn oilskin military camp pavilions.",
+    "prerequisites": [
+      "Sewing"
+    ]
+  },
+  {
+    "id": 288,
+    "name": "Guard duty",
+    "description": "The hyper-focused static patrol observation of perimeter lines throughout freezing nights.",
+    "prerequisites": [
+      "Meditation"
+    ]
+  },
+  {
+    "id": 289,
+    "name": "Gatekeeping",
+    "description": "The strict identification auditing of incoming travelers entering city wall passages.",
+    "prerequisites": [
+      "Guard duty"
+    ]
+  },
+  {
+    "id": 290,
+    "name": "Prison guarding",
+    "description": "The structural security management, key tracking, and cell locking of dungeons.",
+    "prerequisites": [
+      "Guard duty"
+    ]
+  },
+  {
+    "id": 291,
+    "name": "Diplomacy",
+    "description": "The formal execution of state banquets, envoy terms, and border treaties.",
+    "prerequisites": [
+      "Public speaking",
+      "Negotiation"
+    ]
+  },
+  {
+    "id": 292,
+    "name": "Oath swearing",
+    "description": "The ritualized invocation of high divine names to solidify permanent guild allegiances.",
+    "prerequisites": [
+      "Public speaking"
+    ]
+  },
+  {
+    "id": 293,
+    "name": "Law recitation",
+    "description": "The flawless memory citation of codified imperial laws during courtroom judgments.",
+    "prerequisites": [
+      "Writing"
+    ]
+  },
+  {
+    "id": 294,
+    "name": "Census taking",
+    "description": "The district-by-district counting and property cataloging of a sovereign population.",
+    "prerequisites": [
+      "Record keeping"
+    ]
+  },
+  {
+    "id": 295,
+    "name": "Apprentice training",
+    "description": "The professional instructional guidance given to novice workers to speed up their crafting skill gains.",
+    "prerequisites": [
+      "Teaching"
+    ]
+  },
+  {
+    "id": 296,
+    "name": "Classroom instruction",
+    "description": "The concurrent management and lecturing of large university student groups.",
+    "prerequisites": [
+      "Teaching"
+    ]
+  },
+  {
+    "id": 297,
+    "name": "Monastery brewing",
+    "description": "The creation of specialized, dense herbal ales fermented inside secret abbey vaults.",
+    "prerequisites": [
+      "Beer brewing"
+    ]
+  },
+  {
+    "id": 298,
+    "name": "Pilgrimage guiding",
+    "description": "The protective navigation of religious devotees across hazardous holy trail pathways.",
+    "prerequisites": [
+      "Orienteering"
+    ]
+  },
+  {
+    "id": 299,
+    "name": "River ferrying",
+    "description": "The professional management of heavy cable barge ferries across wide river networks.",
+    "prerequisites": [
+      "Steering rivercraft"
+    ]
+  },
+  {
+    "id": 300,
+    "name": "Market marketplace entertaining",
+    "description": "The lively public performance of street juggling or card tricks to harvest tip coins.",
+    "prerequisites": [
+      "Public speaking"
+    ]
+  }
+]

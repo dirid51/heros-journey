@@ -12,6 +12,11 @@ import java.util.Set;
  */
 @Component
 public class LocalActionHandler {
+    private final YamlLibraryService libraryService;
+
+    public LocalActionHandler(YamlLibraryService yamlLibraryService) {
+        this.libraryService = yamlLibraryService;
+    }
 
     // Commands that just describe the current room state
     private static final Set<String> LOOK_COMMANDS = Set.of(
@@ -74,11 +79,18 @@ public class LocalActionHandler {
         sb.append(room.description());
 
         if (!room.npcIds().isEmpty()) {
-            sb.append("\n\nPresent here: ").append(String.join(", ", room.npcIds())).append(".");
+            String npcNames = room.npcIds().stream()
+                    .map(id -> libraryService.getNpcById(id).getName())
+                    .reduce((a, b) -> a + ", " + b).orElse("");
+            sb.append("\n\nPresent here: ").append(npcNames).append(".");
         }
         if (!room.itemIds().isEmpty()) {
-            sb.append("\nYou notice: ").append(String.join(", ", room.itemIds())).append(".");
+            String itemNames = room.itemIds().stream()
+                    .map(id -> libraryService.getItemById(id).getName())
+                    .reduce((a, b) -> a + ", " + b).orElse("");
+            sb.append("\nYou notice: ").append(itemNames).append(".");
         }
+
         if (!room.exits().isEmpty()) {
             sb.append("\nPossible paths: ");
             sb.append(room.exits().stream()

@@ -1,14 +1,23 @@
 {
-  "rooms" : [ {
-    "title" : "The Enchanted Cellar",
-    "description" : "You find yourself in a dimly lit cellar with the scent of ancient wine and mystery."
-  }, {
-    "title" : "Crystal Chamber of Reflection",
-    "description" : "You find yourself in an underground chamber illuminated by the ethereal glow of shimmering crystals that seem to pulse with hidden magic."
-  }, {
-    "title" : "Abyssal Cavern Passage",
-    "description" : "You find yourself standing before a narrow staircase descending deeper into the earth, its walls lined with ancient runes that seem to pulse faintly."
-  } ],
-  "skillPatterns" : [ "climbing", "lightning_forgotten_trail" ],
-  "skillNames" : [ "Crystal Insight" ]
+  "rooms": [
+    {
+      "title": "The Enchanted Cellar",
+      "description": "You find yourself in a dimly lit cellar with the scent of ancient wine and mystery."
+    },
+    {
+      "title": "Crystal Chamber of Reflection",
+      "description": "You find yourself in an underground chamber illuminated by the ethereal glow of shimmering crystals that seem to pulse with hidden magic."
+    },
+    {
+      "title": "Abyssal Cavern Passage",
+      "description": "You find yourself standing before a narrow staircase descending deeper into the earth, its walls lined with ancient runes that seem to pulse faintly."
+    }
+  ],
+  "skillPatterns": [
+    "climbing",
+    "lightning_forgotten_trail"
+  ],
+  "skillNames": [
+    "Crystal Insight"
+  ]
 }
