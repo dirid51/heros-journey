@@ -45,6 +45,21 @@ public class LocalActionHandler {
             "wait", "rest", "catch my breath", "catch breath",
             "pause", "stand still", "do nothing"
     );
+
+    // "learn cooking" / "unlock cooking" / "buy cooking"
+    private static final Pattern LEARN_PATTERN =
+            Pattern.compile("^(?:learn|unlock|buy|study)\\s+(.+)$");
+
+    // "skills" / "skill tree" / "available skills"
+    private static final Set<String> SKILL_TREE_COMMANDS = Set.of(
+            "skills", "skill tree", "available skills", "skill list", "what can i learn"
+    );
+
+    // "skill points" / "sp" / "how many skill points"
+    private static final Set<String> SP_COMMANDS = Set.of(
+            "skill points", "sp", "my skill points"
+    );
+
     // TODO: INVENTORY - Add item use handling here for common items (e.g. healing potions, keys) before falling through to LLM
 
     // Tiny passive heal when resting — keeps the player engaged without LLM cost

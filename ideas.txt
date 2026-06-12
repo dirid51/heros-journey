@@ -1,0 +1,300 @@
+1. Cooking
+2. Baking
+3. Gardening
+4. Cleaning
+5. Laundry
+6. Ironing
+7. Sewing
+8. Knitting
+9. Crocheting
+10. Woodworking
+11. Carpentry
+12. Painting walls
+13. Plumbing
+14. Electrical repair
+15. Car maintenance
+16. Tire changing
+17. Oil changing
+18. Driving
+19. Parking
+20. Bicycle repair
+21. Fishing
+22. Hunting
+23. Camping
+24. Hiking
+25. Swimming
+26. Running
+27. Walking long distances
+28. Stretching
+29. Weightlifting
+30. Yoga
+31. Meditation
+32. First aid
+33. Babysitting
+34. Pet care
+35. Dog training
+36. Bird watching
+37. Photography
+38. Videography
+39. Drawing
+40. Painting art
+41. Sculpting
+42. Writing
+43. Typing
+44. Public speaking
+45. Storytelling
+46. Negotiation
+47. Persuasion
+48. Haggling
+49. Salesmanship
+50. Customer service
+51. Teaching
+52. Tutoring
+53. Studying
+54. Research
+55. Filing paperwork
+56. Organization
+57. Time management
+58. Budgeting
+59. Accounting
+60. Investing
+61. Couponing
+62. Shopping efficiently
+63. Grocery planning
+64. Meal prepping
+65. Inventory tracking
+66. Lockpicking
+67. Map reading
+68. Navigation
+69. Orienteering
+70. Survival skills
+71. Fire starting
+72. Knot tying
+73. Climbing ladders
+74. Digging
+75. Shoveling snow
+76. Lawn mowing
+77. Hedge trimming
+78. Window washing
+79. Trash sorting
+80. Recycling
+81. Composting
+82. Furniture assembly
+83. Interior decorating
+84. Fashion coordination
+85. Makeup application
+86. Hair cutting
+87. Shaving
+88. Bartending
+89. Brewing coffee
+90. Tea making
+91. Playing cards
+92. Chess
+93. Board game strategy
+94. Computer repair
+95. Programming
+96. Data entry
+97. Spreadsheet management
+98. Social media management
+99. Event planning
+100. Queue patience
+1. Basket weaving
+2. Reed weaving
+3. Rope making
+4. Net weaving
+5. Cloth weaving
+6. Spinning wool
+7. Spinning flax
+8. Dye making
+9. Tanning leather
+10. Hide scraping
+11. Fur curing
+12. Shoemaking
+13. Sandal making
+14. Tailoring
+15. Embroidery
+16. Loom operation
+17. Felt making
+18. Pottery
+19. Kiln firing
+20. Brick making
+21. Mud plastering
+22. Stone carving
+23. Masonry
+24. Quarrying
+25. Road paving
+26. Bridge building
+27. Hut building
+28. Timber framing
+29. Thatching
+30. Wattle-and-daub construction
+31. Roofing
+32. Well digging
+33. Irrigation trenching
+34. Canal maintenance
+35. Aqueduct maintenance
+36. Fence building
+37. Cart building
+38. Wheel making
+39. Chariot repair
+40. Ship caulking
+41. Sail mending
+42. Boat rowing
+43. Steering rivercraft
+44. Harbor loading
+45. Animal packing
+46. Camel handling
+47. Elephant handling
+48. Ox driving
+49. Horse grooming
+50. Horse breeding
+51. Falconry
+52. Beekeeping
+53. Herding goats
+54. Herding sheep
+55. Herding cattle
+56. Pig tending
+57. Poultry keeping
+58. Fishing with nets
+59. Fishing with spears
+60. Ice fishing
+61. Oyster gathering
+62. Pearl diving
+63. Salt harvesting
+64. Rice farming
+65. Wheat farming
+66. Millet farming
+67. Terrace farming
+68. Vineyard tending
+69. Olive cultivation
+70. Orchard keeping
+71. Composting fields
+72. Seed saving
+73. Crop rotation
+74. Water carrying
+75. Grain threshing
+76. Grain grinding
+77. Flour sifting
+78. Bread baking
+79. Beer brewing
+80. Mead brewing
+81. Wine making
+82. Cheese making
+83. Butter churning
+84. Smoking meat
+85. Salting fish
+86. Fermenting vegetables
+87. Spice blending
+88. Open-fire cooking
+89. Soup making
+90. Tea preparation
+91. Herbal medicine
+92. Midwifery
+93. Bone setting
+94. Bloodletting
+95. Poultice making
+96. Incense making
+97. Perfume blending
+98. Soap making
+99. Bathhouse tending
+100. Hair braiding
+101. Beard trimming
+102. Tattooing
+103. Ritual chanting
+104. Drum playing
+105. Flute playing
+106. Harp playing
+107. Lute playing
+108. Storytelling
+109. Epic recitation
+110. Poetry composition
+111. Calligraphy
+112. Manuscript copying
+113. Ink making
+114. Papyrus making
+115. Parchment curing
+116. Seal carving
+117. Wax tablet writing
+118. Record keeping
+119. Tax counting
+120. Market haggling
+121. Caravan organizing
+122. Tribute collection
+123. Coin testing
+124. Weight balancing
+125. Measure calibration
+126. Map drawing
+127. Celestial navigation
+128. Star reading
+129. Weather prediction
+130. Calendar keeping
+131. Sundial reading
+132. Water clock maintenance
+133. Temple cleaning
+134. Shrine tending
+135. Ritual sacrifice preparation
+136. Divination
+137. Astrology
+138. Dream interpretation
+139. Ancestor veneration
+140. Funeral preparation
+141. Mummification
+142. Grave digging
+143. Tomb painting
+144. Banner making
+145. Shield painting
+146. Armor polishing
+147. Spear crafting
+148. Bow making
+149. Arrow fletching
+150. Sling use
+151. Sword sharpening
+152. Blacksmithing
+153. Bronze casting
+154. Iron smelting
+155. Charcoal burning
+156. Bell casting
+157. Jewelry making
+158. Gem polishing
+159. Glass blowing
+160. Mosaic making
+161. Candle making
+162. Lantern maintenance
+163. Fire tending
+164. Snow tracking
+165. Trail marking
+166. Cave exploration
+167. Mountain climbing
+168. River crossing
+169. Swimming rivers
+170. Hunting with dogs
+171. Trapping animals
+172. Skinning animals
+173. Butchering
+174. Feather collecting
+175. Dye plant gathering
+176. Medicinal herb gathering
+177. Foraging mushrooms
+178. Gathering shellfish
+179. Gathering firewood
+180. Coal hauling
+181. Messenger running
+182. Banner signaling
+183. Beacon lighting
+184. Drum signaling
+185. Siege ladder carrying
+186. Camp setup
+187. Tent repair
+188. Guard duty
+189. Gatekeeping
+190. Prison guarding
+191. Diplomacy
+192. Oath swearing
+193. Law recitation
+194. Census taking
+195. Apprentice training
+196. Classroom instruction
+197. Monastery brewing
+198. Pilgrimage guiding
+199. River ferrying
+200. Marketplace entertaining

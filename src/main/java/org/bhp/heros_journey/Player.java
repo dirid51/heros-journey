@@ -3,11 +3,7 @@ package org.bhp.heros_journey;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 public class Player implements Serializable {
@@ -19,10 +15,10 @@ public class Player implements Serializable {
      * 0.1 means 10% damage reduction.
      */
     private double injuryReduction = 0.0;
-
-    private Map<String, Integer> skills = new HashMap<>(); // skill name, level
-    private Map<String, Integer> skillXp = new HashMap<>(); // skill name, xp
     private List<String> inventory = new ArrayList<>(); // item IDs currently held by the player
+    private Set<String> discoveredSkills = new HashSet<>();  // base skills encountered
+    private Set<String> unlockedSkills = new HashSet<>();    // purchased skills
+    private int skillPoints = 0;
 
     /**
      * Logic: The game ends only if health is BELOW zero.
